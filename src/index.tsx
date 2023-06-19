@@ -14,7 +14,9 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    canvasRef.current.appendChild(app.view);
+    if(canvasRef.current) {
+      canvasRef.current.appendChild(app.view);
+    }
 
     return () => {
       app.stop();
