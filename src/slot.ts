@@ -10,8 +10,8 @@ const app = new PIXI.Application({ 	autoDensity: true,
 
 app.loader
   .add([
-    { name: "images/symbols/eggHead.png", url: eggHead },
-    { name: "images/symbols/flowerTop.png", url: flowerTop },
+    { name: "eggman", url: eggHead },
+    { name: "flower", url: flowerTop },
     { name: "images/symbols/helmlok.png", url: helmlok },
     { name: "images/symbols/skully.png", url: skully }
   ])
@@ -24,8 +24,8 @@ const SYMBOL_SIZE = 150;
 function onAssetsLoaded() {
   // Create different slot symbols.
   const slotTextures = [
-    PIXI.Texture.from("images/symbols/eggHead.png"),
-    PIXI.Texture.from("images/symbols/flowerTop.png"),
+    PIXI.Texture.from("eggman"),
+    PIXI.Texture.from("flower"),
     PIXI.Texture.from("images/symbols/helmlok.png"),
     PIXI.Texture.from("images/symbols/skully.png")
   ];

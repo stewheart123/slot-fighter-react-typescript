@@ -9,7 +9,7 @@ export class Bootstrapper {
 
     public start(): void {
         console.log('bootstrapper');
-     stateChanger.stateChange("firstState");
+     stateChanger.stateChange("loadingScreenState");
    }
 
 }

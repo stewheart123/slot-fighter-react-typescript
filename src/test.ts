@@ -4,11 +4,13 @@ import * as PIXI from "pixi.js";
 // import helmlok from "../src/images/symbols/helmlok.png";
 // import skully from "../src/images/symbols/skully.png";
 import {Bootstrapper} from "../src/bootstrapper/Bootstrapper";
+import appProps from "../src/models/App";
 
 const bootstrapper = new Bootstrapper();
 bootstrapper.start();
-const app = new PIXI.Application({ 	autoDensity: true,
+ appProps.theApp = new PIXI.Application({ 	autoDensity: true,
 	backgroundColor: 0x111926,
+    resolution: window.devicePixelRatio || 1,
 	width: 1056,
 	height: 609 });
 
@@ -24,6 +26,6 @@ const app = new PIXI.Application({ 	autoDensity: true,
 //   .load(onAssetsLoaded);
 
 
-
+const app =  appProps.theApp;
 
 export default app;
