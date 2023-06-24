@@ -1,9 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
-//import app from "./initializer";
-import element from "../src/sceneElement";
-
-
+import theGame from "./theGame";
 
 import "./styles.css";
 
@@ -12,11 +9,11 @@ const App = () => {
 
   React.useEffect(() => {
     if (canvasRef.current) {
-      canvasRef.current.appendChild(element.view);
+      canvasRef.current.appendChild(theGame.view);
     }
 
     return () => {
-      element.stop();
+      theGame.stop();
     };
   }, []);
 

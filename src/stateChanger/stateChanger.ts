@@ -5,11 +5,11 @@
  */
 
 import { LoadingScreenState } from "../states/loadScreenState/loadScreenState";
-// import { SplashScreenState } from "../states/splashScreenState";
+import { SplashScreenState } from "../states/splashScreenState/splashScreenState";
 // import { MainGameIntroState } from "../main-game-intro/mainGameIntroState";
 
 const loadingScreenState = new LoadingScreenState();
-// const splashScreenState = new SplashScreenState();
+const splashScreenState = new SplashScreenState();
 // const mainGameIntroState = new MainGameIntroState();
   const stateChanger = {
     stateChange: changeTheState.bind(this),
@@ -22,9 +22,9 @@ const loadingScreenState = new LoadingScreenState();
         case "loadingScreenState":
           loadingScreenState.startSequence();
           break;
-        // case "splashScreenState":
-        //   splashScreenState.startSequence();
-        //   break;
+        case "splashScreenState":
+          splashScreenState.startSequence();
+          break;
         //   case "mainGameIntroState":
         //   mainGameIntroState.startSequence();  
         //   break;
