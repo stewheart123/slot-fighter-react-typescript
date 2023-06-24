@@ -13,7 +13,6 @@ export class LoadingScreenSequece implements ISequence {
     sequenceSignal: Signal = new Signal();
 
     initialiseSequence() : void {
-        console.log('ss init');
         //adds the signal so can be re-called, then calls the function...
         this.startSequence();
         this.sequenceSignal.add(() => {
@@ -22,7 +21,6 @@ export class LoadingScreenSequece implements ISequence {
     }
 
     startSequence(): void {
-        console.log('ss seq');
         for (let x = 0; x < this.steps.length; x++) {
             if (this.steps[x].isComplete === false) {
               this.steps[x].start(this.sequenceSignal);

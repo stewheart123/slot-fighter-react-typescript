@@ -5,11 +5,15 @@ import { Graphics, Container, Texture } from "pixi.js";
 import { Signal } from "signals.js";
 import liveComponents from "../../../models/liveComponents";
 import introScreenBackground from "../../../images/scene/into-screen-background.jpg";
+import slotFighterBackgroundDynamic from "../../../images/scene/slot-fighter-background-dynamic.jpg";
+import slotFighterForegroundDynamic from "../../../images/scene/slot-fighter-foreground-dynamic.png";
+
 export class LoadScreenStep extends Step {
   public isComplete = false;
   public loaderBarFill = new Graphics();
 
   public start(signal: Signal): void {
+
     console.log('loadscreenstep');
     const loadingContainer = new Container();
 
@@ -19,6 +23,14 @@ export class LoadScreenStep extends Step {
     this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 25);
     this.loaderBarFill.endFill();
     this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
+
+    //test graphic
+
+    let testGraphic = new Graphics();
+    testGraphic.beginFill(0x332e2e, 1);
+    testGraphic.drawRect(0, 0, 300, 25);
+    testGraphic.endFill();
+    loadingContainer.addChild(testGraphic);
 
     // The border of the bar.
     let loaderBarProgress = new Graphics();
@@ -42,6 +54,7 @@ export class LoadScreenStep extends Step {
     loadingContainer.addChild(this.loaderBarFill);
     appProps.theApp.stage.addChild(loadingContainer);
     liveComponents.loadScreen = loadingContainer;
+    console.log(liveComponents.loadScreen);
 
     this.initializeLoader().then(() => {
       this.isComplete = true;
@@ -61,6 +74,9 @@ export class LoadScreenStep extends Step {
     const assetLoader = appProps.theApp.loader;
     appProps.theApp.loader.add([
       { name: "intro-screen-background", url: introScreenBackground },
+      { name: "sf-background-dynamic", url: slotFighterBackgroundDynamic },
+      { name: "sf-foreground-dynamic", url: slotFighterForegroundDynamic },
+      
     ]);
 
     assetLoader.onProgress.add(() => {
@@ -81,3 +97,5 @@ export class LoadScreenStep extends Step {
     this.loaderBarFill.scale.x = progressRatio;
 }
 }
+
+//think i need to add everything to a container, then put the container into the app...

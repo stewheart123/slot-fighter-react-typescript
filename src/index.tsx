@@ -7,11 +7,7 @@ import "./styles.css";
 const App = () => {
   const canvasRef = React.createRef<HTMLDivElement>();
   const app = PixiApp;
-  const [state, setState] = React.useState<string>("state!");
-
-  const onClickSpin = () => {
-    console.log("click");
-  };
+  //const [state, setState] = React.useState<string>("state!");
 
   React.useEffect(() => {
     if(canvasRef.current) {
@@ -25,7 +21,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>{state}</h1>
+      
       <div ref={canvasRef} />
     </div>
   );
