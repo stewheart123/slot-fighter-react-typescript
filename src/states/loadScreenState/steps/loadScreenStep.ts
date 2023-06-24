@@ -7,30 +7,22 @@ import liveComponents from "../../../models/liveComponents";
 import introScreenBackground from "../../../images/scene/into-screen-background.jpg";
 import slotFighterBackgroundDynamic from "../../../images/scene/slot-fighter-background-dynamic.jpg";
 import slotFighterForegroundDynamic from "../../../images/scene/slot-fighter-foreground-dynamic.png";
+import initializeApp from "../../../initializer";
 
 export class LoadScreenStep extends Step {
   public isComplete = false;
   public loaderBarFill = new Graphics();
-
+  public app = initializeApp();
+  
   public start(signal: Signal): void {
-
-    console.log('loadscreenstep');
     const loadingContainer = new Container();
 
-    const loaderBarWidth = appProps.theApp.screen.width; // just an auxiliar variableconst
+    const loaderBarWidth = this.app.screen.width ; // just an auxiliar variableconst
     // the fill of the bar.
     this.loaderBarFill.beginFill(0xff7a00, 1);
     this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 25);
     this.loaderBarFill.endFill();
     this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
-
-    //test graphic
-
-    let testGraphic = new Graphics();
-    testGraphic.beginFill(0x332e2e, 1);
-    testGraphic.drawRect(0, 0, 300, 25);
-    testGraphic.endFill();
-    loadingContainer.addChild(testGraphic);
 
     // The border of the bar.
     let loaderBarProgress = new Graphics();
@@ -46,13 +38,13 @@ export class LoadScreenStep extends Step {
     //loaderBar.position.x = appProps.theApp.screen.width / 2;
     //loadingContainer.pivot.set(0.5, 0.5);
     loadingContainer.position.x =
-      appProps.theApp.screen.width / 2 - loaderBarWidth / 2;
+      this.app.screen.width / 2 - loaderBarWidth / 2;
     loadingContainer.position.y =
-      (appProps.theApp.screen.height - loaderBar.height) / 2;
+      (this.app.screen.height - loaderBar.height) / 2;
     //loaderBar.pivot.set(0.5);
     loadingContainer.addChild(loaderBar);
     loadingContainer.addChild(this.loaderBarFill);
-    appProps.theApp.stage.addChild(loadingContainer);
+    this.app.stage.addChild(loadingContainer);
     liveComponents.loadScreen = loadingContainer;
     console.log(liveComponents.loadScreen);
 
@@ -71,8 +63,8 @@ export class LoadScreenStep extends Step {
     //needs to load all the assets and have a download progress bar
 
     //how and where are the assets stored???
-    const assetLoader = appProps.theApp.loader;
-    appProps.theApp.loader.add([
+    const assetLoader = this.app.loader;
+    this.app.loader.add([
       { name: "intro-screen-background", url: introScreenBackground },
       { name: "sf-background-dynamic", url: slotFighterBackgroundDynamic },
       { name: "sf-foreground-dynamic", url: slotFighterForegroundDynamic },
@@ -97,5 +89,6 @@ export class LoadScreenStep extends Step {
     this.loaderBarFill.scale.x = progressRatio;
 }
 }
+
 
 //think i need to add everything to a container, then put the container into the app...

@@ -1,27 +1,27 @@
 import * as React from "react";
 import { render } from "react-dom";
-import PixiApp from "./test";
+//import app from "./initializer";
+import element from "../src/sceneElement";
+
+
 
 import "./styles.css";
 
 const App = () => {
-  const canvasRef = React.createRef<HTMLDivElement>();
-  const app = PixiApp;
-  //const [state, setState] = React.useState<string>("state!");
+  const canvasRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    if(canvasRef.current) {
-      canvasRef.current.appendChild(app.view);
+    if (canvasRef.current) {
+      canvasRef.current.appendChild(element.view);
     }
 
     return () => {
-      app.stop();
+      element.stop();
     };
-  }, [canvasRef, app]);
+  }, []);
 
   return (
     <div className="App">
-      
       <div ref={canvasRef} />
     </div>
   );

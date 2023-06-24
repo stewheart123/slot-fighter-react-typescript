@@ -4,8 +4,8 @@ import { LoadScreenStep } from "./steps/loadScreenStep";
 import { Step } from "../../Step";
 import stateChanger from "../../stateChanger/stateChanger";
 
-export class LoadingScreenSequece implements ISequence {
-    loadScreenStep = new LoadScreenStep();
+export class LoadingScreenSequence implements ISequence {
+   public loadScreenStep = new LoadScreenStep();
 
     steps: Step[] = [
         this.loadScreenStep,

@@ -1,6 +1,6 @@
-import { LoadingScreenSequece } from "./loadingScreenSequence";
+import { LoadingScreenSequence } from "./loadingScreenSequence";
 export class LoadingScreenState {
-    loadingScreenSequence = new LoadingScreenSequece();
+    public loadingScreenSequence = new LoadingScreenSequence();
 
     public startSequence(): void {
         this.loadingScreenSequence.initialiseSequence();
