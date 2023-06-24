@@ -8,6 +8,8 @@ import introScreenBackground from "../../../images/scene/into-screen-background.
 import slotFighterBackgroundDynamic from "../../../images/scene/slot-fighter-background-dynamic.jpg";
 import slotFighterForegroundDynamic from "../../../images/scene/slot-fighter-foreground-dynamic.png";
 import stageOneBackground from "../../../images/scene/stage-1-background.jpg";
+import maiSpriteSheet from "../../../images/character/mai-sprites.png";
+import maiAnimationInfo from "../../../images/character/mai-sprites.json";
 import symbolH from "../../../images/symbols/symbol-H.jpg";
 import symbolJ from "../../../images/symbols/symbol-J.jpg";
 import symbolK from "../../../images/symbols/symbol-K.jpg";
@@ -59,7 +61,7 @@ export class LoadScreenStep extends Step {
     loadingContainer.addChild(this.loaderBarFill);
     this.app.stage.addChild(loadingContainer);
     liveComponents.loadScreen = loadingContainer;
-    console.log(liveComponents.loadScreen);
+    //console.log(liveComponents.loadScreen);
 
    await this.initializeLoader().then(() => {
       this.isComplete = true;
@@ -74,7 +76,7 @@ export class LoadScreenStep extends Step {
   private async initializeLoader(): Promise<void> {
     return new Promise((resolve) => {
 
-      console.log("load function");
+      // console.log("load function");
       
       //needs to load all the assets and have a download progress bar
 
@@ -85,6 +87,8 @@ export class LoadScreenStep extends Step {
       { name: "sf-background-dynamic", url: slotFighterBackgroundDynamic },
       { name: "sf-foreground-dynamic", url: slotFighterForegroundDynamic },
       { name: "stage-1-background", url: stageOneBackground },
+      { name: "maiSpritesheet", url: maiSpriteSheet },
+      { name: "maiAnimationInf", url: maiAnimationInfo },
       { name: "symbol-h", url: symbolH },
       { name: "symbol-j", url: symbolJ },
       { name: "symbol-k", url: symbolK },
@@ -100,12 +104,12 @@ export class LoadScreenStep extends Step {
 
     assetLoader.onProgress.add(() => {
         this.downloadProgress(assetLoader.progress);
-        console.log('loading');
-        console.log(assetLoader.progress);
+       // console.log('loading');
+        // console.log(assetLoader.progress);
     });
     
     //saves the textures to the assets model
-    assetLoader.load(() => {
+    assetLoader.load((loader, resources) => {
       const loadedTextures = [
         Texture.from("intro-screen-background"),
         Texture.from("sf-foreground-dynamic"),
@@ -122,10 +126,11 @@ export class LoadScreenStep extends Step {
         Texture.from("symbol-s"),
         Texture.from("symbol-st"),
         Texture.from("symbol-w"),
-        
-        
       ];
       assets.textures = loadedTextures;
+      const spritesheet = resources.maiSpriteSheet;
+      const animationData = resources.maiAnimationInfo;
+      assets.animationResources = [spritesheet, animationData];
     });
     assetLoader.onComplete.add(() => {
      resolve(); //something here?

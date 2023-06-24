@@ -27,7 +27,6 @@ export class StepSplashScreen implements IStep {
     splashContainer.addChild(backgroundImage);
     splashContainer.addChild(foregroundFighter);
 
-
     // foreground animation
     const startY = foregroundFighter.y;
     const amplitude = 2;
@@ -58,6 +57,7 @@ export class StepSplashScreen implements IStep {
       insertCoinButton.visible = true;
       creditsText.text = "CREDITS 01";
       this.completeStep(signal);
+      splashContainer.destroy();
     });
 
     buttonContainer.addChild(insertCoinButton);

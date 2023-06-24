@@ -6,17 +6,17 @@
 
 import { LoadingScreenState } from "../states/loadScreenState/loadScreenState";
 import { SplashScreenState } from "../states/splashScreenState/splashScreenState";
-// import { MainGameIntroState } from "../main-game-intro/mainGameIntroState";
+import { MainGameIntroState } from "../states/mainGameIntroState/mainGameIntroState";
 
 const loadingScreenState = new LoadingScreenState();
 const splashScreenState = new SplashScreenState();
-// const mainGameIntroState = new MainGameIntroState();
+const mainGameIntroState = new MainGameIntroState();
   const stateChanger = {
     stateChange: changeTheState.bind(this),
   };
 
   function changeTheState(stateId: string) {
-      console.log(`change state ${stateId}`);
+    //  console.log(`change state ${stateId}`);
     switch (stateId) {
      
         case "loadingScreenState":
@@ -25,9 +25,9 @@ const splashScreenState = new SplashScreenState();
         case "splashScreenState":
           splashScreenState.startSequence();
           break;
-        //   case "mainGameIntroState":
-        //   mainGameIntroState.startSequence();  
-        //   break;
+          case "mainGameIntroState":
+          mainGameIntroState.startSequence();  
+          break;
       default:
         console.log('default reached');
         break;
