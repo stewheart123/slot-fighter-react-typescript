@@ -1,16 +1,19 @@
 import * as PIXI from "pixi.js";
-import eggHead from "../src/images/eggHead.png";
-import flowerTop from "../src/images/flowerTop.png";
-import helmlok from "../src/images/helmlok.png";
-import skully from "../src/images/skully.png";
-const app = new PIXI.Application({ backgroundColor: 0x1099bb });
+import eggHead from "../src/images/symbols/eggHead.png";
+import flowerTop from "../src/images/symbols/flowerTop.png";
+import helmlok from "../src/images/symbols/helmlok.png";
+import skully from "../src/images/symbols/skully.png";
+const app = new PIXI.Application({ 	autoDensity: true,
+	backgroundColor: 0x111926,
+	width: 1056,
+	height: 609 });
 
 app.loader
   .add([
-    { name: "images/eggHead.png", url: eggHead },
-    { name: "images/flowerTop.png", url: flowerTop },
-    { name: "images/helmlok.png", url: helmlok },
-    { name: "images/skully.png", url: skully }
+    { name: "images/symbols/eggHead.png", url: eggHead },
+    { name: "images/symbols/flowerTop.png", url: flowerTop },
+    { name: "images/symbols/helmlok.png", url: helmlok },
+    { name: "images/symbols/skully.png", url: skully }
   ])
   .load(onAssetsLoaded);
 
@@ -21,10 +24,10 @@ const SYMBOL_SIZE = 150;
 function onAssetsLoaded() {
   // Create different slot symbols.
   const slotTextures = [
-    PIXI.Texture.from("images/eggHead.png"),
-    PIXI.Texture.from("images/flowerTop.png"),
-    PIXI.Texture.from("images/helmlok.png"),
-    PIXI.Texture.from("images/skully.png")
+    PIXI.Texture.from("images/symbols/eggHead.png"),
+    PIXI.Texture.from("images/symbols/flowerTop.png"),
+    PIXI.Texture.from("images/symbols/helmlok.png"),
+    PIXI.Texture.from("images/symbols/skully.png")
   ];
 
   // Build the reels
