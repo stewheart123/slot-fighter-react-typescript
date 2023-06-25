@@ -21,7 +21,7 @@ export class StepSplashScreen implements IStep {
     foregroundFighter.width = this.app.screen.width;
     foregroundFighter.height = this.app.screen.height;
     const backgroundImage = new Sprite();
-    backgroundImage.texture = assets.textures[0];
+    backgroundImage.texture = assets.textures[2];
     backgroundImage.width = this.app.screen.width;
     backgroundImage.height = this.app.screen.width;
     splashContainer.addChild(backgroundImage);
@@ -56,8 +56,8 @@ export class StepSplashScreen implements IStep {
       animationOn = false;
       insertCoinButton.visible = true;
       creditsText.text = "CREDITS 01";
-      this.completeStep(signal);
-      splashContainer.destroy();
+
+     // this.app.stage.children[0].destroy();
     });
 
     buttonContainer.addChild(insertCoinButton);
@@ -121,6 +121,14 @@ export class StepSplashScreen implements IStep {
           elapsedTime = 0;
         }
       }
+      else {
+       // foregroundFighter.destroy();
+       //  buttonContainer.destroy();
+       this.isComplete = true;
+       this.completeStep(signal);
+       this.app.ticker.stop();
+       splashContainer.destroy();
+      }
     });
 
     const creditsText = new Text("CREDITS 00", {
@@ -140,6 +148,7 @@ export class StepSplashScreen implements IStep {
     splashContainer.addChild(creditsText);
 
     this.app.stage.addChild(splashContainer);
+    
     // refactor liveComponents.splashScreen = splashContainer;
   
     //place the dispatch inside a button event

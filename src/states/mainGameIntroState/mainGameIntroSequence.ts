@@ -12,18 +12,22 @@ export class MainGameIntroSequence implements ISequence {
   steps: Step[] = [
     this.setupBackgroundStep
   ];
+  public canRun: undefined | boolean = undefined;
 
   sequenceSignal: Signal= new Signal();
 
   initialiseSequence(): void {
-    console.log('main game intro seq');
-    this.sequenceSignal.add(() => {
-        this.startSequence();
-    });
-    this.startSequence();
+    if(this.canRun === undefined) {
+      console.log('main game intro seq');
+      this.sequenceSignal.add(() => {
+          this.startSequence();
+      });
+      this.startSequence();
+    }
   }
 
   startSequence(): void {
+
     for (let x = 0; x < this.steps.length; x++) {
       if (this.steps[x].isComplete === false) {
         this.steps[x].start(this.sequenceSignal);
@@ -33,8 +37,9 @@ export class MainGameIntroSequence implements ISequence {
     this.stateChange();
   }
   stateChange(): void {
-   // stateChanger.stateChange("loadingScreenState");
-   console.log(stateChanger);
+    this.canRun = false;
+    stateChanger.stateChange("end");
+   //console.log(stateChanger);
    console.log('intro complete');
   }
 }

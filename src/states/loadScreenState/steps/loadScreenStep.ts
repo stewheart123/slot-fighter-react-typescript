@@ -113,8 +113,9 @@ export class LoadScreenStep extends Step {
       const loadedTextures = [
         Texture.from("intro-screen-background"),
         Texture.from("sf-foreground-dynamic"),
-        Texture.from("stage-1-background"),
+        Texture.from("sf-background-dynamic"),
         Texture.from("intro-screen-background"),
+        Texture.from("stage-1-background"),
         Texture.from("symbol-h"),
         Texture.from("symbol-j"),
         Texture.from("symbol-k"),
@@ -129,8 +130,6 @@ export class LoadScreenStep extends Step {
       ];
       assets.textures = loadedTextures;
       const spritesheet = resources.maiSpriteSheet;
-      const animationData = resources.maiAnimationInfo;
-      assets.animationResources = [spritesheet, animationData];
     });
     assetLoader.onComplete.add(() => {
      resolve(); //something here?
