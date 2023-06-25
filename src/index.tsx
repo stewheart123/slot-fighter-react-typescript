@@ -1,10 +1,11 @@
 import * as React from "react";
 import { render } from "react-dom";
 import theGame from "./theGame";
-
+import floatingSignal from "./signal";
 import "./styles.css";
 
 const App = () => {
+
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -20,6 +21,8 @@ const App = () => {
   return (
     <div className="App">
       <div ref={canvasRef} />
+      {/* how to call a UI item and update the pixi game.. */}
+      <p onClick={()=> {floatingSignal.dispatch();}}>a signal</p>
     </div>
   );
 };

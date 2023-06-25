@@ -11,16 +11,23 @@ import {
 } from "pixi.js";
 import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
-//import spritesheeeet from "../../../images/character/mai-sprites.json"
+import  floatingSignal  from "../../../signal";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
 
-  public start(signal: Signal): void {
-    this.app.stage.removeChildren();
-    const mainSceneContainer = new Container();
+  public addGraphic(container : Container):void {
+    //exmample of signal triggered game element from react
+    const testgra = new Graphics();
+    testgra.beginFill(0x00ff00, 1);
+    testgra.drawRect(0, 0, 500, 500);
+    testgra.endFill();
+   container.addChild(testgra);
+  }
 
+  public start(signal: Signal): void {
+    const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
     stageOneBackground.texture = assets.textures[4];
     stageOneBackground.width = this.app.screen.width;
@@ -36,9 +43,10 @@ export class SetupBackgroundStep implements IStep {
    // console.log(testG);
     mainSceneContainer.addChild(stageOneBackground);
     this.app.stage.addChild(mainSceneContainer);
-    this.app.stage.addChild(mainSceneContainer);
-    console.log(' in main scene');
-
+    floatingSignal.add(() =>{
+      this.addGraphic(mainSceneContainer);
+      this.app.renderer.render(this.app.stage);
+    });
     //animation test
 
 // Create a loader instance
