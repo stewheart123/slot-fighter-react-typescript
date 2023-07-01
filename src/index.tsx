@@ -22,7 +22,7 @@ const App = () => {
     <div className="App">
       <div ref={canvasRef} />
       {/* how to call a UI item and update the pixi game.. */}
-      <p onClick={()=> {floatingSignal.dispatch();}}>a signal</p>
+      <div className="button-overlay" onClick={()=> {floatingSignal.dispatch();}}>a signal</div>
     </div>
   );
 };

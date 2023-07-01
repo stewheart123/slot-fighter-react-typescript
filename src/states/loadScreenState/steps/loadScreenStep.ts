@@ -116,6 +116,9 @@ export class LoadScreenStep extends Step {
         Texture.from("sf-background-dynamic"),
         Texture.from("intro-screen-background"),
         Texture.from("stage-1-background"),
+        
+      ];
+      const symbolTextures = [
         Texture.from("symbol-h"),
         Texture.from("symbol-j"),
         Texture.from("symbol-k"),
@@ -129,6 +132,7 @@ export class LoadScreenStep extends Step {
         Texture.from("symbol-w"),
       ];
       assets.textures = loadedTextures;
+      assets.symbolTextures = symbolTextures;
       const spritesheet = resources.maiSpriteSheet;
     });
     assetLoader.onComplete.add(() => {
