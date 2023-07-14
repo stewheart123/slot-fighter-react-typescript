@@ -3,8 +3,20 @@ import { render } from "react-dom";
 import theGame from "./theGame";
 import floatingSignal from "./signal";
 import "./styles.css";
+import { useState } from "react";
+
+let setModelValue: React.Dispatch<React.SetStateAction<boolean | undefined>> | undefined;
+
+export function updateState(newValue: boolean) {
+  if (setModelValue) {
+    setModelValue(newValue);
+  }
+}
 
 const App = () => {
+  const [modelValue, internalSetModelValue] = useState<boolean | undefined>();
+
+  setModelValue = internalSetModelValue;
 
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
@@ -21,8 +33,8 @@ const App = () => {
   return (
     <div className="App">
       <div ref={canvasRef} />
-      {/* how to call a UI item and update the pixi game.. */}
-      <div className="button-overlay" onClick={()=> {floatingSignal.dispatch();}}>a signal</div>
+      {modelValue ? <p>user interface</p> : undefined}
+      <div className="button-overlay" onClick={() => { floatingSignal.dispatch(); }}>a signal</div>
     </div>
   );
 };

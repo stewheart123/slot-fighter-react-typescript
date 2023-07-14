@@ -13,12 +13,14 @@ import {
 import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
 import  floatingSignal  from "../../../signal";
+import userInterface from "../../../models/UserInterface";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
  
   public start(signal: Signal): void {
+    userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
 
@@ -41,7 +43,7 @@ for(let x = 0; x < 4; x++) {
   }
   reelContainer.addChild(tempReel);
 }
-reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-50);
+reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-440);
 
 
     stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
@@ -58,7 +60,7 @@ reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-50);
     });
     
     console.log(reelContainer.position.y);
-    const rotateAnimation = ():void => {
+    const reelContainerIntroAnimation = ():void => {
       
         reelContainer.position.y += 2;
         this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
@@ -68,7 +70,7 @@ reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-50);
     }
     const ticker = new Ticker();
 
-    ticker.add(rotateAnimation);
+    ticker.add(reelContainerIntroAnimation);
     ticker.start();
     // how to set up an animation?? 
 
