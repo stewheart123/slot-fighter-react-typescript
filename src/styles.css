@@ -1,4 +1,73 @@
 .App {
   font-family: sans-serif;
   text-align: center;
+  position: relative;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-size: 144px;
+  font-weight: bold;
+}
+
+.marquee {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  height: 9rem;
+  overflow: hidden;
+}
+
+.track {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 32s linear infinite;
+  color: #622a2a;
+}
+.track-reverse {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-reverse 32s linear infinite;
+  color: #76462b;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+
+.marquee-wrapper {
+  position: absolute;
+  top: 17vh;
+  font-size: 11rem;
+  line-height: 10rem;
+  background-color: #000000a3;
+  width: 1056px;
+  margin: auto;
+  left: calc(100vw - 1219px);
+}
+
+.content {
+  line-height: 0.7;
+  height: auto;
+  font-size: 13rem;
+  font-family: 'Tourney';
+}
+h2 {
+  font-size: 6rem;
+  position: absolute;
+  top: 24%;
+  color: #ffeeee;
+  z-index: 1;
+  margin: auto;
+  width: 100%;
+  font-family: 'Permanent Marker';
 }

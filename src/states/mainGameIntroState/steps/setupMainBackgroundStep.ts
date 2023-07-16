@@ -14,12 +14,14 @@ import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
 import  floatingSignal  from "../../../signal";
 import userInterface from "../../../models/UserInterface";
+import {updateState} from "../../../index";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
  
   public start(signal: Signal): void {
+    updateState(true, 'Ready?');
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
@@ -66,6 +68,7 @@ reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-440);
         this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
         if(reelContainer.position.y > 60) {
           ticker.stop();
+          updateState(true, 'Fight!');
         }
     }
     const ticker = new Ticker();
