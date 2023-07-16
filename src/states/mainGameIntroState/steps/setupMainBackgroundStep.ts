@@ -21,7 +21,7 @@ export class SetupBackgroundStep implements IStep {
   public app = initializeApp();
  
   public start(signal: Signal): void {
-    updateState(true, 'Ready?');
+    updateState(true, 'Ready?', '');
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
@@ -64,11 +64,11 @@ reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-440);
     console.log(reelContainer.position.y);
     const reelContainerIntroAnimation = ():void => {
       
-        reelContainer.position.y += 2;
+        reelContainer.position.y += 7;
         this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
         if(reelContainer.position.y > 60) {
           ticker.stop();
-          updateState(true, 'Fight!');
+          updateState(true, 'Fight!', 'red');
         }
     }
     const ticker = new Ticker();

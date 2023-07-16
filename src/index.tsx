@@ -14,21 +14,30 @@ let setMessage:
 | React.Dispatch<React.SetStateAction<string | undefined>>
   | undefined;
 
-export function updateState(newValue: boolean, message:string) {
+  let setColourClass:
+  | React.Dispatch<React.SetStateAction<string | undefined>>
+  | undefined;
+
+export function updateState(newValue: boolean, message:string, colourClass: string) {
   if (setModelValue) {
     setModelValue(newValue);
   }
   if(setMessage) {
     setMessage(message);
   }
+  if(setColourClass) {
+    setColourClass(colourClass);
+  }
 }
 
 const App = () => {
   const [modelValue, internalSetModelValue] = useState<boolean | undefined>();
   const [scrollMessage, internalSetMessage] = useState<string | undefined>();
+  const [colourClassValue, internalSetColourClass] = useState<string | undefined>();
 
   setModelValue = internalSetModelValue;
   setMessage = internalSetMessage;
+  setColourClass = internalSetColourClass;
 
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
@@ -46,7 +55,7 @@ const App = () => {
     <div className="App">
       <div ref={canvasRef} />
       {modelValue ? (
-        <UserInterfaceChanger message={scrollMessage} />
+        <UserInterfaceChanger message={scrollMessage} colourClass={colourClassValue} />
       ) : undefined}
       <div
         className="button-overlay"
