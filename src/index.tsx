@@ -51,20 +51,33 @@ const App = () => {
     };
   }, []);
 
+  const inlineStyles = {
+    backgroundPositionX: '460px'
+  };
+
   return (
     <div className="App">
       <div ref={canvasRef} />
+      <div className="energy-bar__container">
+        <div className="energy-bar__window">
+            <div id="energy-bar-left" className="energy-bar__energy --left-bar" style={inlineStyles}>
+              
+          </div>
+        </div>
+        <div className="energy-bar__ko">KO</div>
+        <div className="energy-bar__window">
+          <div id="energy-bar-right" className="energy-bar__energy --right-bar"></div>
+        </div>
+      </div>
       {modelValue ? (
         <UserInterfaceChanger message={scrollMessage} colourClass={colourClassValue} />
       ) : undefined}
       <div
-        className="button-overlay"
+        className="spin-button-overlay"
         onClick={() => {
           floatingSignal.dispatch();
         }}
-      >
-        a signal
-      </div>
+      >SPIN</div>
     </div>
   );
 };

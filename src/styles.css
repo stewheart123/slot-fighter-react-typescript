@@ -13,6 +13,7 @@ body {
   color: black;
   /* font-size: 144px; */
   font-weight: bold;
+  background-color: rgb(82, 74, 74);
 }
 
 .marquee {
@@ -21,6 +22,68 @@ body {
   max-width: 100%;
   height: 5.5rem;
   overflow: hidden;
+}
+
+.spin-button-overlay {
+  color: #FF7A00;
+  text-align: center;
+  font-family: Permanent Marker;
+  font-size: 51px;
+  font-weight: 400;
+  line-height: normal;
+  -webkit-text-stroke: 3px black;
+  width: 90px;
+  height: 90px;
+  background-color: #FF1F00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #000;
+  border-radius: 150px;
+  margin: auto;
+}
+
+.energy-bar__container {
+  display: flex;
+  width: 1040px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: calc(100vw - 1212px);
+}
+
+.energy-bar__ko {
+  font-family: 'Tourney';
+  font-size: 78px;
+  color: white;
+  text-shadow: 4px 4px black;
+}
+
+.energy-bar__window {
+  width: 100%;
+  height: 30px;
+  border: 3px solid white;
+  overflow: hidden;
+}
+
+.--left-bar {
+  background: linear-gradient(270deg, #FFFFFE 6.25%, #FAFF07 50.23%, #FF0707 79.69%, #AC0606 94.27%);
+  width: 100%;
+  height: 100%;
+  transition: 2s;
+  background-repeat: no-repeat;
+  background-position-x: 460px;
+}
+
+.--right-bar {
+  background: linear-gradient(90deg, #FFFFFE 6.25%, #FAFF07 50.23%, #FF0707 79.69%, #AC0606 94.27%);
+  width: 100%;
+  height: 100%;
+  transition: 2s;
+  background-repeat: no-repeat;
+  background-position-x: -460px;
 }
 
 .track {

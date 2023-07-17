@@ -25,8 +25,13 @@ export class SetupBackgroundStep implements IStep {
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
-
     const reelContainer = new Container();
+    const reelFrameColour = new Graphics();
+    reelFrameColour.beginFill(0x746960);
+    reelFrameColour.drawRect(-10,-10, (110*4) + 20, (110 * 4) + 20);
+    reelFrameColour.endFill();
+    reelContainer.addChild(reelFrameColour);
+
     reelContainer.pivot.set(0.5,0.5);
     reelContainer.position.set(this.app.screen.width / 2- (110 * 2), 0);
 for(let x = 0; x < 4; x++) {
@@ -41,7 +46,7 @@ for(let x = 0; x < 4; x++) {
     tempSymbol.height = 110;
     tempSymbol.position.set((x*110), (y * 110), );
     tempReel.addChild(tempSymbol);
-    tempReel.addChild(tempReel);
+     tempReel.addChild(tempReel);
   }
   reelContainer.addChild(tempReel);
 }
@@ -66,7 +71,7 @@ reelContainer.position.set((this.app.view.width / 2 - (110*2)) ,-440);
       
         reelContainer.position.y += 7;
         this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
-        if(reelContainer.position.y > 60) {
+        if(reelContainer.position.y > 70) {
           ticker.stop();
           updateState(true, 'Fight!', 'red');
         }
