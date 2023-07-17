@@ -5,39 +5,80 @@ import floatingSignal from "./signal";
 import "./styles.css";
 import { useState } from "react";
 import UserInterfaceChanger from "./components/UserInterfaceChanger";
+import energyBar from "./components/energyBar";
+import EnergyBar from "./components/energyBar";
 
 let setModelValue:
   | React.Dispatch<React.SetStateAction<boolean | undefined>>
   | undefined;
 
 let setMessage:
-| React.Dispatch<React.SetStateAction<string | undefined>>
-  | undefined;
-
-  let setColourClass:
   | React.Dispatch<React.SetStateAction<string | undefined>>
   | undefined;
 
-export function updateState(newValue: boolean, message:string, colourClass: string) {
+let setColourClass:
+  | React.Dispatch<React.SetStateAction<string | undefined>>
+  | undefined;
+
+let setEnergyBarVisible:
+  | React.Dispatch<React.SetStateAction<boolean>>
+  | undefined;
+
+  let setEnergyBarLeft:
+  | React.Dispatch<React.SetStateAction<number>>
+  | undefined;
+  
+  let setEnergyBarRight:
+  | React.Dispatch<React.SetStateAction<number>>
+  | undefined;
+
+export function updateState(
+  newValue: boolean,
+  message: string,
+  colourClass: string,
+  energyBarVisible: boolean,
+  energyBarLeft: number,
+  energyBarRight: number
+) {
   if (setModelValue) {
     setModelValue(newValue);
   }
-  if(setMessage) {
+  if (setMessage) {
     setMessage(message);
   }
-  if(setColourClass) {
+  if (setColourClass) {
     setColourClass(colourClass);
+  }
+  if (setEnergyBarVisible) {
+    setEnergyBarVisible(energyBarVisible);
+  }
+  if(setEnergyBarLeft) {
+    setEnergyBarLeft(energyBarLeft);
+  }
+  if(setEnergyBarRight) {
+    setEnergyBarRight(energyBarRight);
   }
 }
 
 const App = () => {
   const [modelValue, internalSetModelValue] = useState<boolean | undefined>();
   const [scrollMessage, internalSetMessage] = useState<string | undefined>();
-  const [colourClassValue, internalSetColourClass] = useState<string | undefined>();
+  const [colourClassValue, internalSetColourClass] = useState<
+    string | undefined
+  >();
+  const [energyBarVisibleValue, internalSetEnergyBar] =
+    useState<boolean>(false);
+
+    const [energyLeftValue, internalSetEnergyLeft] =  useState<number>(460);
+    const [energyRightValue, internalSetEnergyRight] =  useState<number>(-460);
+  
 
   setModelValue = internalSetModelValue;
   setMessage = internalSetMessage;
   setColourClass = internalSetColourClass;
+  setEnergyBarVisible = internalSetEnergyBar;
+  setEnergyBarLeft = internalSetEnergyLeft;
+  setEnergyBarRight = internalSetEnergyRight;
 
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
@@ -51,33 +92,28 @@ const App = () => {
     };
   }, []);
 
-  const inlineStyles = {
-    backgroundPositionX: '460px'
-  };
-
   return (
     <div className="App">
       <div ref={canvasRef} />
-      <div className="energy-bar__container">
-        <div className="energy-bar__window">
-            <div id="energy-bar-left" className="energy-bar__energy --left-bar" style={inlineStyles}>
-              
-          </div>
-        </div>
-        <div className="energy-bar__ko">KO</div>
-        <div className="energy-bar__window">
-          <div id="energy-bar-right" className="energy-bar__energy --right-bar"></div>
-        </div>
-      </div>
+      <EnergyBar
+        energyBarLeft={energyLeftValue}
+        energyBarRight={energyRightValue}
+        energyBarVisible={energyBarVisibleValue}
+      />
       {modelValue ? (
-        <UserInterfaceChanger message={scrollMessage} colourClass={colourClassValue} />
+        <UserInterfaceChanger
+          message={scrollMessage}
+          colourClass={colourClassValue}
+        />
       ) : undefined}
       <div
         className="spin-button-overlay"
         onClick={() => {
           floatingSignal.dispatch();
         }}
-      >SPIN</div>
+      >
+        SPIN
+      </div>
     </div>
   );
 };
