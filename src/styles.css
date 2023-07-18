@@ -41,6 +41,9 @@ body {
   border: 5px solid #000;
   border-radius: 150px;
   margin: auto;
+  left: calc(50% - 45px);
+  bottom: 10px;
+  position: absolute;
 }
 
 .energy-bar__container {
@@ -115,7 +118,7 @@ body {
   top: 30vh;
   font-size: 11rem;
   line-height: 10rem;
-  background-color: #000000eb;
+  background-color: #000000cf;
   width: 1056px;
   margin: auto;
   left: calc(100vw - 1219px);

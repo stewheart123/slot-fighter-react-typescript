@@ -32,6 +32,17 @@ let setEnergyBarVisible:
   | React.Dispatch<React.SetStateAction<number>>
   | undefined;
 
+  let setSpinButtonVisible:
+  | React.Dispatch<React.SetStateAction<boolean>>
+  | undefined;
+
+  
+export function updateControls(spinButtonVisible: boolean) {
+if(setSpinButtonVisible) {
+  setSpinButtonVisible(spinButtonVisible);
+}
+}
+
 export function updateState(
   newValue: boolean,
   message: string,
@@ -71,6 +82,8 @@ const App = () => {
 
     const [energyLeftValue, internalSetEnergyLeft] =  useState<number>(460);
     const [energyRightValue, internalSetEnergyRight] =  useState<number>(-460);
+
+    const [spinButtonVisibility, internalSetSpinButtonVisibility] = useState<boolean>(false);
   
 
   setModelValue = internalSetModelValue;
@@ -79,6 +92,7 @@ const App = () => {
   setEnergyBarVisible = internalSetEnergyBar;
   setEnergyBarLeft = internalSetEnergyLeft;
   setEnergyBarRight = internalSetEnergyRight;
+  setSpinButtonVisible = internalSetSpinButtonVisibility;
 
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
@@ -106,14 +120,16 @@ const App = () => {
           colourClass={colourClassValue}
         />
       ) : undefined}
-      <div
+
+      {spinButtonVisibility ? <div
         className="spin-button-overlay"
         onClick={() => {
           floatingSignal.dispatch();
         }}
       >
         SPIN
-      </div>
+      </div> : <></> }
+      
     </div>
   );
 };

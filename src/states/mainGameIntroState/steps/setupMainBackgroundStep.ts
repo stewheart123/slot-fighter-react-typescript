@@ -15,13 +15,18 @@ import assets from "../../../models/Assets";
 import floatingSignal from "../../../signal";
 import userInterface from "../../../models/UserInterface";
 import { updateState } from "../../../index";
+import playerHealth from "../../../models/PlayerHealth";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
-
+  
   public start(signal: Signal): void {
-    updateState(true, "Ready?", "", true, 460, -460);
+    playerHealth.playerOneHealth = 0;
+    playerHealth.playerTwoHealth = 0;
+    updateState(true, "Ready?", "", true,
+     playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+     -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     const stageOneBackground = new Sprite();
@@ -70,10 +75,18 @@ export class SetupBackgroundStep implements IStep {
       reelContainer.position.y += 7;
       this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
       if (reelContainer.position.y > -400) {
-        updateState(true, "Ready?", "white", true, 0, 0);
+        playerHealth.playerOneHealth = 10;
+        playerHealth.playerTwoHealth = 10;
+        updateState(true, "Ready?", "white", true, 
+        playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
       }
       if (reelContainer.position.y > 70) {
-        updateState(true, "Fight!", "red", true, 0, 0);
+        playerHealth.playerOneHealth = 10;
+        playerHealth.playerTwoHealth = 10;
+        updateState(true, "Fight!", "red", true, 
+         playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
         ticker.stop();
       }
     };
