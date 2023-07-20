@@ -7,10 +7,13 @@
 import { LoadingScreenState } from "../states/loadScreenState/loadScreenState";
 import { SplashScreenState } from "../states/splashScreenState/splashScreenState";
 import { MainGameIntroState } from "../states/mainGameIntroState/mainGameIntroState";
+import { SpinReadyState } from "../states/spinReadyState/spinReadyState";
 
 const loadingScreenState = new LoadingScreenState();
 const splashScreenState = new SplashScreenState();
 const mainGameIntroState = new MainGameIntroState();
+const spinReadyState = new SpinReadyState();
+
   const stateChanger = {
     stateChange: changeTheState.bind(this),
   };
@@ -27,6 +30,9 @@ const mainGameIntroState = new MainGameIntroState();
           break;
           case "mainGameIntroState":
           mainGameIntroState.startSequence();  
+          break;
+          case "spinReady":
+          spinReadyState.startSequence();
           break;
       default:
         console.log('default reached');

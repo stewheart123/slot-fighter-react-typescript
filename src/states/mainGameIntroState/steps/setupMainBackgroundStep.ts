@@ -65,10 +65,10 @@ export class SetupBackgroundStep implements IStep {
     mainSceneContainer.addChild(reelContainer);
     this.app.stage.addChild(mainSceneContainer);
 
-    floatingSignal.add(() => {
-      // add a pixi game instruction in here, the floating signal canbe exported to the UI
-      console.log("floating signal");
-    });
+    // floatingSignal.add(() => {
+    //   // add a pixi game instruction in here, the floating signal canbe exported to the UI
+    //   console.log("floating signal");
+    // });
 
     console.log(reelContainer.position.y);
     const reelContainerIntroAnimation = (): void => {

@@ -5,7 +5,7 @@ import floatingSignal from "./signal";
 import "./styles.css";
 import { useState } from "react";
 import UserInterfaceChanger from "./components/UserInterfaceChanger";
-import energyBar from "./components/energyBar";
+// import energyBar from "./components/energyBar";
 import EnergyBar from "./components/energyBar";
 
 let setModelValue:
