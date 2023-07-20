@@ -88,16 +88,35 @@ export class SetupBackgroundStep implements IStep {
          playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
         -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
         ticker.stop();
+        ticker.remove(reelContainerIntroAnimation)
+        ticker.add(reelContainerExitAnimation);
+        ticker.start();
       }
     };
     const ticker = new Ticker();
+    let elapsedTime = 0;
+    const reelContainerExitAnimation = (delta:number): void => {
+      elapsedTime += delta;
+
+      // Check if 1 second has passed
+      if (elapsedTime >= 100) {
+        console.log('ELAPSED');
+        playerHealth.playerOneHealth = 10;
+        playerHealth.playerTwoHealth = 10;
+        updateState(false, "Fight!", "red", true, 
+         playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
+        ticker.stop();
+        this.isComplete = true;
+        signal.dispatch();
+        console.log('end!');
+      }
+    };
 
     ticker.add(reelContainerIntroAnimation);
     ticker.start();
     // how to set up an animation??
 
-    this.isComplete = true;
-    //signal.dispatch();
-    //console.log(signal);
+   
   }
 }

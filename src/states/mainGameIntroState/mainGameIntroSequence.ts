@@ -38,9 +38,7 @@ export class MainGameIntroSequence implements ISequence {
   }
   stateChange(): void {
     this.canRun = false;
-    stateChanger.stateChange("end");
-   //console.log(stateChanger);
-   console.log('intro complete');
+    stateChanger.stateChange("spinReady");
   }
 }
 
