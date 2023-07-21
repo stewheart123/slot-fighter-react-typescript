@@ -131,9 +131,10 @@ export class LoadScreenStep extends Step {
         Texture.from("symbol-st"),
         Texture.from("symbol-w"),
       ];
+
       assets.textures = loadedTextures;
       assets.symbolTextures = symbolTextures;
-      const spritesheet = resources.maiSpriteSheet;
+      assets.animation = resources;
     });
     assetLoader.onComplete.add(() => {
      resolve(); //something here?
@@ -142,6 +143,7 @@ export class LoadScreenStep extends Step {
     
   }
   private downloadProgress(progressRatio: number): void {
+    this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
     // progressRatio goes from 0 to 1, so set it to scale
     this.loaderBarFill.scale.x = progressRatio;
   }

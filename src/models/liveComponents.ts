@@ -4,9 +4,10 @@
  * Destroy the object and make the value undefined in this object
  */
 
-const liveComponents: { loadScreen: undefined | any, splashScreen: undefined | any } = {
+const liveComponents: { loadScreen: undefined | any, splashScreen: undefined | any, reelContainer : undefined|any } = {
     loadScreen: undefined,
-    splashScreen: undefined
+    splashScreen: undefined,
+    reelContainer: undefined
   };
   
   export default liveComponents;

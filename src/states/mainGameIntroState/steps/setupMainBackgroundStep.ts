@@ -16,6 +16,7 @@ import floatingSignal from "../../../signal";
 import userInterface from "../../../models/UserInterface";
 import { updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
+import liveComponents from "../../../models/liveComponents";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -29,9 +30,12 @@ export class SetupBackgroundStep implements IStep {
      -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
+    mainSceneContainer.name = "main_scene_container";
     const stageOneBackground = new Sprite();
+    stageOneBackground.name ="stage_one_background"
     const reelContainer = new Container();
     const reelFrameColour = new Graphics();
+    reelFrameColour.name = "reel_frame";
     reelFrameColour.beginFill(0x746960);
     reelFrameColour.drawRect(-10, -10, 110 * 4 + 20, 110 * 4 + 20);
     reelFrameColour.endFill();
@@ -56,6 +60,8 @@ export class SetupBackgroundStep implements IStep {
       reelContainer.addChild(tempReel);
     }
     reelContainer.position.set(this.app.view.width / 2 - 110 * 2, -440);
+    reelContainer.name = "reel_container";
+    liveComponents.reelContainer = reelContainer;
 
     stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
     stageOneBackground.width = this.app.screen.width;
@@ -116,7 +122,5 @@ export class SetupBackgroundStep implements IStep {
     ticker.add(reelContainerIntroAnimation);
     ticker.start();
     // how to set up an animation??
-
-   
   }
 }

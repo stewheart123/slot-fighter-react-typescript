@@ -25,6 +25,7 @@ body {
 }
 
 .spin-button-overlay {
+  cursor: pointer;
   color: #FF7A00;
   text-align: center;
   font-family: Permanent Marker;
