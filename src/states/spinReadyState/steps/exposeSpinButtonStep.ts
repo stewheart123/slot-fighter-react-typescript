@@ -4,7 +4,7 @@ import initializeApp from "../../../initializer";
 import floatingSignal from "../../../signal";
 import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
-import { AnimatedSprite, Graphics, Sprite } from "pixi.js";
+import { AnimatedSprite, Graphics, Sprite, Ticker } from "pixi.js";
 import assets from "../../../models/Assets";
 import { Texture } from "pixi.js";
 
@@ -14,18 +14,20 @@ export class ExposeSpinButtonStep implements IStep {
   
   public reRenderCallback = () => { // Use an arrow function here
     this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
-    console.log('rr');
   }
 
   public start(signal: Signal): void {
+    const tick = new Ticker();
    
     console.log(assets.symbolTextures[0]);
 
     const texturesArray =  [assets.symbolTextures[3], assets.symbolTextures[1] ,assets.symbolTextures[2]];
     const animatedSprite = new AnimatedSprite(texturesArray);
-    animatedSprite.animationSpeed = 10; // Adjust the speed as needed
+    animatedSprite.animationSpeed = 0.010; // Adjust the speed as needed
 animatedSprite.play(); // Start the animation
-animatedSprite.on('update', this.reRenderCallback);
+tick.add(this.reRenderCallback);
+
+
 
 // Step 4: Add the AnimatedSprite to the stage
 this.app.stage.addChild(animatedSprite);
@@ -74,6 +76,7 @@ this.app.stage.addChild(animatedSprite);
       // this.isComplete = true;
       // signal.dispatch();
       // console.log("floating signal - expose spin button..");
+      tick.start();
     });
   }
 }
