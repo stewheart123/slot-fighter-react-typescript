@@ -22,6 +22,15 @@ import symbolS from "../../../images/symbols/symbol-S.jpg";
 import symbolST from "../../../images/symbols/symbol-ST.jpg";
 import symbolT from "../../../images/symbols/symbol-T.jpg";
 import symbolW from "../../../images/symbols/symbol-W.jpg";
+import akuma0 from "../../../images/akuma/frame_0.png";
+import akuma1 from "../../../images/akuma/frame_1.png";
+import akuma2 from "../../../images/akuma/frame_2.png";
+import akuma3 from "../../../images/akuma/frame_3.png";
+import akuma4 from "../../../images/akuma/frame_4.png";
+import akuma5 from "../../../images/akuma/frame_5.png";
+import akuma6 from "../../../images/akuma/frame_6.png";
+import akuma7 from "../../../images/akuma/frame_7.png";
+
 import initializeApp from "../../../initializer";
 
 export class LoadScreenStep extends Step {
@@ -100,6 +109,14 @@ export class LoadScreenStep extends Step {
       { name: "symbol-s", url: symbolS },
       { name: "symbol-st", url: symbolST },
       { name: "symbol-w", url: symbolW },
+      {name: "akuma-0", url: akuma0},
+      {name: "akuma-1", url: akuma1},
+      {name: "akuma-2", url: akuma2},
+      {name: "akuma-3", url: akuma3},
+      {name: "akuma-4", url: akuma4},
+      {name: "akuma-5", url: akuma5},
+      {name: "akuma-6", url: akuma6},
+      {name: "akuma-7", url: akuma7},
     ]);
 
     assetLoader.onProgress.add(() => {
@@ -132,9 +149,21 @@ export class LoadScreenStep extends Step {
         Texture.from("symbol-w"),
       ];
 
+      const akuma = [
+        Texture.from("akuma-0"),
+        Texture.from("akuma-1"),
+        Texture.from("akuma-2"),
+        Texture.from("akuma-3"),
+        Texture.from("akuma-4"),
+        Texture.from("akuma-5"),
+        Texture.from("akuma-6"),
+        Texture.from("akuma-7"),
+      ]
+
       assets.textures = loadedTextures;
       assets.symbolTextures = symbolTextures;
       assets.animation = resources;
+      assets.akumaSprites = akuma;
     });
     assetLoader.onComplete.add(() => {
      resolve(); //something here?

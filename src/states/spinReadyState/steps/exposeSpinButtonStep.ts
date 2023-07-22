@@ -21,11 +21,24 @@ export class ExposeSpinButtonStep implements IStep {
    
     console.log(assets.symbolTextures[0]);
 
-    const texturesArray =  [assets.symbolTextures[3], assets.symbolTextures[1] ,assets.symbolTextures[2]];
+    const texturesArray =  [
+      assets.akumaSprites[0], 
+      assets.akumaSprites[1],
+      assets.akumaSprites[2],
+      assets.akumaSprites[3],
+      assets.akumaSprites[4],
+      assets.akumaSprites[5],
+      assets.akumaSprites[6],
+      assets.akumaSprites[7]
+    ];
     const animatedSprite = new AnimatedSprite(texturesArray);
-    animatedSprite.animationSpeed = 0.010; // Adjust the speed as needed
+    animatedSprite.height = 300;
+    animatedSprite.width = 300;
+    animatedSprite.position.set(20, this.app.view.height - 320);
+    animatedSprite.animationSpeed = 0.2; // Adjust the speed as needed
 animatedSprite.play(); // Start the animation
 tick.add(this.reRenderCallback);
+tick.start();
 
 
 
@@ -76,7 +89,7 @@ this.app.stage.addChild(animatedSprite);
       // this.isComplete = true;
       // signal.dispatch();
       // console.log("floating signal - expose spin button..");
-      tick.start();
+      tick.stop();
     });
   }
 }
