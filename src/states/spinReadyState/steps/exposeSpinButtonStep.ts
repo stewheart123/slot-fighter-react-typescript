@@ -25,6 +25,7 @@ export class ExposeSpinButtonStep implements IStep {
       // this.isComplete = true;
       // signal.dispatch();
       // console.log("floating signal - expose spin button..");
+      console.log('spin');
     });
   }
 }

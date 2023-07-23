@@ -17,6 +17,7 @@ import userInterface from "../../../models/UserInterface";
 import { updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
+import { ValueSprite} from "../../../models/ValueSprite";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -92,8 +93,9 @@ export class SetupBackgroundStep implements IStep {
 
       for (let y = 0; y < 4; y++) {
         let randomSymbolIndex = Math.floor(Math.random() * 10);
-        const tempSymbol = new Sprite();
+        const tempSymbol = new ValueSprite();
         tempSymbol.texture = assets.symbolTextures[randomSymbolIndex];
+        tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
         tempSymbol.width = 110;
         tempSymbol.height = 110;
         tempSymbol.position.set(x * 110, y * 110);
