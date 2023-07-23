@@ -6,7 +6,7 @@ import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
 import { AnimatedSprite, Graphics, Sprite, Ticker } from "pixi.js";
 import assets from "../../../models/Assets";
-import { Texture } from "pixi.js";
+
 
 export class ExposeSpinButtonStep implements IStep {
   public isComplete = false;
@@ -34,8 +34,9 @@ export class ExposeSpinButtonStep implements IStep {
     const animatedSprite = new AnimatedSprite(texturesArray);
     animatedSprite.height = 300;
     animatedSprite.width = 300;
-    animatedSprite.position.set(20, this.app.view.height - 320);
+    animatedSprite.position.set(this.app.view.width - 10, this.app.view.height - 320);
     animatedSprite.animationSpeed = 0.2; // Adjust the speed as needed
+    animatedSprite.scale.x *= -1; 
 animatedSprite.play(); // Start the animation
 tick.add(this.reRenderCallback);
 tick.start();
@@ -44,42 +45,7 @@ tick.start();
 
 // Step 4: Add the AnimatedSprite to the stage
 this.app.stage.addChild(animatedSprite);
-    // Get the data from the JSON file
-    // const spritesheetJsonData = JSON.parse(assets.animation.maiAnimationInf[0]);
-    // console.log(spritesheetJsonData);
 
-    // const animatedCapguy = new AnimatedSprite(spritesheetJsonData.animations["tile"]);
-
-    // // set speed, start playback and add it to the stage
-    // animatedCapguy.animationSpeed = 0.167; 
-    // animatedCapguy.play();
-    // this.app.stage.addChild(animatedCapguy);
-    // // Extract each frame from the sprite sheet and store them in the frames array
-    // for (let frameName in spritesheetJsonData["frames"]) {
-    //   const texture = Texture.from(frameName);
-    //   frames.push(texture);
-    // }
-
-    // // Create the sprite using the first frame of the animation
-    // const sprite = new AnimatedSprite(frames);
-
-    // // Set the animation speed and loop
-    // sprite.animationSpeed = 0.2;
-    // sprite.loop = true;
-
-    // // Position the sprite on the canvas
-    // sprite.x = instance.screen.width / 2 - sprite.width / 2;
-    // sprite.y = instance.screen.height / 2 - sprite.height / 2;
-
-    // // Start playing the animation
-    // sprite.play();
-    // instance.stage.addChild(sprite);
-
-    // const square = new Graphics();
-    // square.beginFill(0xff0000);
-    // square.drawRect(0, 0, 400, 400);
-    // square.endFill();
-    // this.app.stage.addChild(square);
     this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
 
     updateControls(true);
