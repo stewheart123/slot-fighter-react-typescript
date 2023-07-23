@@ -21,18 +21,62 @@ import liveComponents from "../../../models/liveComponents";
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
-  
+
+  public reRenderCallback = () => {
+    // Use an arrow function here
+    this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
+  };
+
   public start(signal: Signal): void {
+    const characterTicker = new Ticker();
+
+    const texturesArray = [
+      assets.akumaSprites[0],
+      assets.akumaSprites[1],
+      assets.akumaSprites[2],
+      assets.akumaSprites[3],
+      assets.akumaSprites[4],
+      assets.akumaSprites[5],
+      assets.akumaSprites[6],
+      assets.akumaSprites[7],
+    ];
+    const characterOne = new AnimatedSprite(texturesArray);
+    characterOne.height = 300;
+    characterOne.width = 300;
+    characterOne.position.set(10, this.app.view.height - 320);
+    characterOne.animationSpeed = 0.2; // Adjust the speed as needed
+    characterOne.play(); // Start the animation
+    const characterTwo = new AnimatedSprite(texturesArray);
+    characterTwo.height = 300;
+    characterTwo.width = 300;
+    characterTwo.position.set(
+      this.app.view.width - 10,
+      this.app.view.height - 320
+    );
+    characterTwo.animationSpeed = 0.2; // Adjust the speed as needed
+    characterTwo.scale.x *= -1;
+    characterTwo.play();
+    liveComponents.playerOne = characterOne;
+    liveComponents.playerTwo = characterTwo;
+
+    characterTicker.add(this.reRenderCallback);
+    characterTicker.start();
+
     playerHealth.playerOneHealth = 0;
     playerHealth.playerTwoHealth = 0;
-    updateState(true, "Ready?", "", true,
-     playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
-     -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
+    updateState(
+      true,
+      "Ready?",
+      "",
+      true,
+      playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+      -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth)
+    );
     userInterface.hasReadyBanner = true;
     const mainSceneContainer = new Container();
     mainSceneContainer.name = "main_scene_container";
     const stageOneBackground = new Sprite();
-    stageOneBackground.name ="stage_one_background"
+    stageOneBackground.name = "stage_one_background";
     const reelContainer = new Container();
     const reelFrameColour = new Graphics();
     reelFrameColour.name = "reel_frame";
@@ -40,15 +84,14 @@ export class SetupBackgroundStep implements IStep {
     reelFrameColour.drawRect(-10, -10, 110 * 4 + 20, 110 * 4 + 20);
     reelFrameColour.endFill();
     reelContainer.addChild(reelFrameColour);
-
     reelContainer.pivot.set(0.5, 0.5);
     reelContainer.position.set(this.app.screen.width / 2 - 110 * 2, 0);
+
     for (let x = 0; x < 4; x++) {
       const tempReel = new Container();
 
       for (let y = 0; y < 4; y++) {
         let randomSymbolIndex = Math.floor(Math.random() * 10);
-        //console.log(randomSymbolIndex);
         const tempSymbol = new Sprite();
         tempSymbol.texture = assets.symbolTextures[randomSymbolIndex];
         tempSymbol.width = 110;
@@ -71,11 +114,8 @@ export class SetupBackgroundStep implements IStep {
     mainSceneContainer.addChild(reelContainer);
     this.app.stage.addChild(mainSceneContainer);
 
-    // floatingSignal.add(() => {
-    //   // add a pixi game instruction in here, the floating signal canbe exported to the UI
-    //   console.log("floating signal");
-    // });
-
+    mainSceneContainer.addChild(characterOne);
+    mainSceneContainer.addChild(characterTwo);
     console.log(reelContainer.position.y);
     const reelContainerIntroAnimation = (): void => {
       reelContainer.position.y += 7;
@@ -83,44 +123,58 @@ export class SetupBackgroundStep implements IStep {
       if (reelContainer.position.y > -400) {
         playerHealth.playerOneHealth = 10;
         playerHealth.playerTwoHealth = 10;
-        updateState(true, "Ready?", "white", true, 
-        playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
-        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
+        updateState(
+          true,
+          "Ready?",
+          "white",
+          true,
+          playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+          -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth)
+        );
       }
       if (reelContainer.position.y > 70) {
         playerHealth.playerOneHealth = 10;
         playerHealth.playerTwoHealth = 10;
-        updateState(true, "Fight!", "red", true, 
-         playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
-        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
+        updateState(
+          true,
+          "Fight!",
+          "red",
+          true,
+          playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+          -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth)
+        );
         ticker.stop();
-        ticker.remove(reelContainerIntroAnimation)
+        ticker.remove(reelContainerIntroAnimation);
         ticker.add(reelContainerExitAnimation);
         ticker.start();
       }
     };
     const ticker = new Ticker();
     let elapsedTime = 0;
-    const reelContainerExitAnimation = (delta:number): void => {
+    const reelContainerExitAnimation = (delta: number): void => {
       elapsedTime += delta;
 
       // Check if 1 second has passed
       if (elapsedTime >= 100) {
-        console.log('ELAPSED');
+        console.log("ELAPSED");
         playerHealth.playerOneHealth = 10;
         playerHealth.playerTwoHealth = 10;
-        updateState(false, "Fight!", "red", true, 
-         playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
-        -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth));
+        updateState(
+          false,
+          "Fight!",
+          "red",
+          true,
+          playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
+          -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth)
+        );
         ticker.stop();
         this.isComplete = true;
         signal.dispatch();
-        console.log('end!');
+        console.log("end!");
       }
     };
 
     ticker.add(reelContainerIntroAnimation);
     ticker.start();
-    // how to set up an animation??
   }
 }
