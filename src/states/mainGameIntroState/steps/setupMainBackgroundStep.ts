@@ -38,16 +38,31 @@ export class SetupBackgroundStep implements IStep {
      // const jsondata = Loader.shared.resources["jsonData"].data;
       const textureImage = assets.akumaSprites[9];
      
-      console.log(mai['frames']['tile000.png']);
+      // console.log(mai['frames']['tile000.png']);
+      console.log(mai['animations']['tile']);
 
       animationFrame = new Texture(textureImage.baseTexture, new Rectangle(mai['frames']['tile000.png'].frame.x, mai['frames']['tile000.png'].frame.y, mai['frames']['tile000.png'].frame.h, mai['frames']['tile000.png'].frame.w));
      // console.log(jsondata['frames']['Explosion_Sequence_A 3.png']);
-      sp = new Sprite();
-      sp.texture = animationFrame;
-      a.addChild(sp);
-    
-    
-    
+      // sp = new Sprite();
+      // sp.texture = animationFrame;
+      // a.addChild(sp);
+
+
+
+      // Load the tile animation frames
+const tileFrames = mai['animations']['tile'];
+
+// Create a spritesheet from the frame names
+const spritesheet = new Spritesheet(assets.akumaSprites[9], mai); // Replace with your spritesheet image path
+
+// Load the spritesheet and parse the frame data
+spritesheet.parse(() => {
+  // Create an array of textures for the animation frames
+  const textures = tileFrames.map((frameName) => spritesheet.textures[frameName]);
+
+  // Create an AnimatedSprite using the textures
+  const characterOne = new AnimatedSprite(textures);
+   
     const characterTicker = new Ticker();
 
     let texturesArray = [
@@ -62,7 +77,8 @@ export class SetupBackgroundStep implements IStep {
       // assets.akumaSprites[6],
       // assets.akumaSprites[7],
     ];
-    const characterOne = new AnimatedSprite(texturesArray);
+    //const characterOne = new AnimatedSprite(texturesArray);
+    //const characterOne = new AnimatedSprite(animatedTile);
     characterOne.height = 300;
     characterOne.width = 300;
     characterOne.position.set(10, this.app.view.height - 320);
@@ -199,5 +215,8 @@ export class SetupBackgroundStep implements IStep {
 
     ticker.add(reelContainerIntroAnimation);
     ticker.start();
+     
+});
+
   }
 }
