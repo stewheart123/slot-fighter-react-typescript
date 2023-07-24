@@ -31,26 +31,12 @@ export class SetupBackgroundStep implements IStep {
   };
   
   public start(signal: Signal): void {
-    let animationFrame : any;
-    let sp: any;
-    let a = this.app.stage;
-   
+   // let animationFrame : any;   
      // const jsondata = Loader.shared.resources["jsonData"].data;
-      const textureImage = assets.akumaSprites[9];
-     
-      // console.log(mai['frames']['tile000.png']);
-      console.log(mai['animations']['tile']);
-
-      animationFrame = new Texture(textureImage.baseTexture, new Rectangle(mai['frames']['tile000.png'].frame.x, mai['frames']['tile000.png'].frame.y, mai['frames']['tile000.png'].frame.h, mai['frames']['tile000.png'].frame.w));
-     // console.log(jsondata['frames']['Explosion_Sequence_A 3.png']);
-      // sp = new Sprite();
-      // sp.texture = animationFrame;
-      // a.addChild(sp);
-
-
-
+     //  const textureImage = assets.akumaSprites[9];
       // Load the tile animation frames
-const tileFrames = mai['animations']['tile'];
+const tileFrames = mai['animations']['greet'];
+
 
 // Create a spritesheet from the frame names
 const spritesheet = new Spritesheet(assets.akumaSprites[9], mai); // Replace with your spritesheet image path
@@ -66,31 +52,34 @@ spritesheet.parse(() => {
     const characterTicker = new Ticker();
 
     let texturesArray = [
-      animationFrame,
-      animationFrame,
-      // assets.akumaSprites[0],
-      // assets.akumaSprites[1],
-      // assets.akumaSprites[2],
-      // assets.akumaSprites[3],
-      // assets.akumaSprites[4],
-      // assets.akumaSprites[5],
-      // assets.akumaSprites[6],
-      // assets.akumaSprites[7],
+      assets.akumaSprites[0],
+      assets.akumaSprites[1],
+      assets.akumaSprites[2],
+      assets.akumaSprites[3],
+      assets.akumaSprites[4],
+      assets.akumaSprites[5],
+      assets.akumaSprites[6],
+      assets.akumaSprites[7],
     ];
     //const characterOne = new AnimatedSprite(texturesArray);
     //const characterOne = new AnimatedSprite(animatedTile);
     characterOne.height = 300;
     characterOne.width = 300;
-    characterOne.position.set(10, this.app.view.height - 320);
+    characterOne.position.set(350, this.app.view.height - 450);
     characterOne.animationSpeed = 0.2; // Adjust the speed as needed
+    console.log(characterOne);
     characterOne.play(); // Start the animation
-    const characterTwo = new AnimatedSprite(texturesArray);
-    characterTwo.height = 300;
-    characterTwo.width = 300;
-    characterTwo.position.set(
-      this.app.view.width - 10,
-      this.app.view.height - 320
-    );
+    characterOne.scale.x *= 1.5;
+    characterOne.scale.y *= 1.5;
+    characterOne.scale.x *= -1;
+
+     const characterTwo = new AnimatedSprite(texturesArray);
+     characterTwo.height = 300;
+     characterTwo.width = 300;
+     characterTwo.position.set(
+       this.app.view.width - 10,
+       this.app.view.height - 320
+     );
     characterTwo.animationSpeed = 0.2; // Adjust the speed as needed
     characterTwo.scale.x *= -1;
     characterTwo.play();
