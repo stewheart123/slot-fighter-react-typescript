@@ -30,6 +30,7 @@ import akuma4 from "../../../images/akuma/frame_4.png";
 import akuma5 from "../../../images/akuma/frame_5.png";
 import akuma6 from "../../../images/akuma/frame_6.png";
 import akuma7 from "../../../images/akuma/frame_7.png";
+import mc from "../../../images/character/mc.png"
 
 import initializeApp from "../../../initializer";
 
@@ -117,6 +118,8 @@ export class LoadScreenStep extends Step {
       {name: "akuma-5", url: akuma5},
       {name: "akuma-6", url: akuma6},
       {name: "akuma-7", url: akuma7},
+      {name: "mc" , url: mc}
+      
     ]);
 
     assetLoader.onProgress.add(() => {
@@ -158,6 +161,8 @@ export class LoadScreenStep extends Step {
         Texture.from("akuma-5"),
         Texture.from("akuma-6"),
         Texture.from("akuma-7"),
+        Texture.from("mc"),
+        Texture.from("maiSpritesheet")
       ]
 
       assets.textures = loadedTextures;

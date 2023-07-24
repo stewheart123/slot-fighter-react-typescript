@@ -5,6 +5,7 @@ import {
   Container,
   Graphics,
   Loader,
+  Rectangle,
   Sprite,
   Spritesheet,
   Texture,
@@ -18,6 +19,7 @@ import { updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite} from "../../../models/ValueSprite";
+import mai from "../../../images/character/mai-sprites.json";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -27,19 +29,38 @@ export class SetupBackgroundStep implements IStep {
     // Use an arrow function here
     this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
   };
-
+  
   public start(signal: Signal): void {
+    let animationFrame : any;
+    let sp: any;
+    let a = this.app.stage;
+   
+     // const jsondata = Loader.shared.resources["jsonData"].data;
+      const textureImage = assets.akumaSprites[9];
+     
+      console.log(mai['frames']['tile000.png']);
+
+      animationFrame = new Texture(textureImage.baseTexture, new Rectangle(mai['frames']['tile000.png'].frame.x, mai['frames']['tile000.png'].frame.y, mai['frames']['tile000.png'].frame.h, mai['frames']['tile000.png'].frame.w));
+     // console.log(jsondata['frames']['Explosion_Sequence_A 3.png']);
+      sp = new Sprite();
+      sp.texture = animationFrame;
+      a.addChild(sp);
+    
+    
+    
     const characterTicker = new Ticker();
 
-    const texturesArray = [
-      assets.akumaSprites[0],
-      assets.akumaSprites[1],
-      assets.akumaSprites[2],
-      assets.akumaSprites[3],
-      assets.akumaSprites[4],
-      assets.akumaSprites[5],
-      assets.akumaSprites[6],
-      assets.akumaSprites[7],
+    let texturesArray = [
+      animationFrame,
+      animationFrame,
+      // assets.akumaSprites[0],
+      // assets.akumaSprites[1],
+      // assets.akumaSprites[2],
+      // assets.akumaSprites[3],
+      // assets.akumaSprites[4],
+      // assets.akumaSprites[5],
+      // assets.akumaSprites[6],
+      // assets.akumaSprites[7],
     ];
     const characterOne = new AnimatedSprite(texturesArray);
     characterOne.height = 300;
