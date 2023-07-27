@@ -10,12 +10,14 @@ const liveComponents: {
   reelContainer: undefined | any;
   playerOne: undefined | any;
   playerTwo: undefined | any;
+  mai: undefined | any;
 } = {
   loadScreen: undefined,
   splashScreen: undefined,
   reelContainer: undefined,
   playerOne: undefined,
   playerTwo: undefined,
+  mai: undefined,
 };
 
 export default liveComponents;
