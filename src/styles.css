@@ -55,7 +55,7 @@ body {
   align-items: center;
   position: absolute;
   top: 0;
-  left: calc(100vw - 1203px);
+  left: calc(50vw - 1040px / 2);
 }
 
 .energy-bar__ko {
@@ -122,7 +122,7 @@ body {
   background-color: #000000cf;
   width: 1056px;
   margin: auto;
-  left: calc(100vw - 1219px);
+  left: calc(50vw - 1056px / 2);
 }
 
 .content {
