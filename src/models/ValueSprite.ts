@@ -2,16 +2,19 @@ import { Sprite } from "pixi.js";
 
 interface ValueSpriteInterface {
   value: number;
+  symbolPosition: number[] | undefined;
   setValue: (textureName: string) => void;
 }
 
 export class ValueSprite extends Sprite implements ValueSpriteInterface {
   value: number; // Declare the 'value' property in the class
+  symbolPosition: number[] | undefined;
 
   constructor() {
     super();
 
     this.value = 0;
+    this.symbolPosition = undefined;
   }
 
   setValue(inputTexture: string): void {

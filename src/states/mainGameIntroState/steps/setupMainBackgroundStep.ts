@@ -4,10 +4,8 @@ import {
   AnimatedSprite,
   Container,
   Graphics,
-  Loader,
   Sprite,
   Spritesheet,
-  Texture,
   Ticker,
 } from "pixi.js";
 import initializeApp from "../../../initializer";
@@ -32,7 +30,7 @@ export class SetupBackgroundStep implements IStep {
   public start(signal: Signal): void {
     // Load the tile animation frames
     //cant use the assets version of a json file.... ever!
-    const tileFrames = assets.mai.spriteData.animations["greet"];
+    const tileFrames = assets.mai.spriteData.animations;
 
     // Create a spritesheet from the frame names
     if (assets.mai.spriteSheet) {
@@ -44,12 +42,17 @@ export class SetupBackgroundStep implements IStep {
       // Load the spritesheet and parse the frame data
       spritesheet.parse(() => {
         // Create an array of textures for the animation frames
-        const textures = tileFrames.map(
+        const greetTextures = tileFrames["greet"].map(
           (frameName: string | number) => spritesheet.textures[frameName]
         );
+        const maiReadyTextures = tileFrames["ready"].map(
+          (frameName: string | number) => spritesheet.textures[frameName]
+        );
+        liveComponents.maiGreet = greetTextures;
+        liveComponents.maiReady = maiReadyTextures;
 
         // Create an AnimatedSprite using the textures
-        const characterOne = new AnimatedSprite(textures);
+        const characterOne = new AnimatedSprite(liveComponents.maiGreet);
 
         const characterTicker = new Ticker();
 
@@ -72,9 +75,6 @@ export class SetupBackgroundStep implements IStep {
         characterOne.scale.y *= 2.5;
         characterOne.scale.x *= -1;
         liveComponents.mai = characterOne;
-        characterOne.onComplete = () => {
-          console.log("mai finished");
-        };
         const characterTwo = new AnimatedSprite(texturesArray);
         characterTwo.height = 300;
         characterTwo.width = 300;
@@ -119,15 +119,16 @@ export class SetupBackgroundStep implements IStep {
         for (let x = 0; x < 4; x++) {
           const tempReel = new Container();
 
-          for (let y = 0; y < 4; y++) {
+          for (let y = 0; y < 5; y++) {
             let randomSymbolIndex = Math.floor(Math.random() * 10);
             const tempSymbol = new ValueSprite();
+            tempSymbol.symbolPosition = [x, y];
             tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
             tempSymbol.texture = assets.symbolTextures[randomSymbolIndex];
-            tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
+            // tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
             tempSymbol.width = 110;
             tempSymbol.height = 110;
-            tempSymbol.position.set(x * 110, y * 110);
+            tempSymbol.position.set(x * 110, y * 110 - 110);
             tempReel.addChild(tempSymbol);
             tempReel.addChild(tempReel);
           }
@@ -147,7 +148,7 @@ export class SetupBackgroundStep implements IStep {
 
         mainSceneContainer.addChild(characterOne);
         mainSceneContainer.addChild(characterTwo);
-        console.log(reelContainer.position.y);
+
         const reelContainerIntroAnimation = (): void => {
           reelContainer.position.y += 7;
           this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
@@ -213,7 +214,6 @@ export class SetupBackgroundStep implements IStep {
             ticker.stop();
             this.isComplete = true;
             signal.dispatch();
-            console.log("end!");
           }
         };
 

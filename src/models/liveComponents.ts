@@ -4,6 +4,8 @@
  * Destroy the object and make the value undefined in this object
  */
 
+import { Ticker } from "pixi.js";
+
 const liveComponents: {
   loadScreen: undefined | any;
   splashScreen: undefined | any;
@@ -11,6 +13,11 @@ const liveComponents: {
   playerOne: undefined | any;
   playerTwo: undefined | any;
   mai: undefined | any;
+  maiSheetTextures: undefined | any;
+  reelAnimation: undefined | Ticker;
+  reelAnimationSet: boolean;
+  maiGreet: undefined | any;
+  maiReady: undefined | any;
 } = {
   loadScreen: undefined,
   splashScreen: undefined,
@@ -18,6 +25,11 @@ const liveComponents: {
   playerOne: undefined,
   playerTwo: undefined,
   mai: undefined,
+  maiSheetTextures: undefined,
+  reelAnimation: undefined,
+  reelAnimationSet: false,
+  maiGreet: undefined,
+  maiReady: undefined,
 };
 
 export default liveComponents;

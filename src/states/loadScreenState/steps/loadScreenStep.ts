@@ -149,7 +149,7 @@ export class LoadScreenStep extends Step {
         ];
         assets.textures = gameTextures;
         assets.symbolTextures = symbolTextures;
-        assets.animation = resources;
+        // assets.animation = resources;
         assets.akumaSprites = akuma;
         assets.mai.spriteData = maiAnimationInfo;
         assets.mai.spriteSheet = Texture.from("maiSpritesheet");

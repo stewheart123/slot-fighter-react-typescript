@@ -3,6 +3,7 @@ export class SpinReadyState {
     public spinReadySequence = new SpinReadySequence();
 
     public startSequence(): void {
+        console.log('srs initialise');
         this.spinReadySequence.initialiseSequence();
     }
 }
