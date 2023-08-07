@@ -4,9 +4,10 @@ import initializeApp from "../../../initializer";
 import floatingSignal from "../../../signal";
 import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
-import { AnimatedSprite, Graphics, Sprite, Spritesheet, Ticker } from "pixi.js";
+import { Graphics, Ticker, filters } from "pixi.js";
 import assets from "../../../models/Assets";
-import { ValueSprite } from "../../../models/ValueSprite";
+//import { ValueSprite } from "../../../models/ValueSprite";
+//var blurFilter = new filters.BlurFilter();
 
 export class SpinStep implements IStep {
   public isComplete = false;
@@ -17,6 +18,7 @@ export class SpinStep implements IStep {
   // };
 
   public start(signal: Signal): void {
+
     this.isComplete = false;
     if (liveComponents.reelAnimation === undefined) {
       const reelticker = new Ticker();
@@ -25,6 +27,8 @@ export class SpinStep implements IStep {
     const reelSymbols = liveComponents.reelContainer.children;
     let reelOne: any[] = [];
     for (let y = 0; y < reelSymbols.length; y++) {
+      //adds blur
+     // reelSymbols[1].children[y].filters = [blurFilter];
       reelOne.push(reelSymbols[1].children[y]);
     }
 
@@ -80,49 +84,55 @@ export class SpinStep implements IStep {
     const animateReel = (
       reel: any[],
       reelStartTargets: number[],
-      reelEndTargets: number[]
+      reelEndTargets: number[], 
+      reelDelay:number
     ) => {
-      for (let z = 0; z < reelOne.length; z++) {
-        if (reel[z].position.y < reelEndTargets[z]) {
-          reel[z].position.set(reel[z].position.x, reel[z].position.y + 10);
-        }
-        if (reel[z].position.y >= reelEndTargets[z]) {
-          reel[z].position.set(reel[z].position.x, reelStartTargets[z]);
-
-          if (z === 4) {
-            reel[4].texture = reel[3].texture;
-            reel[3].texture = reel[2].texture;
-            reel[2].texture = reel[1].texture;
-            reel[1].texture = reel[0].texture;
-            let randomSymbolIndex = Math.floor(Math.random() * 10);
-            reel[0].texture = assets.symbolTextures[randomSymbolIndex];
-            reel[0].setValue(reel[0].texture.textureCacheIds[0]);
-            moveCount++;
+      setTimeout(()=> {
+        for (let z = 0; z < reelOne.length; z++) {
+          if (reel[z].position.y < reelEndTargets[z]) {
+            reel[z].position.set(reel[z].position.x, reel[z].position.y + 10);
+          }
+          if (reel[z].position.y >= reelEndTargets[z]) {
+            reel[z].position.set(reel[z].position.x, reelStartTargets[z]);
+  
+            if (z === 4) {
+              reel[4].texture = reel[3].texture;
+              reel[3].texture = reel[2].texture;
+              reel[2].texture = reel[1].texture;
+              reel[1].texture = reel[0].texture;
+              let randomSymbolIndex = Math.floor(Math.random() * 10);
+              reel[0].texture = assets.symbolTextures[randomSymbolIndex];
+              reel[0].setValue(reel[0].texture.textureCacheIds[0]);
+              moveCount++;
+            }
           }
         }
-      }
-      if (moveCount === 30) {
-        if (liveComponents.reelAnimation) {
-          liveComponents.reelAnimation.stop();
+        if (moveCount === 30) {
+          //loop over contents and remove motion blur
+          if (liveComponents.reelAnimation) {
+            liveComponents.reelAnimation.stop();
+          }
+          updateControls(true);
+          moveCount = 0;
         }
-        updateControls(true);
-        moveCount = 0;
-      }
+
+      },reelDelay);
     };
 
+    //sets up the reel animation
     if (liveComponents.reelAnimationSet === false) {
       liveComponents.reelAnimationSet = true;
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelOne, symbolOneStartTargets, symbolOneEndTargets);
+        animateReel(reelOne, symbolOneStartTargets, symbolOneEndTargets, 0);
       });
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelTwo, symbolTwoStartTargets, symbolTwoEndTargets);
+        animateReel(reelTwo, symbolTwoStartTargets, symbolTwoEndTargets,0);
       });
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelThree, symbolThreeStartTargets, symbolThreeEndTargets);
+        animateReel(reelThree, symbolThreeStartTargets, symbolThreeEndTargets, 0);
       });
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelFour, symbolFourStartTargets, symbolFourEndTargets);
+        animateReel(reelFour, symbolFourStartTargets, symbolFourEndTargets, 0);
       });
     }
     liveComponents.reelAnimation.start();

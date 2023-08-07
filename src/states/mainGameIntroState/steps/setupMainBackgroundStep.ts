@@ -138,6 +138,15 @@ export class SetupBackgroundStep implements IStep {
         reelContainer.name = "reel_container";
         liveComponents.reelContainer = reelContainer;
 
+        //testing added mask
+        const redSq = new Graphics();
+        redSq.beginFill(0xff0000);
+        redSq.drawRect(10, 71, 900, 445);
+        redSq.endFill();
+        this.app.stage.addChild(redSq);
+        liveComponents.reelContainer.mask = redSq;
+        //end of
+
         stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
         stageOneBackground.width = this.app.screen.width;
         stageOneBackground.height = this.app.screen.height;
