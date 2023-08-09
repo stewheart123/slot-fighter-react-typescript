@@ -120,11 +120,14 @@ export class SetupBackgroundStep implements IStep {
           const tempReel = new Container();
 
           for (let y = 0; y < 5; y++) {
-            let randomSymbolIndex = Math.floor(Math.random() * 10);
+            //can be this instead of hard coded random number int ... assets.symbolTextures.length
+            let randomSymbolIndex = Math.floor(Math.random() * 4);
             const tempSymbol = new ValueSprite();
             tempSymbol.symbolPosition = [x, y];
-            tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
+            //removed old set value as its too expensive
+            //tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
             tempSymbol.texture = assets.symbolTextures[randomSymbolIndex];
+            tempSymbol.value = randomSymbolIndex;
             // tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
             tempSymbol.width = 110;
             tempSymbol.height = 110;
@@ -142,7 +145,6 @@ export class SetupBackgroundStep implements IStep {
         const redSq = new Graphics();
         redSq.beginFill(0xff0000);
         redSq.drawRect(10, 71, 900, 445);
-        redSq.endFill();
         this.app.stage.addChild(redSq);
         liveComponents.reelContainer.mask = redSq;
         //end of

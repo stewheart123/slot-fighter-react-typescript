@@ -9,12 +9,14 @@ import { SplashScreenState } from "../states/splashScreenState/splashScreenState
 import { MainGameIntroState } from "../states/mainGameIntroState/mainGameIntroState";
 import { SpinReadyState } from "../states/spinReadyState/spinReadyState";
 import { SpinState } from "../states/spinState/spinState";
+import {SpinResultState} from "../states/spinResultState/spinResultState";
 
 const loadingScreenState = new LoadingScreenState();
 const splashScreenState = new SplashScreenState();
 const mainGameIntroState = new MainGameIntroState();
 const spinReadyState = new SpinReadyState();
 const spinState = new SpinState();
+const spinResultState = new SpinResultState();
 
 const stateChanger = {
   stateChange: changeTheState.bind(this),
@@ -24,15 +26,15 @@ function changeTheState(stateId: string) {
   // console.log(`change state ${stateId}`);
   switch (stateId) {
     case "loadingScreenState":
-      console.log("loadingScreenState");
+      //console.log("loadingScreenState");
       loadingScreenState.startSequence();
       break;
     case "splashScreenState":
-      console.log("splashScreenState");
+      //console.log("splashScreenState");
       splashScreenState.startSequence();
       break;
     case "mainGameIntroState":
-      console.log("mainGameIntroState");
+      //console.log("mainGameIntroState");
       mainGameIntroState.startSequence();
       break;
     case "spinState":
@@ -43,6 +45,9 @@ function changeTheState(stateId: string) {
      //  console.log("spinReadyState");
       spinReadyState.startSequence();
       break;
+    case "spinResultState":
+      console.log("spin result state");
+    spinResultState.startSequence();
     default:
       console.log("default reached");
       break;

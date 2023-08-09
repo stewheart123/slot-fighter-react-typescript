@@ -40,35 +40,20 @@ export class ValueSprite extends Sprite implements ValueSpriteInterface {
       case "symbol-r":
         this.value = 7;
         break;
-      case "symbol-r":
+          case "symbol-rt":
         this.value = 8;
         break;
-      case "symbol-r":
+      case "symbol-s":
         this.value = 9;
         break;
-      case "symbol-r":
+      case "symbol-st":
         this.value = 10;
         break;
-      case "symbol-r":
+      case "symbol-t":
         this.value = 11;
         break;
-      case "symbol-r":
-        this.value = 12;
-        break;
-      case "symbol-rt":
-        this.value = 13;
-        break;
-      case "symbol-s":
-        this.value = 14;
-        break;
-      case "symbol-st":
-        this.value = 15;
-        break;
-      case "symbol-t":
-        this.value = 16;
-        break;
       case "symbol-w":
-        this.value = 17;
+        this.value = 12;
         break;
       default:
         this.value = 0;

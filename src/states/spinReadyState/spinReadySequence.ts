@@ -12,8 +12,6 @@ export class SpinReadySequence implements ISequence {
   sequenceSignal: Signal | undefined = undefined;
 
   initialiseSequence(): void {
-    console.log('srs');
-    console.log(this.sequenceSignal);
     if(this.sequenceSignal === undefined) {
       this.sequenceSignal = new Signal();
       this.sequenceSignal.add(() => {
