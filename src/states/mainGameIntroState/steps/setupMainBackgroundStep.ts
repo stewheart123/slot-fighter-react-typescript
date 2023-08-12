@@ -10,13 +10,11 @@ import {
 } from "pixi.js";
 import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
-import floatingSignal from "../../../signal";
 import userInterface from "../../../models/UserInterface";
 import { updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite } from "../../../models/ValueSprite";
-import mai from "../../../images/character/mai-sprites.json";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -39,7 +37,7 @@ export class SetupBackgroundStep implements IStep {
         assets.mai.spriteData
       ); // Replace with your spritesheet image path
 
-      // Load the spritesheet and parse the frame data
+      // Load the spritesheet and parse the frame data - parse all animations right here only
       spritesheet.parse(() => {
         // Create an array of textures for the animation frames
         const greetTextures = tileFrames["greet"].map(
@@ -124,7 +122,7 @@ export class SetupBackgroundStep implements IStep {
             let randomSymbolIndex = Math.floor(Math.random() * 4);
             const tempSymbol = new ValueSprite();
             tempSymbol.symbolPosition = [x, y];
-            //removed old set value as its too expensive
+            //removed old 'setvalue' as its too expensive to process
             //tempSymbol.setValue(tempSymbol.texture.textureCacheIds[0]);
             tempSymbol.texture = assets.symbolTextures[randomSymbolIndex];
             tempSymbol.value = randomSymbolIndex;
@@ -141,13 +139,12 @@ export class SetupBackgroundStep implements IStep {
         reelContainer.name = "reel_container";
         liveComponents.reelContainer = reelContainer;
 
-        //testing added mask
+        //REEL MASK
         const redSq = new Graphics();
         redSq.beginFill(0xff0000);
         redSq.drawRect(10, 71, 900, 445);
         this.app.stage.addChild(redSq);
         liveComponents.reelContainer.mask = redSq;
-        //end of
 
         stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
         stageOneBackground.width = this.app.screen.width;
@@ -207,7 +204,6 @@ export class SetupBackgroundStep implements IStep {
 
           // Check if 1 second has passed
           if (elapsedTime >= 100) {
-            console.log("ELAPSED");
             playerHealth.playerOneHealth = 10;
             playerHealth.playerTwoHealth = 10;
             updateState(

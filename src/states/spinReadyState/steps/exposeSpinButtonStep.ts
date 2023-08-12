@@ -6,6 +6,7 @@ import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
 import { AnimatedSprite, Graphics, Sprite, Spritesheet, Ticker } from "pixi.js";
 import assets from "../../../models/Assets";
+import turnModel from "../../../models/TurnModel";
 
 export class ExposeSpinButtonStep implements IStep {
   public isComplete = false;
@@ -16,6 +17,7 @@ export class ExposeSpinButtonStep implements IStep {
   // console.log('rcb');
   // };
   public start(signal: Signal): void {
+    console.log(turnModel.playerTurn);
     this.isComplete = false;
 
     liveComponents.mai.textures = liveComponents.maiReady;

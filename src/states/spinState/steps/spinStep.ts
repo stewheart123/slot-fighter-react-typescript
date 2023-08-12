@@ -4,18 +4,12 @@ import initializeApp from "../../../initializer";
 import floatingSignal from "../../../signal";
 import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
-import { Graphics, Ticker, filters } from "pixi.js";
+import { Ticker } from "pixi.js";
 import assets from "../../../models/Assets";
-//import { ValueSprite } from "../../../models/ValueSprite";
-//var blurFilter = new filters.BlurFilter();
 
 export class SpinStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
-  // public reRenderCallback = () => {
-  // // Use an arrow function here
-  // this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
-  // };
 
   public start(signal: Signal): void {
     this.isComplete = false;

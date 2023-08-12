@@ -1,9 +1,10 @@
+import turnModel from "../../models/TurnModel";
 import { SpinReadySequence } from "./spinReadySequence";
 export class SpinReadyState {
     public spinReadySequence = new SpinReadySequence();
 
     public startSequence(): void {
-        console.log('srs initialise');
+        turnModel.switchPlayer();
         this.spinReadySequence.initialiseSequence();
     }
 }
