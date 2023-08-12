@@ -1,23 +1,9 @@
 import { IStep } from "../../../IStep";
 import { Signal } from "signals.js";
-// import {
-//   AnimatedSprite,
-//   Container,
-//   Graphics,
-//   Sprite,
-//   Spritesheet,
-//   Ticker,
-// } from "pixi.js";
 import initializeApp from "../../../initializer";
-// import assets from "../../../models/Assets";
-// import floatingSignal from "../../../signal";
-// import userInterface from "../../../models/UserInterface";
-// import { updateState } from "../../../index";
-// import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { SpinResultSequence } from "../spinResultSequence";
 import stateChanger from "../../../stateChanger/stateChanger";
-// import turnModel from "../../../models/TurnModel";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
@@ -156,11 +142,10 @@ export class SpinResultStep implements IStep {
         let first = this.winLines[z].plot[p][0];
         let second = this.winLines[z].plot[p][1];
         this.winLines[z].symbolArray.push(
-          //liveComponents.reelContainer.children[this.winLines[z].plot[0]].children[this.winLines[z].plot[1]].value
           liveComponents.reelContainer.children[first + 1].children[second]
             .value
         );
-        //  console.log(this.winLines[z].symbolArray);
+        
       }
       this.CheckWinLine(
         this.winLines[z].symbolArray,
@@ -188,7 +173,6 @@ export class SpinResultStep implements IStep {
   }
 
   //this checks all symbols - I need to make a simple - if 4 or 3 in a row are same in array, say win..
-
   private CheckWinLine(symbols: any[], winMessage: string) {
     var isAWin = false;
     for (let i = 0; i < symbols.length; i++) {
