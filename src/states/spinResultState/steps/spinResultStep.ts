@@ -162,27 +162,27 @@ export class SpinResultStep implements IStep {
         );
       //  console.log(this.winLines[z].symbolArray);
       }
+      this.CheckWinLine(this.winLines[z].symbolArray, this.winLines[z].descripton);
     }
-    console.log(this.winLines);
+   // console.log(this.winLines);
 
   }
 
   //this checks all symbols - I need to make a simple - if 4 or 3 in a row are same in array, say win..
 
-
-
-  // private CheckWinLine(symbols : ValueSprite[]) {
-  //   for(let i = 0; i < symbols.length; i++ ) {
-  //     console.log(symbols[i].value);
-  //     if()
-  //   }
-  // }
-
-  private CheckReels(reels: any, startIndex:number, reelPositionStart:number) {
-    for(let x = startIndex; x < reels.children.length; x++) {
-       for(let y = reelPositionStart; y < reels.children[1].children.length; y++ ) {
-         console.log(reels.children[x].children[y].value);
-       }
+  private CheckWinLine(symbols : any[], winMessage: string) {
+    var isAWin = false;
+    for(let i = 0; i < symbols.length; i++ ) {
+      
+      if(symbols[0] === symbols[1] && symbols[2] === symbols[3] && symbols[3] === symbols[0] ) {
+        isAWin = true;
+      }
+    }
+    if(isAWin) {
+      //add in logic that stores the winline into a result animation.
+      console.log(winMessage);
     }
   }
+
+  
 }

@@ -18,7 +18,6 @@ export class SpinStep implements IStep {
   // };
 
   public start(signal: Signal): void {
-
     this.isComplete = false;
     if (liveComponents.reelAnimation === undefined) {
       const reelticker = new Ticker();
@@ -28,7 +27,7 @@ export class SpinStep implements IStep {
     let reelOne: any[] = [];
     for (let y = 0; y < reelSymbols.length; y++) {
       //adds blur
-     // reelSymbols[1].children[y].filters = [blurFilter];
+      // reelSymbols[1].children[y].filters = [blurFilter];
       reelOne.push(reelSymbols[1].children[y]);
     }
 
@@ -84,63 +83,58 @@ export class SpinStep implements IStep {
     const animateReel = (
       reel: any[],
       reelStartTargets: number[],
-      reelEndTargets: number[], 
-      reelDelay:number
+      reelEndTargets: number[],
+      reelDelay: number
     ) => {
-     
-        for (let z = 0; z < reelOne.length; z++) {
-          if (reel[z].position.y < reelEndTargets[z]) {
-            reel[z].position.set(reel[z].position.x, reel[z].position.y + 10);
-          }
-          if (reel[z].position.y >= reelEndTargets[z]) {
-            reel[z].position.set(reel[z].position.x, reelStartTargets[z]);
-  
-            if (z === 4) {
-              reel[4].texture = reel[3].texture;
-              reel[4].value = reel[3].value;
-              reel[3].texture = reel[2].texture;
-              reel[3].value = reel[2].value;
-              
-              reel[2].texture = reel[1].texture;
-              reel[2].value = reel[1].value;
-              reel[1].texture = reel[0].texture;
-              reel[1].value = reel[0].value;
-              //12 is the number before inserting the next matirx of pre-defined numbers..//can be this instead of hard coded random number int ... assets.symbolTextures.length.
-              let randomSymbolIndex = Math.floor(Math.random() * 5);
-              console.log('cl');
-              // if(moveCount < 12) {
-              //   //might need to add value in below this line?
-              //   reel[0].setValue(reel[0].texture.textureCacheIds[0]);
-              // } else {
-              //   //this is where we can replace the random number with a number from our result card...
-              //   reel[0].texture = assets.symbolTextures[0];
-              // }
-              
-               reel[0].texture = assets.symbolTextures[randomSymbolIndex];
-               reel[0].value = randomSymbolIndex;
-           
-              //set value is so slow- by the time it gets the figure its out of sync.. make an easier way of setting value....
-              // reel[0].setValue(reel[0].texture.textureCacheIds[0]);
-  
-              moveCount++;
-            }
-          }
+      for (let z = 0; z < reelOne.length; z++) {
+        if (reel[z].position.y < reelEndTargets[z]) {
+          reel[z].position.set(reel[z].position.x, reel[z].position.y + 20);
         }
-        if (moveCount === 30) {
-          //loop over contents and remove motion blur
-          if (liveComponents.reelAnimation) {
-            moveCount = 0;
-            liveComponents.reelAnimation.stop();
-            updateControls(false);
-            setTimeout(() => {
-              this.isComplete = true;
-              signal.dispatch();
-            },1000);
-          }
-          
-        }
+        if (reel[z].position.y >= reelEndTargets[z]) {
+          reel[z].position.set(reel[z].position.x, reelStartTargets[z]);
 
-     
+          if (z === 4) {
+            reel[4].texture = reel[3].texture;
+            reel[4].value = reel[3].value;
+            reel[3].texture = reel[2].texture;
+            reel[3].value = reel[2].value;
+
+            reel[2].texture = reel[1].texture;
+            reel[2].value = reel[1].value;
+            reel[1].texture = reel[0].texture;
+            reel[1].value = reel[0].value;
+            //12 is the number before inserting the next matirx of pre-defined numbers..//can be this instead of hard coded random number int ... assets.symbolTextures.length.
+            let randomSymbolIndex = Math.floor(Math.random() * 2);
+            // if(moveCount < 12) {
+            //   //might need to add value in below this line?
+            //   reel[0].setValue(reel[0].texture.textureCacheIds[0]);
+            // } else {
+            //   //this is where we can replace the random number with a number from our result card...
+            //   reel[0].texture = assets.symbolTextures[0];
+            // }
+
+            reel[0].texture = assets.symbolTextures[randomSymbolIndex];
+            reel[0].value = randomSymbolIndex;
+
+            //set value is so slow- by the time it gets the figure its out of sync.. make an easier way of setting value....
+            // reel[0].setValue(reel[0].texture.textureCacheIds[0]);
+
+            moveCount++;
+          }
+        }
+      }
+      if (moveCount === 30) {
+        //loop over contents and remove motion blur
+        if (liveComponents.reelAnimation) {
+          moveCount = 0;
+          liveComponents.reelAnimation.stop();
+          updateControls(false);
+          setTimeout(() => {
+            this.isComplete = true;
+            signal.dispatch();
+          }, 400);
+        }
+      }
     };
 
     //sets up the reel animation
@@ -150,10 +144,15 @@ export class SpinStep implements IStep {
         animateReel(reelOne, symbolOneStartTargets, symbolOneEndTargets, 0);
       });
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelTwo, symbolTwoStartTargets, symbolTwoEndTargets,0);
+        animateReel(reelTwo, symbolTwoStartTargets, symbolTwoEndTargets, 0);
       });
       liveComponents.reelAnimation.add(() => {
-        animateReel(reelThree, symbolThreeStartTargets, symbolThreeEndTargets, 0);
+        animateReel(
+          reelThree,
+          symbolThreeStartTargets,
+          symbolThreeEndTargets,
+          0
+        );
       });
       liveComponents.reelAnimation.add(() => {
         animateReel(reelFour, symbolFourStartTargets, symbolFourEndTargets, 0);
@@ -167,7 +166,7 @@ export class SpinStep implements IStep {
       // // add a pixi game instruction in here, the floating signal canbe exported to the UI
       // this.isComplete = true;
       // signal.dispatch();
-    //  signal.removeAll();
+      //  signal.removeAll();
     });
   }
 }
