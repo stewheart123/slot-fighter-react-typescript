@@ -30,12 +30,12 @@ export class SpinResultSequence implements ISequence {
         return;
       }
     }
-    this.stateChange();
+   // this.stateChange();
   }
 
   stateChange(): void {
     this.resetStepsComplete();
-    stateChanger.stateChange("spinResultState");
+   // stateChanger.stateChange("spinResultState");
   }
   resetStepsComplete(): void {
     for (let x = 0; x < this.steps.length; x++) {

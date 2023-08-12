@@ -17,10 +17,14 @@ import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite } from "../../../models/ValueSprite";
 import mai from "../../../images/character/mai-sprites.json";
+import { SpinResultSequence } from "../spinResultSequence";
+import stateChanger from "../../../stateChanger/stateChanger";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
   public app = initializeApp();
+  public hasWon = false;
+  
 
   /**
    * -look at values at various win lines
@@ -145,6 +149,8 @@ export class SpinResultStep implements IStep {
     ];
 
   public start(signal: Signal): void {
+    const spinResultSequence = new SpinResultSequence();
+    
     console.log('in spin result step');
    // this.CheckReels(liveComponents.reelContainer, 1,1);
     //console.log(liveComponents.reelContainer);
@@ -165,7 +171,23 @@ export class SpinResultStep implements IStep {
       this.CheckWinLine(this.winLines[z].symbolArray, this.winLines[z].descripton);
     }
    // console.log(this.winLines);
+  //  this.isComplete = true;
+    spinResultSequence.stateChange(); // might not need to reset here...
+   if(this.hasWon) {
+    stateChanger.stateChange("attackState");
+   } else {
+    stateChanger.stateChange("spinReadyState");
+   }
+   this.hasWon = false;
+    this.ResetSymbolArrays();
+  }
 
+  private ResetSymbolArrays() {
+    for(let z = 0; z < this.winLines.length; z++) {
+      for(let p = 0; p < 4; p++) {
+        this.winLines[z].symbolArray = [];
+      }
+    }
   }
 
   //this checks all symbols - I need to make a simple - if 4 or 3 in a row are same in array, say win..
@@ -181,8 +203,7 @@ export class SpinResultStep implements IStep {
     if(isAWin) {
       //add in logic that stores the winline into a result animation.
       console.log(winMessage);
+      this.hasWon = true;
     }
   }
-
-  
 }
