@@ -46,11 +46,11 @@ function changeTheState(stateId: string) {
       spinReadyState.startSequence();
       break;
     case "spinResultState":
-      console.log("spin result state");
+   //   console.log("spin result state");
     spinResultState.startSequence();
       break;
     case "attackState":
-      console.log("attack animation state reached!");
+     // console.log("attack animation state reached!");
       changeTheState("spinReadyState");
       break;
     default:

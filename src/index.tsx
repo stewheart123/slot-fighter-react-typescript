@@ -5,7 +5,6 @@ import floatingSignal from "./signal";
 import "./styles.css";
 import { useState } from "react";
 import UserInterfaceChanger from "./components/UserInterfaceChanger";
-// import energyBar from "./components/energyBar";
 import EnergyBar from "./components/energyBar";
 
 let setModelValue:
@@ -24,32 +23,32 @@ let setEnergyBarVisible:
   | React.Dispatch<React.SetStateAction<boolean>>
   | undefined;
 
-  let setEnergyBarLeft:
-  | React.Dispatch<React.SetStateAction<number>>
-  | undefined;
-  
-  let setEnergyBarRight:
-  | React.Dispatch<React.SetStateAction<number>>
-  | undefined;
+let setEnergyBarLeft: React.Dispatch<React.SetStateAction<number>> | undefined;
 
-  let setSpinButtonVisible:
+let setEnergyBarRight: React.Dispatch<React.SetStateAction<number>> | undefined;
+
+let setSpinButtonVisible:
   | React.Dispatch<React.SetStateAction<boolean>>
   | undefined;
 
-  
 export function updateControls(spinButtonVisible: boolean) {
-if(setSpinButtonVisible) {
-  setSpinButtonVisible(spinButtonVisible);
+  if (setSpinButtonVisible) {
+    setSpinButtonVisible(spinButtonVisible);
+  }
 }
+
+export function updateHealthBar(playerOneHealthInput : number , playerTwoHealthInput : number) {
+  if(setEnergyBarRight && setEnergyBarLeft) {
+    setEnergyBarLeft(playerOneHealthInput);
+    setEnergyBarRight(playerTwoHealthInput);
+  }
 }
 
 export function updateState(
   newValue: boolean,
   message: string,
   colourClass: string,
-  energyBarVisible: boolean,
-  energyBarLeft: number,
-  energyBarRight: number
+  energyBarVisible: boolean
 ) {
   if (setModelValue) {
     setModelValue(newValue);
@@ -63,12 +62,6 @@ export function updateState(
   if (setEnergyBarVisible) {
     setEnergyBarVisible(energyBarVisible);
   }
-  if(setEnergyBarLeft) {
-    setEnergyBarLeft(energyBarLeft);
-  }
-  if(setEnergyBarRight) {
-    setEnergyBarRight(energyBarRight);
-  }
 }
 
 const App = () => {
@@ -80,11 +73,10 @@ const App = () => {
   const [energyBarVisibleValue, internalSetEnergyBar] =
     useState<boolean>(false);
 
-    const [energyLeftValue, internalSetEnergyLeft] =  useState<number>(460);
-    const [energyRightValue, internalSetEnergyRight] =  useState<number>(-460);
-
-    const [spinButtonVisibility, internalSetSpinButtonVisibility] = useState<boolean>(false);
-  
+  const [energyLeftValue, internalSetEnergyLeft] = useState<number>(460);
+  const [energyRightValue, internalSetEnergyRight] = useState<number>(-460);
+  const [spinButtonVisibility, internalSetSpinButtonVisibility] =
+    useState<boolean>(false);
 
   setModelValue = internalSetModelValue;
   setMessage = internalSetMessage;
@@ -121,15 +113,18 @@ const App = () => {
         />
       ) : undefined}
 
-      {spinButtonVisibility ? <div
-        className="spin-button-overlay"
-        onClick={() => {
-          floatingSignal.dispatch();
-        }}
-      >
-        SPIN
-      </div> : <></> }
-      
+      {spinButtonVisibility ? (
+        <div
+          className="spin-button-overlay"
+          onClick={() => {
+            floatingSignal.dispatch();
+          }}
+        >
+          SPIN
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

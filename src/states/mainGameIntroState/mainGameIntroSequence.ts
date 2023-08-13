@@ -24,6 +24,7 @@ export class MainGameIntroSequence implements ISequence {
   }
 
   startSequence(): void {
+   // console.log('main intro start');
     for (let x = 0; x < this.steps.length; x++) {
       if (this.steps[x].isComplete === false) {
         this.steps[x].start(this.sequenceSignal);

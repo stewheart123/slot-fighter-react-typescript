@@ -11,7 +11,7 @@ import {
 import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
 import userInterface from "../../../models/UserInterface";
-import { updateState } from "../../../index";
+import { updateHealthBar, updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite } from "../../../models/ValueSprite";
@@ -89,16 +89,16 @@ export class SetupBackgroundStep implements IStep {
         characterTicker.add(this.reRenderCallback);
         characterTicker.start();
 
-        playerHealth.playerOneHealth = 0;
-        playerHealth.playerTwoHealth = 0;
+        playerHealth.playerOneHealth = 463;
+        playerHealth.playerTwoHealth = -463;
         updateState(
           true,
           "Ready?",
           "",
-          true,
-          playerHealth.calculateHealthBarPosition(playerHealth.playerOneHealth),
-          -playerHealth.calculateHealthBarPosition(playerHealth.playerTwoHealth)
+          true
         );
+
+        updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
         userInterface.hasReadyBanner = true;
         const mainSceneContainer = new Container();
         mainSceneContainer.name = "main_scene_container";
@@ -161,36 +161,25 @@ export class SetupBackgroundStep implements IStep {
           reelContainer.position.y += 7;
           this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
           if (reelContainer.position.y > -400) {
-            playerHealth.playerOneHealth = 10;
-            playerHealth.playerTwoHealth = 10;
+            // playerHealth.playerOneHealth = 0;
+            // playerHealth.playerTwoHealth = 0;
             updateState(
               true,
               "Ready?",
               "white",
-              true,
-              playerHealth.calculateHealthBarPosition(
-                playerHealth.playerOneHealth
-              ),
-              -playerHealth.calculateHealthBarPosition(
-                playerHealth.playerTwoHealth
-              )
+              true
             );
           }
           if (reelContainer.position.y > 70) {
-            playerHealth.playerOneHealth = 10;
-            playerHealth.playerTwoHealth = 10;
+             playerHealth.playerOneHealth = 0;
+             playerHealth.playerTwoHealth = 0;
             updateState(
               true,
               "Fight!",
               "red",
               true,
-              playerHealth.calculateHealthBarPosition(
-                playerHealth.playerOneHealth
-              ),
-              -playerHealth.calculateHealthBarPosition(
-                playerHealth.playerTwoHealth
-              )
             );
+            updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
             ticker.stop();
             ticker.remove(reelContainerIntroAnimation);
             ticker.add(reelContainerExitAnimation);
@@ -204,19 +193,14 @@ export class SetupBackgroundStep implements IStep {
 
           // Check if 1 second has passed
           if (elapsedTime >= 100) {
-            playerHealth.playerOneHealth = 10;
-            playerHealth.playerTwoHealth = 10;
+            // playerHealth.playerOneHealth = -100;
+            // playerHealth.playerTwoHealth = 10;
+           // console.log('player set')
             updateState(
               false,
               "Fight!",
               "red",
-              true,
-              playerHealth.calculateHealthBarPosition(
-                playerHealth.playerOneHealth
-              ),
-              -playerHealth.calculateHealthBarPosition(
-                playerHealth.playerTwoHealth
-              )
+              true
             );
             ticker.stop();
             this.isComplete = true;

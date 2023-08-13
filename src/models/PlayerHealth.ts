@@ -1,3 +1,5 @@
+//player 1 zero = full , 463 = empty
+//player 2 - zero = full, -463 = empty 
 const playerHealth = {
     playerOneHealth : undefined as undefined | number,
     playerTwoHealth : undefined as undefined | number,

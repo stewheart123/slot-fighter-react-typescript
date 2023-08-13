@@ -52,7 +52,7 @@ export class StepSplashScreen implements IStep {
     insertCoinButton.interactive = true;
     insertCoinButton.cursor = "pointer";
     insertCoinButton.on("pointerdown", () => {
-      console.log("coin inserted");
+    //  console.log("coin inserted");
       animationOn = false;
       insertCoinButton.visible = true;
       creditsText.text = "CREDITS 01";
