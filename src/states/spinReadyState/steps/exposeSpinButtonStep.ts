@@ -17,7 +17,6 @@ export class ExposeSpinButtonStep implements IStep {
   // };
   public start(signal: Signal): void {
     // reset the animation player contents
-    console.log('animation player reset');
      animationPlayer.animationSequence = [];
      animationPlayer.damageAmounts = [];
      animationPlayer.playerName = turnModel.playerTurn;

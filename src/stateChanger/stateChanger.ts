@@ -53,6 +53,9 @@ function changeTheState(stateId: string) {
      // console.log("attack animation state reached!");
       changeTheState("spinReadyState");
       break;
+    case "gameOverState":
+      console.log('game Over State');
+      break;
     default:
       console.log("default reached");
       break;

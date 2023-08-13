@@ -197,7 +197,12 @@ export class SpinResultStep implements IStep {
     }
     setTimeout(() => {
       console.log('reached end');
-      stateChanger.stateChange("attackState");
+      console.log(playerHealth.checkWin());
+      if(playerHealth.checkWin() === undefined) {
+        stateChanger.stateChange("attackState");
+      } else {
+        stateChanger.stateChange("gameOverState");
+      }
 
     },2100 * animationPlayer.animationSequence.length);
   }
@@ -215,7 +220,7 @@ export class SpinResultStep implements IStep {
       }
     }
     if (isAWin) {
-      animationPlayer.damageAmounts.push((symbols[0]+10) * 3);
+      animationPlayer.damageAmounts.push((symbols[0]+10) * 5);
       animationPlayer.reelPlots.push(positioning);
       animationPlayer.animationSequence.push(symbols[0]);
       this.hasWon = true;
