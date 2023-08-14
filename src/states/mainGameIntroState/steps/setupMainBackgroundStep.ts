@@ -7,6 +7,7 @@ import {
   Sprite,
   Spritesheet,
   Ticker,
+  filters,
 } from "pixi.js";
 import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
@@ -132,6 +133,7 @@ export class SetupBackgroundStep implements IStep {
             tempSymbol.position.set(x * 110, y * 110 - 110);
             tempReel.addChild(tempSymbol);
             tempReel.addChild(tempReel);
+
           }
           reelContainer.addChild(tempReel);
         }
@@ -146,6 +148,7 @@ export class SetupBackgroundStep implements IStep {
         this.app.stage.addChild(redSq);
         liveComponents.reelContainer.mask = redSq;
 
+      
         stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
         stageOneBackground.width = this.app.screen.width;
         stageOneBackground.height = this.app.screen.height;

@@ -20,8 +20,6 @@ export class SpinStep implements IStep {
     const reelSymbols = liveComponents.reelContainer.children;
     let reelOne: any[] = [];
     for (let y = 0; y < reelSymbols.length; y++) {
-      //adds blur
-      // reelSymbols[1].children[y].filters = [blurFilter];
       reelOne.push(reelSymbols[1].children[y]);
     }
 
