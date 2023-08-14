@@ -30,12 +30,22 @@ export class ExposeSpinButtonStep implements IStep {
     updateControls(true);
 
     floatingSignal.removeAll();
-    floatingSignal.add(() => {
-      // add a pixi game instruction in here, the floating signal canbe exported to the UI
-      this.isComplete = true;
-      signal.dispatch();
-      updateControls(false);
-     // signal.removeAll();
-    });
+    if(turnModel.playerTurn == "playerOne") {
+      floatingSignal.add(() => {
+        // add a pixi game instruction in here, the floating signal canbe exported to the UI
+        this.isComplete = true;
+        signal.dispatch();
+        updateControls(false);
+       // signal.removeAll();
+      });
+
+    } else {
+      setTimeout(() => {
+        this.isComplete = true;
+        updateControls(false);
+        signal.dispatch();
+
+      }, 1300);
+    }
   }
 }
