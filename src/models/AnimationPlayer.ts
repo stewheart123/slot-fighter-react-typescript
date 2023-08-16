@@ -8,7 +8,8 @@ let animationPlayer = {
     playerName : "",
     animationSequence : [] as string[],
     damageAmounts : [] as number[],
-    reelPlots: [] as number[][]
+    reelPlots: [] as number[][],
+    animationIDSequence: [] as number[]
 };
 
 export default animationPlayer;

@@ -18,6 +18,10 @@ const liveComponents: {
   reelAnimationSet: boolean;
   maiGreet: undefined | any;
   maiReady: undefined | any;
+  maiForce: undefined | any;
+  maiBreeze : undefined | any;
+  maiLieDown : undefined | any;
+  maiAttackAnimationCatalogue: any[];
 } = {
   loadScreen: undefined,
   splashScreen: undefined,
@@ -30,6 +34,10 @@ const liveComponents: {
   reelAnimationSet: false,
   maiGreet: undefined,
   maiReady: undefined,
+  maiForce : undefined,
+  maiBreeze : undefined,
+  maiLieDown: undefined,
+  maiAttackAnimationCatalogue: []
 };
 
 export default liveComponents;

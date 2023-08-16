@@ -14,25 +14,12 @@ export class SpinResultStep implements IStep {
   public app = initializeApp();
   public hasWon = false;
 
-  /**
-   * -look at values at various win lines
-   * if yes, place into an array and animate out ,
-   * using the health models to update the health values
-   * look at an earlier step to add more animations at that point.
-   *
-   * if no results, go back to the next sequence - perhaps spin ready needs to be a conditional?
-   * i.e. if human player show spin button, else auto spin.
-   *
-   * spin results will need model for whos turn it is...
-   */
-
   // might not need this
   public reRenderCallback = () => {
     // Use an arrow function here
     this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
   };
 
-  //can i loop through each winline win configuration??
   private winLines = [
     {
       plot: [
@@ -43,6 +30,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "top horizontal",
       symbolArray: [] as number[],
+      animationID : 0
     },
     {
       plot: [
@@ -53,6 +41,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "second horizontal",
       symbolArray: [] as number[],
+      animationID : 1
     },
     {
       plot: [
@@ -63,6 +52,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "third horizontal",
       symbolArray: [] as number[],
+      animationID : 2
     },
     {
       plot: [
@@ -73,6 +63,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "bottom horizontal",
       symbolArray: [] as number[],
+      animationID : 3
     },
     {
       plot: [
@@ -83,6 +74,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "top bottom diagonal",
       symbolArray: [] as number[],
+      animationID : 4
     },
     {
       plot: [
@@ -93,6 +85,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "bottom top diagonal",
       symbolArray: [] as number[],
+      animationID : 5
     },
     {
       plot: [
@@ -103,6 +96,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "first vertical",
       symbolArray: [] as number[],
+      animationID : 6
     },
     {
       plot: [
@@ -113,6 +107,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "second vertical",
       symbolArray: [] as number[],
+      animationID : 7
     },
     {
       plot: [
@@ -123,6 +118,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "third vertical",
       symbolArray: [] as number[],
+      animationID : 8
     },
     {
       plot: [
@@ -133,6 +129,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "fourth vertical",
       symbolArray: [] as number[],
+      animationID : 9
     },
   ];
 
@@ -153,7 +150,8 @@ export class SpinResultStep implements IStep {
       this.CheckWinLine(
         this.winLines[z].symbolArray,
         this.winLines[z].descripton,
-        this.winLines[z].plot
+        this.winLines[z].plot,
+        this.winLines[z].animationID
       );
     }
 
@@ -187,7 +185,6 @@ export class SpinResultStep implements IStep {
     for (var i = 1; i < liveComponents.reelContainer.children.length; i++) {
       for (var y = 0; y < 5; y++) {
         if (undo) {
-          console.log('change back 2');
           liveComponents.reelContainer.children[i].children[y].filters = [];
         } else {
           liveComponents.reelContainer.children[i].children[y].filters = [
@@ -221,16 +218,56 @@ export class SpinResultStep implements IStep {
       }
   }
 
+  async playAnimationsSequentially(animationIDArray: any[]) {
+
+    for (var i = 0; i < animationIDArray.length; i++) {
+      let animationToPlay : any;
+     // console.log( liveComponents.maiAttackAnimationCatalogue);
+      if(animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length) {
+        console.log('inner');
+          animationToPlay = liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]]
+      }
+      else {
+        animationToPlay = liveComponents.maiAttackAnimationCatalogue[0];
+      }
+     // animationToPlay = liveComponents.maiLieDown;
+      this.SetWinlineRed(animationPlayer.reelPlots[i]);
+      const animationPromise = new Promise((resolve:any) => {
+        liveComponents.mai.textures = animationToPlay;
+        liveComponents.mai.loop = false;
+        liveComponents.mai.play();
+        liveComponents.mai.onComplete = () => {
+          resolve(); // Resolve the promise when animation completes
+  
+        };
+      });
+      
+        await animationPromise; // Wait for the animation to complete before moving on
+    }
+    this.ToggleAllGrey(true);
+      
+      if (playerHealth.checkWin() === undefined) {
+        stateChanger.stateChange("attackState");
+      } else {
+        stateChanger.stateChange("gameOverState");
+      }
+}
+
   private PlayAnimations() {
-    console.log("sequence for " + animationPlayer.playerName);
-    
     this.SetWinlineLsd(animationPlayer.reelPlots, false);
+    if(turnModel.playerTurn === "playerOne") {
+      // console.log(animationPlayer.animationSequence); 
+    setTimeout(() => {
+      this.playAnimationsSequentially(animationPlayer.animationIDSequence);
+    },1000);
+    }
+
+    //sets all winlines to LSD
     for (let i = 0; i < animationPlayer.animationSequence.length; i++) {
       setTimeout(() => {
-        console.log(
-          "playing animation " + animationPlayer.animationSequence[i]
-        );
-        this.SetWinlineRed(animationPlayer.reelPlots[i]);
+
+     //   this.SetWinlineRed(animationPlayer.reelPlots[i]);   --- this might be important to put back!
+        //updates the health bar
         if (
           turnModel.playerTurn == "playerOne" &&
           playerHealth.playerTwoHealth != undefined
@@ -254,20 +291,22 @@ export class SpinResultStep implements IStep {
         }
       }, 2000 * (i + 1));
     }
-    setTimeout(() => {
-      this.ToggleAllGrey(true);
-      // shows undefined until a winner is made! 
-      //console.log(playerHealth.checkWin());
-      if (playerHealth.checkWin() === undefined) {
-        stateChanger.stateChange("attackState");
-      } else {
-        stateChanger.stateChange("gameOverState");
-      }
-    }, (2100 * animationPlayer.animationSequence.length) + 1800); // this time sets the delay from last animation to next turn
+    if(turnModel.playerTurn === "playerTwo") {
+      setTimeout(() => {
+        this.ToggleAllGrey(true);
+        
+        if (playerHealth.checkWin() === undefined) {
+          stateChanger.stateChange("attackState");
+        } else {
+          stateChanger.stateChange("gameOverState");
+        }
+      }, (2100 * animationPlayer.animationIDSequence.length) + 1800); // this time sets the delay from last animation to next turn
+
+    }
   }
 
   //this checks all symbols - I need to make a simple - if 4 or 3 in a row are same in array, say win..
-  private CheckWinLine(symbols: any[], winMessage: string, positioning: any[]) {
+  private CheckWinLine(symbols: any[], winMessage: string, positioning: any[], animationID: number) {
     var isAWin = false;
     for (let i = 0; i < symbols.length; i++) {
       if (
@@ -279,10 +318,16 @@ export class SpinResultStep implements IStep {
       }
     }
     if (isAWin) {
+      //console.log(animationID);
       animationPlayer.damageAmounts.push((symbols[0] + 10) * 5);
       animationPlayer.reelPlots.push(positioning);
       animationPlayer.animationSequence.push(symbols[0]);
+      animationPlayer.animationIDSequence.push(animationID);
       this.hasWon = true;
+
+      // console.log('----------------------');
+      console.log(animationPlayer.animationSequence);
+      console.log(animationPlayer.animationIDSequence);
     }
   }
 }

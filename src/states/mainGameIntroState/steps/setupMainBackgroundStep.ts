@@ -47,8 +47,27 @@ export class SetupBackgroundStep implements IStep {
         const maiReadyTextures = tileFrames["ready"].map(
           (frameName: string | number) => spritesheet.textures[frameName]
         );
+        const maiForceTextures = tileFrames["force"].map(
+          (frameName: string | number) => spritesheet.textures[frameName]
+        );
+        const maiBreezeTextures = tileFrames["breeze"].map(
+          (frameName: string | number) => spritesheet.textures[frameName]
+        );
+        const maiLieDownTextures = tileFrames["lie-down"].map(
+          (frameName: string | number) => spritesheet.textures[frameName]
+        );
+
         liveComponents.maiGreet = greetTextures;
         liveComponents.maiReady = maiReadyTextures;
+        liveComponents.maiForce = maiForceTextures;
+        liveComponents.maiBreeze = maiBreezeTextures;
+        liveComponents.maiLieDown = maiLieDownTextures;
+        
+        liveComponents.maiAttackAnimationCatalogue.push(
+          liveComponents.maiForce,
+          liveComponents.maiBreeze,
+          liveComponents.maiLieDown,
+          );
 
         // Create an AnimatedSprite using the textures
         const characterOne = new AnimatedSprite(liveComponents.maiGreet);
@@ -164,8 +183,6 @@ export class SetupBackgroundStep implements IStep {
           reelContainer.position.y += 7;
           this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
           if (reelContainer.position.y > -400) {
-            // playerHealth.playerOneHealth = 0;
-            // playerHealth.playerTwoHealth = 0;
             updateState(
               true,
               "Ready?",
@@ -196,9 +213,6 @@ export class SetupBackgroundStep implements IStep {
 
           // Check if 1 second has passed
           if (elapsedTime >= 100) {
-            // playerHealth.playerOneHealth = -100;
-            // playerHealth.playerTwoHealth = 10;
-           // console.log('player set')
             updateState(
               false,
               "Fight!",

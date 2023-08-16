@@ -21,10 +21,12 @@ export class ExposeSpinButtonStep implements IStep {
      animationPlayer.damageAmounts = [];
      animationPlayer.playerName = turnModel.playerTurn;
      animationPlayer.reelPlots = [];
+     animationPlayer.animationIDSequence = [];
   
     this.isComplete = false;
 
     liveComponents.mai.textures = liveComponents.maiReady;
+    liveComponents.mai.loop = true;
     liveComponents.mai.play();
 
     updateControls(true);
