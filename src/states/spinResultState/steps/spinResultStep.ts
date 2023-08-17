@@ -169,7 +169,6 @@ export class SpinResultStep implements IStep {
     this.hasWon = false;
     this.ResetSymbolArrays();
   }
-
   private ResetSymbolArrays() {
     for (let z = 0; z < this.winLines.length; z++) {
       for (let p = 0; p < 4; p++) {
@@ -177,7 +176,6 @@ export class SpinResultStep implements IStep {
       }
     }
   }
-
   private ToggleAllGrey(undo: boolean) {
     let specialFilter = new filters.ColorMatrixFilter();
     specialFilter.greyscale(0.3, false);
@@ -193,7 +191,6 @@ export class SpinResultStep implements IStep {
       }
     }
   }
-
   private SetWinlineLsd(symbolPositions: any[], undo: boolean) {
     let lsdFilter = new filters.ColorMatrixFilter();
     lsdFilter.lsd(false);
@@ -204,7 +201,6 @@ export class SpinResultStep implements IStep {
         ].children[symbolPositions[i][x][1]].filters = [lsdFilter];
     }
   }
-
   private SetWinlineRed(symbolPosition: any[]) {
     let redFilter = new filters.ColorMatrixFilter();
     redFilter.matrix = [
@@ -270,6 +266,7 @@ export class SpinResultStep implements IStep {
       damagePlayer = liveComponents.playerOne;
       attackPlayer = liveComponents.playerTwo;
     }
+
     for (var i = 0; i < animationIDArray.length; i++) {
       let animationToPlay: any;
       if (
@@ -282,18 +279,22 @@ export class SpinResultStep implements IStep {
       }
       this.SetWinlineRed(animationPlayer.reelPlots[i]);
       //WORKS WITH MAI AND WITH PLAYERONE --- WHY???
-      const animationPromise = new Promise((resolve: any) => {
-        liveComponents.playerOne.textures = animationToPlay;
-        liveComponents.playerOne.loop = false;
-        liveComponents.playerOne.play();
-        this.updatePlayerHealth(i);
-        this.DamageFlashAnimation(damagePlayer);
-        liveComponents.playerOne.onComplete = () => {
-          resolve(); // Resolve the promise when animation completes
-        };
-      });
 
-      await animationPromise; // Wait for the animation to complete before moving on
+      if (turnModel.playerTurn === "playerOne") {
+        //temp fix for no akuma animations - remove the conditionals
+        const animationPromise = new Promise((resolve: any) => {
+          attackPlayer.textures = animationToPlay;
+          attackPlayer.loop = false;
+          attackPlayer.play();
+          this.updatePlayerHealth(i);
+          this.DamageFlashAnimation(damagePlayer);
+          attackPlayer.onComplete = () => {
+            resolve(); // Resolve the promise when animation completes
+          };
+        });
+
+        await animationPromise; // Wait for the animation to complete before moving on
+      } /// remove this conditional
     }
     this.ToggleAllGrey(true);
 
@@ -330,30 +331,9 @@ export class SpinResultStep implements IStep {
 
   private PlayAnimations() {
     this.SetWinlineLsd(animationPlayer.reelPlots, false);
-    if (turnModel.playerTurn === "playerOne") {
-      // console.log(animationPlayer.animationSequence);
-      setTimeout(() => {
-        this.playAnimationsSequentially(animationPlayer.animationIDSequence);
-      }, 1000);
-    }
-
-    //sets all winlines to LSD
-    for (let i = 0; i < animationPlayer.animationSequence.length; i++) {
-      setTimeout(() => {
-        this.updatePlayerHealth(i);
-      }, 2000 * (i + 1));
-    }
-    if (turnModel.playerTurn === "playerTwo") {
-      setTimeout(() => {
-        this.ToggleAllGrey(true);
-
-        if (playerHealth.checkWin() === undefined) {
-          stateChanger.stateChange("attackState");
-        } else {
-          stateChanger.stateChange("gameOverState");
-        }
-      }, 2100 * animationPlayer.animationIDSequence.length + 1800); // this time sets the delay from last animation to next turn
-    }
+    setTimeout(() => {
+      this.playAnimationsSequentially(animationPlayer.animationIDSequence);
+    }, 1000);
   }
 
   private CheckWinLine(
