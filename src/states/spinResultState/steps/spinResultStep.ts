@@ -7,7 +7,7 @@ import turnModel from "../../../models/TurnModel";
 import playerHealth from "../../../models/PlayerHealth";
 import { updateHealthBar } from "../../../";
 import animationPlayer from "../../../models/AnimationPlayer";
-import { filters } from "pixi.js";
+import { Ticker, filters } from "pixi.js";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
@@ -30,7 +30,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "top horizontal",
       symbolArray: [] as number[],
-      animationID : 0
+      animationID: 0,
     },
     {
       plot: [
@@ -41,7 +41,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "second horizontal",
       symbolArray: [] as number[],
-      animationID : 1
+      animationID: 1,
     },
     {
       plot: [
@@ -52,7 +52,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "third horizontal",
       symbolArray: [] as number[],
-      animationID : 2
+      animationID: 2,
     },
     {
       plot: [
@@ -63,7 +63,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "bottom horizontal",
       symbolArray: [] as number[],
-      animationID : 3
+      animationID: 3,
     },
     {
       plot: [
@@ -74,7 +74,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "top bottom diagonal",
       symbolArray: [] as number[],
-      animationID : 4
+      animationID: 4,
     },
     {
       plot: [
@@ -85,7 +85,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "bottom top diagonal",
       symbolArray: [] as number[],
-      animationID : 5
+      animationID: 5,
     },
     {
       plot: [
@@ -96,7 +96,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "first vertical",
       symbolArray: [] as number[],
-      animationID : 6
+      animationID: 6,
     },
     {
       plot: [
@@ -107,7 +107,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "second vertical",
       symbolArray: [] as number[],
-      animationID : 7
+      animationID: 7,
     },
     {
       plot: [
@@ -118,7 +118,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "third vertical",
       symbolArray: [] as number[],
-      animationID : 8
+      animationID: 8,
     },
     {
       plot: [
@@ -129,7 +129,7 @@ export class SpinResultStep implements IStep {
       ],
       descripton: "fourth vertical",
       symbolArray: [] as number[],
-      animationID : 9
+      animationID: 9,
     },
   ];
 
@@ -179,7 +179,6 @@ export class SpinResultStep implements IStep {
   }
 
   private ToggleAllGrey(undo: boolean) {
-   
     let specialFilter = new filters.ColorMatrixFilter();
     specialFilter.greyscale(0.3, false);
     for (var i = 1; i < liveComponents.reelContainer.children.length; i++) {
@@ -195,118 +194,174 @@ export class SpinResultStep implements IStep {
     }
   }
 
-  private SetWinlineLsd(symbolPositions: any[], undo:boolean) {
+  private SetWinlineLsd(symbolPositions: any[], undo: boolean) {
     let lsdFilter = new filters.ColorMatrixFilter();
     lsdFilter.lsd(false);
-      for(let i = 0; i < symbolPositions.length; i++ ) {
-        for(let x = 0; x < 4; x++)
-        liveComponents.reelContainer.children[(symbolPositions[i][x][0])+1].children[symbolPositions[i][x][1]].filters = [lsdFilter];
-      }
+    for (let i = 0; i < symbolPositions.length; i++) {
+      for (let x = 0; x < 4; x++)
+        liveComponents.reelContainer.children[
+          symbolPositions[i][x][0] + 1
+        ].children[symbolPositions[i][x][1]].filters = [lsdFilter];
+    }
   }
 
   private SetWinlineRed(symbolPosition: any[]) {
     let redFilter = new filters.ColorMatrixFilter();
     redFilter.matrix = [
-         9, 0, 0, 0, 0, // Red channel
-         0, 1, 0, 0, 0, // Green channel
-         0, 0, 1, 0, 0, // Blue channel
-         0, 0, 0, 1, 0, // Alpha channel
-      ];
-      for(let i = 0; i < symbolPosition.length; i++ ) {
-        for(let x = 0; x < 4; x++)
-        liveComponents.reelContainer.children[(symbolPosition[i][0])+1].children[symbolPosition[i][1]].filters = [redFilter];
+      9,
+      0,
+      0,
+      0,
+      0, // Red channel
+      0,
+      1,
+      0,
+      0,
+      0, // Green channel
+      0,
+      0,
+      1,
+      0,
+      0, // Blue channel
+      0,
+      0,
+      0,
+      1,
+      0, // Alpha channel
+    ];
+    for (let i = 0; i < symbolPosition.length; i++) {
+      for (let x = 0; x < 4; x++)
+        liveComponents.reelContainer.children[
+          symbolPosition[i][0] + 1
+        ].children[symbolPosition[i][1]].filters = [redFilter];
+    }
+  }
+  private DamageFlashAnimation(player: any) {
+    const flashTicker = new Ticker();
+    let time = 0;
+    let count = 0;
+    let alphaFilter = new filters.AlphaFilter(0.6);
+    flashTicker.add(() => {
+      time++;
+      if (time > 4) {
+        time = 0;
+        count++;
       }
+      if (count % 2 === 0) {
+        player.filters = [alphaFilter];
+      } else {
+        player.filters = [];
+      }
+      if (count > 30) {
+        flashTicker.stop();
+        liveComponents.playerTwo.filters = [];
+      }
+    });
+    flashTicker.start();
   }
 
   async playAnimationsSequentially(animationIDArray: any[]) {
-
+    let damagePlayer: any;
+    let attackPlayer: any;
+    if (turnModel.playerTurn === "playerOne") {
+      damagePlayer = liveComponents.playerTwo;
+      attackPlayer = liveComponents.playerOne;
+    } else {
+      damagePlayer = liveComponents.playerOne;
+      attackPlayer = liveComponents.playerTwo;
+    }
     for (var i = 0; i < animationIDArray.length; i++) {
-      let animationToPlay : any;
-     // console.log( liveComponents.maiAttackAnimationCatalogue);
-      if(animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length) {
-        console.log('inner');
-          animationToPlay = liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]]
-      }
-      else {
+      let animationToPlay: any;
+      if (
+        animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length
+      ) {
+        animationToPlay =
+          liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]];
+      } else {
         animationToPlay = liveComponents.maiAttackAnimationCatalogue[0];
       }
-     // animationToPlay = liveComponents.maiLieDown;
       this.SetWinlineRed(animationPlayer.reelPlots[i]);
-      const animationPromise = new Promise((resolve:any) => {
-        liveComponents.mai.textures = animationToPlay;
-        liveComponents.mai.loop = false;
-        liveComponents.mai.play();
-        liveComponents.mai.onComplete = () => {
+      //WORKS WITH MAI AND WITH PLAYERONE --- WHY???
+      const animationPromise = new Promise((resolve: any) => {
+        liveComponents.playerOne.textures = animationToPlay;
+        liveComponents.playerOne.loop = false;
+        liveComponents.playerOne.play();
+        this.updatePlayerHealth(i);
+        this.DamageFlashAnimation(damagePlayer);
+        liveComponents.playerOne.onComplete = () => {
           resolve(); // Resolve the promise when animation completes
-  
         };
       });
-      
-        await animationPromise; // Wait for the animation to complete before moving on
+
+      await animationPromise; // Wait for the animation to complete before moving on
     }
     this.ToggleAllGrey(true);
-      
-      if (playerHealth.checkWin() === undefined) {
-        stateChanger.stateChange("attackState");
-      } else {
-        stateChanger.stateChange("gameOverState");
-      }
-}
+
+    if (playerHealth.checkWin() === undefined) {
+      stateChanger.stateChange("attackState");
+    } else {
+      stateChanger.stateChange("gameOverState");
+    }
+  }
+
+  updatePlayerHealth(index: number) {
+    if (
+      turnModel.playerTurn == "playerOne" &&
+      playerHealth.playerTwoHealth != undefined
+    ) {
+      playerHealth.playerTwoHealth -= animationPlayer.damageAmounts[index];
+    }
+    if (
+      turnModel.playerTurn == "playerTwo" &&
+      playerHealth.playerOneHealth != undefined
+    ) {
+      playerHealth.playerOneHealth += animationPlayer.damageAmounts[index];
+    }
+    if (
+      playerHealth.playerOneHealth != undefined &&
+      playerHealth.playerTwoHealth != undefined
+    ) {
+      updateHealthBar(
+        playerHealth.playerOneHealth,
+        playerHealth.playerTwoHealth
+      );
+    }
+  }
 
   private PlayAnimations() {
     this.SetWinlineLsd(animationPlayer.reelPlots, false);
-    if(turnModel.playerTurn === "playerOne") {
-      // console.log(animationPlayer.animationSequence); 
-    setTimeout(() => {
-      this.playAnimationsSequentially(animationPlayer.animationIDSequence);
-    },1000);
+    if (turnModel.playerTurn === "playerOne") {
+      // console.log(animationPlayer.animationSequence);
+      setTimeout(() => {
+        this.playAnimationsSequentially(animationPlayer.animationIDSequence);
+      }, 1000);
     }
 
     //sets all winlines to LSD
     for (let i = 0; i < animationPlayer.animationSequence.length; i++) {
       setTimeout(() => {
-
-     //   this.SetWinlineRed(animationPlayer.reelPlots[i]);   --- this might be important to put back!
-        //updates the health bar
-        if (
-          turnModel.playerTurn == "playerOne" &&
-          playerHealth.playerTwoHealth != undefined
-        ) {
-          playerHealth.playerTwoHealth -= animationPlayer.damageAmounts[i];
-        }
-        if (
-          turnModel.playerTurn == "playerTwo" &&
-          playerHealth.playerOneHealth != undefined
-        ) {
-          playerHealth.playerOneHealth += animationPlayer.damageAmounts[i];
-        }
-        if (
-          playerHealth.playerOneHealth != undefined &&
-          playerHealth.playerTwoHealth != undefined
-        ) {
-          updateHealthBar(
-            playerHealth.playerOneHealth,
-            playerHealth.playerTwoHealth
-          );
-        }
+        this.updatePlayerHealth(i);
       }, 2000 * (i + 1));
     }
-    if(turnModel.playerTurn === "playerTwo") {
+    if (turnModel.playerTurn === "playerTwo") {
       setTimeout(() => {
         this.ToggleAllGrey(true);
-        
+
         if (playerHealth.checkWin() === undefined) {
           stateChanger.stateChange("attackState");
         } else {
           stateChanger.stateChange("gameOverState");
         }
-      }, (2100 * animationPlayer.animationIDSequence.length) + 1800); // this time sets the delay from last animation to next turn
-
+      }, 2100 * animationPlayer.animationIDSequence.length + 1800); // this time sets the delay from last animation to next turn
     }
   }
 
-  //this checks all symbols - I need to make a simple - if 4 or 3 in a row are same in array, say win..
-  private CheckWinLine(symbols: any[], winMessage: string, positioning: any[], animationID: number) {
+  private CheckWinLine(
+    symbols: any[],
+    winMessage: string,
+    positioning: any[],
+    animationID: number
+  ) {
     var isAWin = false;
     for (let i = 0; i < symbols.length; i++) {
       if (
@@ -318,16 +373,11 @@ export class SpinResultStep implements IStep {
       }
     }
     if (isAWin) {
-      //console.log(animationID);
       animationPlayer.damageAmounts.push((symbols[0] + 10) * 5);
       animationPlayer.reelPlots.push(positioning);
       animationPlayer.animationSequence.push(symbols[0]);
       animationPlayer.animationIDSequence.push(animationID);
       this.hasWon = true;
-
-      // console.log('----------------------');
-      console.log(animationPlayer.animationSequence);
-      console.log(animationPlayer.animationIDSequence);
     }
   }
 }
