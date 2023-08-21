@@ -27,6 +27,7 @@ export class SetupBackgroundStep implements IStep {
   };
 
   public start(signal: Signal): void {
+    assets.levelSoundtrack?.play();
     // Load the tile animation frames
     //cant use the assets version of a json file.... ever!
     const tileFrames = assets.mai.spriteData.animations;
@@ -117,6 +118,7 @@ export class SetupBackgroundStep implements IStep {
           "",
           true
         );
+        assets.voiceYou?.play();
 
         updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
         userInterface.hasReadyBanner = true;
@@ -199,8 +201,10 @@ export class SetupBackgroundStep implements IStep {
               "red",
               true,
             );
+
             updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
             ticker.stop();
+            assets.voiceFight?.play();
             ticker.remove(reelContainerIntroAnimation);
             ticker.add(reelContainerExitAnimation);
             ticker.start();

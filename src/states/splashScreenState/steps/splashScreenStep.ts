@@ -2,8 +2,10 @@ import { IStep } from "../../../IStep";
 import { Signal } from "signals.js/lib/org/osflash/signals/Signal";
 import { Sprite, Container, Graphics, Text } from "pixi.js";
 //delete the old loading container from the game instance!
-import initializeApp from "../../../initializer"; 
+import initializeApp from "../../../initializer";
 import assets from "../../../models/Assets";
+import { Howl } from "howler";
+//import "../../../../src/images"
 
 export class StepSplashScreen implements IStep {
   public isComplete = false;
@@ -14,10 +16,35 @@ export class StepSplashScreen implements IStep {
     signal.dispatch();
   }
 
-  public  start(signal: Signal): void {
+  public start(signal: Signal): void {
+
+    assets.introTheme?.play();
+    const insertCoinSound = new Howl({
+      src: [window.location.origin + "/coin_inserted.wav"],
+      
+       // Replace with the actual path to your audio file
+       //C:/Users/stew_/Documents/CODING STUFF/PIXIJS/slot-fighter-react-typescript/assets/crunch.mp3
+       //"https://s3-us-west-2.amazonaws.com/s.cdpn.io/596723/hit2.wav"
+      autoplay: false, // Don't autoplay
+      loop: false,
+      volume: 1.0,
+      onend: function () {
+        console.log("howl Finished!");
+      },
+      onload: function (error) {
+        console.log("loading the audio...");
+      },
+
+      onloaderror: function (error) {
+        console.error("Error loading the audio file.", error);
+      },
+    });
+    console.log(insertCoinSound);
+   
+
     const splashContainer = new Container();
     const foregroundFighter = new Sprite();
-     foregroundFighter.texture = assets.textures[1];
+    foregroundFighter.texture = assets.textures[1];
     foregroundFighter.width = this.app.screen.width;
     foregroundFighter.height = this.app.screen.height;
     const backgroundImage = new Sprite();
@@ -52,12 +79,14 @@ export class StepSplashScreen implements IStep {
     insertCoinButton.interactive = true;
     insertCoinButton.cursor = "pointer";
     insertCoinButton.on("pointerdown", () => {
-    //  console.log("coin inserted");
+      //  console.log("coin inserted");
+      insertCoinSound.play();
+      assets.introTheme?.stop();
       animationOn = false;
       insertCoinButton.visible = true;
       creditsText.text = "CREDITS 01";
 
-     // this.app.stage.children[0].destroy();
+      // this.app.stage.children[0].destroy();
     });
 
     buttonContainer.addChild(insertCoinButton);
@@ -99,8 +128,8 @@ export class StepSplashScreen implements IStep {
     titleContainer.addChild(titleFighter);
     titleContainer.pivot.set(1, 1);
     titleContainer.position.set(
-        this.app.screen.width / 2 - titleSlotBackground.width,
-        this.app.screen.height / 2 - titleSlotBackground.height / 8
+      this.app.screen.width / 2 - titleSlotBackground.width,
+      this.app.screen.height / 2 - titleSlotBackground.height / 8
     );
 
     buttonText.x = buttonContainer.width / 2;
@@ -120,14 +149,13 @@ export class StepSplashScreen implements IStep {
           insertCoinButton.visible = isObjectVisible;
           elapsedTime = 0;
         }
-      }
-      else {
-       // foregroundFighter.destroy();
-       //  buttonContainer.destroy();
-       this.isComplete = true;
-       this.completeStep(signal);
-       this.app.ticker.stop();
-       splashContainer.destroy();
+      } else {
+        // foregroundFighter.destroy();
+        //  buttonContainer.destroy();
+        this.isComplete = true;
+        this.completeStep(signal);
+        this.app.ticker.stop();
+        splashContainer.destroy();
       }
     });
 
@@ -148,12 +176,10 @@ export class StepSplashScreen implements IStep {
     splashContainer.addChild(creditsText);
 
     this.app.stage.addChild(splashContainer);
-    
+
     // refactor liveComponents.splashScreen = splashContainer;
-  
+
     //place the dispatch inside a button event
     //this.isComplete = true;
   }
 }
-
-

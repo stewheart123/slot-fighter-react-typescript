@@ -35,6 +35,7 @@ import akuma7 from "../../../images/akuma/frame_7.png";
 import initializeApp from "../../../initializer";
 
 export class LoadScreenStep extends Step {
+  
   public isComplete = false;
   public loaderBarFill = new Graphics();
   public app = initializeApp();
@@ -67,6 +68,55 @@ export class LoadScreenStep extends Step {
     loadingContainer.addChild(this.loaderBarFill);
     this.app.stage.addChild(loadingContainer);
     liveComponents.loadScreen = loadingContainer;
+    assets.introTheme = new Howl({
+      src: [window.location.origin + "/intro_theme.mp3"],
+      loop: true,
+      autoplay: true,
+      volume: 0.7
+    });
+    assets.levelSoundtrack = new Howl({
+      src: [window.location.origin + "/level_soundtrack.mp3"],
+      loop: true,
+      autoplay: false,
+      volume: 0.3
+    });
+    assets.voiceFight = new Howl({
+      src: [window.location.origin + "/fight.mp3"],
+      loop: false,
+      autoplay: false,
+      volume: 0.6
+    });
+    assets.voiceYou = new Howl({
+      src: [window.location.origin + "/you.mp3"],
+      loop: false,
+      autoplay: false,
+      volume: 0.6
+    });
+    assets.voiceWin = new Howl({
+      src: [window.location.origin + "/win.mp3"],
+      loop: false,
+      autoplay: false,
+      volume: 0.6
+    });
+    assets.voiceLose = new Howl({
+      src: [window.location.origin + "/lose.mp3"],
+      loop: false,
+      autoplay: false,
+      volume: 0.6
+    });
+    assets.clunkClick = new Howl({
+      src: [window.location.origin + "/clunk_click.wav"],
+      loop: false,
+      autoplay: false,
+      volume: 0.7
+    });
+    assets.evilSpin = new Howl({
+      src: [window.location.origin + "/evil_spin.wav"],
+      loop: false,
+      autoplay: false,
+      volume: 0.5
+    });
+
     await this.initializeLoader().then(() => {
       this.isComplete = true;
 

@@ -8,6 +8,7 @@ import playerHealth from "../../../models/PlayerHealth";
 import { updateHealthBar } from "../../../";
 import animationPlayer from "../../../models/AnimationPlayer";
 import { Ticker, filters } from "pixi.js";
+import assets from "../../../models/Assets";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
@@ -302,6 +303,22 @@ export class SpinResultStep implements IStep {
       stateChanger.stateChange("attackState");
     } else {
       stateChanger.stateChange("gameOverState");
+      assets.levelSoundtrack?.stop();
+      if(playerHealth.playerOneHealth != undefined) {
+        if(playerHealth.playerOneHealth < 463 ) {
+          assets.voiceYou?.on('end', () => {
+            assets.voiceWin?.play();
+          }); 
+          assets.voiceYou?.play();
+        }
+        else {
+          assets.voiceYou?.on('end', () => {
+            assets.voiceLose?.play();
+          }); 
+          assets.voiceYou?.play();
+        }
+      } 
+
     }
   }
 

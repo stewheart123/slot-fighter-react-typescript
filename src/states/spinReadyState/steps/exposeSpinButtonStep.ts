@@ -6,6 +6,7 @@ import { updateControls } from "../../../index";
 import liveComponents from "../../../models/liveComponents";
 import turnModel from "../../../models/TurnModel";
 import animationPlayer from "../../../models/AnimationPlayer";
+import assets from "../../../models/Assets";
 
 export class ExposeSpinButtonStep implements IStep {
   public isComplete = false;
@@ -35,14 +36,19 @@ export class ExposeSpinButtonStep implements IStep {
     if(turnModel.playerTurn == "playerOne") {
       floatingSignal.add(() => {
         // add a pixi game instruction in here, the floating signal canbe exported to the UI
+        if(turnModel.playerTurn ==="playerOne") {
+          assets.clunkClick?.play();
+        }
         this.isComplete = true;
         signal.dispatch();
         updateControls(false);
+
        // signal.removeAll();
       });
 
     } else {
       setTimeout(() => {
+        assets.evilSpin?.play();
         this.isComplete = true;
         updateControls(false);
         signal.dispatch();
