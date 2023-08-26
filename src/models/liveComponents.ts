@@ -22,6 +22,7 @@ const liveComponents: {
   maiBreeze : undefined | any;
   maiLieDown : undefined | any;
   maiAttackAnimationCatalogue: any[];
+  mai2Cry : undefined | any;
 } = {
   loadScreen: undefined,
   splashScreen: undefined,
@@ -37,7 +38,8 @@ const liveComponents: {
   maiForce : undefined,
   maiBreeze : undefined,
   maiLieDown: undefined,
-  maiAttackAnimationCatalogue: []
+  maiAttackAnimationCatalogue: [],
+  mai2Cry : undefined
 };
 
 export default liveComponents;

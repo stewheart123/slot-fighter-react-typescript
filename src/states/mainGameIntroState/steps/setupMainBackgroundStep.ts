@@ -32,12 +32,26 @@ export class SetupBackgroundStep implements IStep {
     //cant use the assets version of a json file.... ever!
     const tileFrames = assets.mai.spriteData.animations;
 
+    const tileFrames2 = assets.mai2.spriteData.animations;
+
     // Create a spritesheet from the frame names
-    if (assets.mai.spriteSheet) {
+    if (assets.mai.spriteSheet && assets.mai2.spriteSheet) {
       const spritesheet = new Spritesheet(
         assets.mai.spriteSheet.baseTexture,
         assets.mai.spriteData
       ); // Replace with your spritesheet image path
+
+      const spriteSheet2 = new Spritesheet(
+        assets.mai2.spriteSheet.baseTexture,
+        assets.mai2.spriteData);
+
+        spriteSheet2.parse(() => {
+          const cryTextures =  tileFrames2["throw"].map(
+            (frameName: string | number) => spriteSheet2.textures[frameName]
+          ); 
+          liveComponents.mai2Cry = cryTextures;
+        });
+      
 
       // Load the spritesheet and parse the frame data - parse all animations right here only
       spritesheet.parse(() => {
@@ -94,7 +108,7 @@ export class SetupBackgroundStep implements IStep {
         characterOne.scale.y *= 2.5;
         characterOne.scale.x *= -1;
         liveComponents.mai = characterOne;
-        const characterTwo = new AnimatedSprite(texturesArray);
+        const characterTwo = new AnimatedSprite(liveComponents.mai2Cry);
         characterTwo.height = 300;
         characterTwo.width = 300;
         characterTwo.position.set(

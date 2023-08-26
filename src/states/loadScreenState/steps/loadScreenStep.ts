@@ -10,6 +10,8 @@ import slotFighterForegroundDynamic from "../../../images/scene/slot-fighter-for
 import stageOneBackground from "../../../images/scene/stage-1-background.jpg";
 import maiSpriteSheet from "../../../images/character/mai-sprites.png";
 import maiAnimationInfo from "../../../images/character/mai-sprites.json";
+import maiSpriteSheet2 from "../../../images/character/mai_complete_range.png";
+import maiAnimationInfo2 from "../../../images/character/mai_complete_range.json";
 import symbolH from "../../../images/symbols/symbol-H.jpg";
 import symbolJ from "../../../images/symbols/symbol-J.jpg";
 import symbolK from "../../../images/symbols/symbol-K.jpg";
@@ -72,49 +74,49 @@ export class LoadScreenStep extends Step {
       src: [window.location.origin + "/intro_theme.mp3"],
       loop: true,
       autoplay: true,
-      volume: 0.7
+      volume: 0.2
     });
     assets.levelSoundtrack = new Howl({
       src: [window.location.origin + "/level_soundtrack.mp3"],
       loop: true,
       autoplay: false,
-      volume: 0.3
+      volume: 0.1
     });
     assets.voiceFight = new Howl({
       src: [window.location.origin + "/fight.mp3"],
       loop: false,
       autoplay: false,
-      volume: 0.6
+      volume: 0.5
     });
     assets.voiceYou = new Howl({
       src: [window.location.origin + "/you.mp3"],
       loop: false,
       autoplay: false,
-      volume: 0.6
+      volume: 0.5
     });
     assets.voiceWin = new Howl({
       src: [window.location.origin + "/win.mp3"],
       loop: false,
       autoplay: false,
-      volume: 0.6
+      volume: 0.5
     });
     assets.voiceLose = new Howl({
       src: [window.location.origin + "/lose.mp3"],
       loop: false,
       autoplay: false,
-      volume: 0.6
+      volume: 0.5
     });
     assets.clunkClick = new Howl({
       src: [window.location.origin + "/clunk_click.wav"],
       loop: false,
       autoplay: false,
-      volume: 0.7
+      volume: 0.3
     });
     assets.evilSpin = new Howl({
       src: [window.location.origin + "/evil_spin.wav"],
       loop: false,
       autoplay: false,
-      volume: 0.5
+      volume: 0.2
     });
 
     await this.initializeLoader().then(() => {
@@ -137,6 +139,7 @@ export class LoadScreenStep extends Step {
         { name: "sf-foreground-dynamic", url: slotFighterForegroundDynamic },
         { name: "stage-1-background", url: stageOneBackground },
         { name: "maiSpritesheet", url: maiSpriteSheet },
+        { name: "maiSpritesheet2", url: maiSpriteSheet2 },
         { name: "symbol-h", url: symbolH },
         { name: "symbol-j", url: symbolJ },
         { name: "symbol-k", url: symbolK },
@@ -202,7 +205,9 @@ export class LoadScreenStep extends Step {
         // assets.animation = resources;
         assets.akumaSprites = akuma;
         assets.mai.spriteData = maiAnimationInfo;
+        assets.mai2.spriteData = maiAnimationInfo2;
         assets.mai.spriteSheet = Texture.from("maiSpritesheet");
+        assets.mai2.spriteSheet = Texture.from("maiSpritesheet2");
       });
       assetLoader.onComplete.add(() => {
         resolve(); //something here?
