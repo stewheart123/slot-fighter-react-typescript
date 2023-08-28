@@ -17,6 +17,14 @@ let assets = {
     spriteSheet: undefined as Texture | undefined,
     spriteData: undefined as any | undefined,
   },
+  ironmanStance: {
+    spriteSheet: undefined as Texture | undefined,
+    spriteData: undefined as any | undefined,
+  },
+  ironmanAttack: {
+    spriteSheet: undefined as Texture | undefined,
+    spriteData: undefined as any | undefined,
+  },
   introTheme : undefined as Howl | undefined,
   levelSoundtrack : undefined as Howl | undefined,
   voiceYou : undefined as Howl | undefined,

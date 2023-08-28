@@ -16,6 +16,7 @@ import { updateHealthBar, updateState } from "../../../index";
 import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite } from "../../../models/ValueSprite";
+import animationCalibration from "../../../models/AnimationCalibration";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -34,8 +35,16 @@ export class SetupBackgroundStep implements IStep {
 
     const tileFrames2 = assets.mai2.spriteData.animations;
 
+    const ironmanStanceFrames = assets.ironmanStance.spriteData.animations;
+    const ironmanAttackFrames = assets.ironmanAttack.spriteData.animations;
+
     // Create a spritesheet from the frame names
-    if (assets.mai.spriteSheet && assets.mai2.spriteSheet) {
+    if (
+      assets.mai.spriteSheet &&
+      assets.mai2.spriteSheet &&
+      assets.ironmanAttack.spriteSheet &&
+      assets.ironmanStance.spriteSheet
+    ) {
       const spritesheet = new Spritesheet(
         assets.mai.spriteSheet.baseTexture,
         assets.mai.spriteData
@@ -43,15 +52,70 @@ export class SetupBackgroundStep implements IStep {
 
       const spriteSheet2 = new Spritesheet(
         assets.mai2.spriteSheet.baseTexture,
-        assets.mai2.spriteData);
+        assets.mai2.spriteData
+      );
 
-        spriteSheet2.parse(() => {
-          const cryTextures =  tileFrames2["throw"].map(
-            (frameName: string | number) => spriteSheet2.textures[frameName]
-          ); 
-          liveComponents.mai2Cry = cryTextures;
-        });
-      
+      const ironmanAttackSheet = new Spritesheet(
+        assets.ironmanAttack.spriteSheet?.baseTexture,
+        assets.ironmanAttack.spriteData
+      );
+
+      const ironmanStanceSheet = new Spritesheet(
+        assets.ironmanStance.spriteSheet?.baseTexture,
+        assets.ironmanStance.spriteData
+      );
+
+      spriteSheet2.parse(() => {
+        const cryTextures = tileFrames2["cry"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiFanGreet = tileFrames2["fan_greet"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiFanThrow = tileFrames2["fan_throw"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiFlyKick = tileFrames2["fly_kick"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiLieDown = tileFrames2["lie_down"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiReady = tileFrames2["ready"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiThrow = tileFrames2["throw"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        //
+        liveComponents.maiReady = maiReady;
+        liveComponents.mai2Cry = cryTextures;
+        liveComponents.mai2FanGreet = maiFanGreet;
+        liveComponents.mai2FanThrow = maiFanThrow;
+        liveComponents.mai2FlyKick = maiFlyKick;
+        liveComponents.mai2LieDown = maiLieDown;
+        liveComponents.mai2FanReady = maiReady;
+        liveComponents.mai2Throw = maiThrow;
+      });
+
+      ironmanStanceSheet.parse(() => {
+        const IMreadyTextures = ironmanStanceFrames["ready"].map(
+          (frameName: string | number) => ironmanStanceSheet.textures[frameName]
+        );
+        const IMdazedTextures = ironmanStanceFrames["dazed"].map(
+          (frameName: string | number) => ironmanStanceSheet.textures[frameName]
+        );
+        const IMWinfist1Textures = ironmanStanceFrames["win_fist_1"].map(
+          (frameName: string | number) => ironmanStanceSheet.textures[frameName]
+        );
+        const IMWinfist2Textures = ironmanStanceFrames["win_fist_2"].map(
+          (frameName: string | number) => ironmanStanceSheet.textures[frameName]
+        );
+        liveComponents.ironmanReady = IMreadyTextures;
+        liveComponents.ironmanDazed = IMdazedTextures;
+        liveComponents.ironmanWinFist1 = IMWinfist1Textures;
+        liveComponents.ironmanWinFist2 = IMWinfist2Textures;
+      });
 
       // Load the spritesheet and parse the frame data - parse all animations right here only
       spritesheet.parse(() => {
@@ -77,28 +141,18 @@ export class SetupBackgroundStep implements IStep {
         liveComponents.maiForce = maiForceTextures;
         liveComponents.maiBreeze = maiBreezeTextures;
         liveComponents.maiLieDown = maiLieDownTextures;
-        
+
         liveComponents.maiAttackAnimationCatalogue.push(
           liveComponents.maiForce,
           liveComponents.maiBreeze,
-          liveComponents.maiLieDown,
-          );
+          liveComponents.maiLieDown
+        );
 
         // Create an AnimatedSprite using the textures
         const characterOne = new AnimatedSprite(liveComponents.maiGreet);
 
         const characterTicker = new Ticker();
 
-        const texturesArray = [
-          assets.akumaSprites[0],
-          assets.akumaSprites[1],
-          assets.akumaSprites[2],
-          assets.akumaSprites[3],
-          assets.akumaSprites[4],
-          assets.akumaSprites[5],
-          assets.akumaSprites[6],
-          assets.akumaSprites[7],
-        ];
         // const characterOne = new AnimatedSprite(texturesArray);
         characterOne.position.set(350, this.app.view.height - 400);
         characterOne.animationSpeed = 0.1; // Adjust the speed as needed
@@ -108,16 +162,26 @@ export class SetupBackgroundStep implements IStep {
         characterOne.scale.y *= 2.5;
         characterOne.scale.x *= -1;
         liveComponents.mai = characterOne;
-        const characterTwo = new AnimatedSprite(liveComponents.mai2Cry);
-        characterTwo.height = 300;
+        const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist2);        
+       //  const characterTwo = new AnimatedSprite(liveComponents.ironmanReady);
+        characterTwo.height = 1;
         characterTwo.width = 300;
+        characterTwo.anchor.set(animationCalibration.IMWinFist2[0], animationCalibration.IMWinFist2[1]);
+
         characterTwo.position.set(
-          this.app.view.width - 10,
-          this.app.view.height - 320
+          this.app.view.width - (characterTwo.width / 2),
+          this.app.view.height - 250
         );
         characterTwo.animationSpeed = 0.2; // Adjust the speed as needed
+        const referenceSize = 700; // Adjust this as needed
+        const scaleFactorAnimation1 = referenceSize / characterTwo.width;
+        
+        // Apply the scale to the animated sprites
+        characterTwo.scale.set(scaleFactorAnimation1);
         characterTwo.scale.x *= -1;
+
         characterTwo.play();
+
         liveComponents.playerOne = characterOne;
         liveComponents.playerTwo = characterTwo;
 
@@ -126,15 +190,13 @@ export class SetupBackgroundStep implements IStep {
 
         playerHealth.playerOneHealth = 463;
         playerHealth.playerTwoHealth = -463;
-        updateState(
-          true,
-          "Ready?",
-          "",
-          true
-        );
+        updateState(true, "Ready?", "", true);
         assets.voiceYou?.play();
 
-        updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
+        updateHealthBar(
+          playerHealth.playerOneHealth,
+          playerHealth.playerTwoHealth
+        );
         userInterface.hasReadyBanner = true;
         const mainSceneContainer = new Container();
         mainSceneContainer.name = "main_scene_container";
@@ -155,7 +217,7 @@ export class SetupBackgroundStep implements IStep {
 
           for (let y = 0; y < 5; y++) {
             //can be this instead of hard coded random number int ... assets.symbolTextures.length
-            let randomSymbolIndex = Math.floor(Math.random() * 4);
+            let randomSymbolIndex = Math.floor(Math.random() * 2);
             const tempSymbol = new ValueSprite();
             tempSymbol.symbolPosition = [x, y];
             //removed old 'setvalue' as its too expensive to process
@@ -168,7 +230,6 @@ export class SetupBackgroundStep implements IStep {
             tempSymbol.position.set(x * 110, y * 110 - 110);
             tempReel.addChild(tempSymbol);
             tempReel.addChild(tempReel);
-
           }
           reelContainer.addChild(tempReel);
         }
@@ -183,7 +244,6 @@ export class SetupBackgroundStep implements IStep {
         this.app.stage.addChild(redSq);
         liveComponents.reelContainer.mask = redSq;
 
-      
         stageOneBackground.texture = assets.textures[4]; //6 - 16 random number
         stageOneBackground.width = this.app.screen.width;
         stageOneBackground.height = this.app.screen.height;
@@ -199,24 +259,17 @@ export class SetupBackgroundStep implements IStep {
           reelContainer.position.y += 7;
           this.app.renderer.render(this.app.stage); // must include this to update the visuals!!!
           if (reelContainer.position.y > -400) {
-            updateState(
-              true,
-              "Ready?",
-              "white",
-              true
-            );
+            updateState(true, "Ready?", "white", true);
           }
           if (reelContainer.position.y > 70) {
-             playerHealth.playerOneHealth = 0;
-             playerHealth.playerTwoHealth = 0;
-            updateState(
-              true,
-              "Fight!",
-              "red",
-              true,
-            );
+            playerHealth.playerOneHealth = 0;
+            playerHealth.playerTwoHealth = 0;
+            updateState(true, "Fight!", "red", true);
 
-            updateHealthBar(playerHealth.playerOneHealth, playerHealth.playerTwoHealth);
+            updateHealthBar(
+              playerHealth.playerOneHealth,
+              playerHealth.playerTwoHealth
+            );
             ticker.stop();
             assets.voiceFight?.play();
             ticker.remove(reelContainerIntroAnimation);
@@ -231,12 +284,7 @@ export class SetupBackgroundStep implements IStep {
 
           // Check if 1 second has passed
           if (elapsedTime >= 100) {
-            updateState(
-              false,
-              "Fight!",
-              "red",
-              true
-            );
+            updateState(false, "Fight!", "red", true);
             ticker.stop();
             this.isComplete = true;
             signal.dispatch();

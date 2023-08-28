@@ -19,10 +19,22 @@ const liveComponents: {
   maiGreet: undefined | any;
   maiReady: undefined | any;
   maiForce: undefined | any;
-  maiBreeze : undefined | any;
-  maiLieDown : undefined | any;
+  maiBreeze: undefined | any;
+  maiLieDown: undefined | any;
+  mai2Cry: undefined | any;
+  mai2FanGreet: undefined | any;
+  mai2FanThrow: undefined | any;
+  mai2FlyKick: undefined | any;
+  mai2LieDown: undefined | any;
+  mai2FanReady: undefined | any;
+  mai2Throw: undefined | any;
+  mai2Ready: undefined | any;
   maiAttackAnimationCatalogue: any[];
-  mai2Cry : undefined | any;
+  ironmanReady: undefined | any;
+  ironmanDazed: undefined | any;
+  ironmanWinFist1: undefined | any;
+  ironmanWinFist2: undefined | any;
+
 } = {
   loadScreen: undefined,
   splashScreen: undefined,
@@ -35,11 +47,22 @@ const liveComponents: {
   reelAnimationSet: false,
   maiGreet: undefined,
   maiReady: undefined,
-  maiForce : undefined,
-  maiBreeze : undefined,
+  maiForce: undefined,
+  maiBreeze: undefined,
   maiLieDown: undefined,
   maiAttackAnimationCatalogue: [],
-  mai2Cry : undefined
+  mai2Cry: undefined,
+  mai2FanGreet: undefined,
+  mai2FanThrow: undefined,
+  mai2FlyKick: undefined,
+  mai2LieDown: undefined,
+  mai2FanReady: undefined,
+  mai2Throw: undefined,
+  ironmanReady: undefined,
+  ironmanDazed: undefined,
+  ironmanWinFist1: undefined,
+  ironmanWinFist2: undefined,
+  mai2Ready: undefined
 };
 
 export default liveComponents;

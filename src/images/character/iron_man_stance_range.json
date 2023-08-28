@@ -505,10 +505,10 @@
 	"sourceSize": {"w":197,"h":224}
 }},
 "animations" : {
-"win_fist_2" : ["win_first_2_(1).gif","win_first_2_(2).gif","win_first_2_(3).gif","win_first_2_(4).gif","win_first_2_(5).gif","win_first_2_(6).gif","win_first_2_(7).gif","win_first_2_(8).gif","win_first_2_(9).gif","win_first_2_(10).gif","win_first_2_(11).gif","win_first_2_(12).gif","win_first_2_(13).gif","win_first_2_(14).gif","win_first_2_(15).gif","win_first_2_(16).gif","win_first_2_(17).gif","win_first_2_(18).gif","win_first_2_(19).gif","win_first_2_(20).gif","win_first_2_(21).gif","win_first_2_(22).gif","win_first_2_(23).gif","win_first_2_(24).gif"],
+"win_fist_2" : ["win_fist_2_(1).gif","win_fist_2_(2).gif","win_fist_2_(3).gif","win_fist_2_(4).gif","win_fist_2_(5).gif","win_fist_2_(6).gif","win_fist_2_(7).gif","win_fist_2_(8).gif","win_fist_2_(9).gif","win_fist_2_(10).gif","win_fist_2_(11).gif","win_fist_2_(12).gif","win_fist_2_(13).gif","win_fist_2_(14).gif","win_fist_2_(15).gif","win_fist_2_(16).gif","win_fist_2_(17).gif","win_fist_2_(18).gif","win_fist_2_(19).gif","win_fist_2_(20).gif","win_fist_2_(21).gif","win_fist_2_(22).gif","win_fist_2_(23).gif","win_fist_2_(24).gif"],
 "dazed" : ["dazed_(1).gif","dazed_(2).gif","dazed_(3).gif","dazed_(4).gif","dazed_(5).gif","dazed_(6).gif"],
 "ready": ["ready_(1).gif","ready_(2).gif","ready_(3).gif","ready_(4).gif","ready_(5).gif","ready_(6).gif","ready_(7).gif","ready_(8).gif","ready_(9).gif","ready_(10).gif","ready_(11).gif"],
-"win_first_1": ["win_first_1_(1).gif","win_first_1_(2).gif","win_first_1_(3).gif","win_first_1_(4).gif","win_first_1_(5).gif","win_first_1_(6).gif","win_first_1_(7).gif","win_first_1_(8).gif","win_first_1_(9).gif","win_first_1_(10).gif","win_first_1_(11).gif","win_first_1_(12).gif","win_first_1_(13).gif","win_first_1_(14).gif","win_first_1_(15).gif","win_first_1_(16).gif","win_first_1_(17).gif","win_first_1_(18).gif","win_first_1_(19).gif","win_first_1_(20).gif","win_first_1_(21).gif","win_first_1_(22).gif"]
+"win_fist_1": ["win_first_1_(1).gif","win_first_1_(2).gif","win_first_1_(3).gif","win_first_1_(4).gif","win_first_1_(5).gif","win_first_1_(6).gif","win_first_1_(7).gif","win_first_1_(8).gif","win_first_1_(9).gif","win_first_1_(10).gif","win_first_1_(11).gif","win_first_1_(12).gif","win_first_1_(13).gif","win_first_1_(14).gif","win_first_1_(15).gif","win_first_1_(16).gif","win_first_1_(17).gif","win_first_1_(18).gif","win_first_1_(19).gif","win_first_1_(20).gif","win_first_1_(21).gif","win_first_1_(22).gif"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",

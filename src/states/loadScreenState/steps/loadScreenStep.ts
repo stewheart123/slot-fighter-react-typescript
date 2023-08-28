@@ -1,5 +1,5 @@
 import { Step } from "../../../Step";
-import appProps from "../../../models/App";
+// import appProps from "../../../models/App";
 import assets from "../../../models/Assets";
 import { Graphics, Container, Texture } from "pixi.js";
 import { Signal } from "signals.js";
@@ -12,27 +12,32 @@ import maiSpriteSheet from "../../../images/character/mai-sprites.png";
 import maiAnimationInfo from "../../../images/character/mai-sprites.json";
 import maiSpriteSheet2 from "../../../images/character/mai_complete_range.png";
 import maiAnimationInfo2 from "../../../images/character/mai_complete_range.json";
+import ironmanStanceSpriteSheet from "../../../images/character/iron_man_stance_range.png";
+import ironmanStanceInfo from "../../../images/character/iron_man_stance_range.json";
+import ironmanAttackSpriteSheet from "../../../images/character/iron_man_attack_range.png";
+import ironmanAttackInfo from "../../../images/character/iron_man_attack_range.json";
 import symbolH from "../../../images/symbols/symbol-H.jpg";
 import symbolJ from "../../../images/symbols/symbol-J.jpg";
-import symbolK from "../../../images/symbols/symbol-K.jpg";
-import symbolKE from "../../../images/symbols/symbol-KE.jpg";
-import symbolL from "../../../images/symbols/symbol-L.jpg";
-import symbolO from "../../../images/symbols/symbol-O.jpg";
-import symbolR from "../../../images/symbols/symbol-R.jpg";
-import symbolRT from "../../../images/symbols/symbol-RT.jpg";
-import symbolS from "../../../images/symbols/symbol-S.jpg";
-import symbolST from "../../../images/symbols/symbol-ST.jpg";
-import symbolT from "../../../images/symbols/symbol-T.jpg";
-import symbolW from "../../../images/symbols/symbol-W.jpg";
+// import symbolK from "../../../images/symbols/symbol-K.jpg";
+// import symbolKE from "../../../images/symbols/symbol-KE.jpg";
+// import symbolL from "../../../images/symbols/symbol-L.jpg";
+// import symbolO from "../../../images/symbols/symbol-O.jpg";
+// import symbolR from "../../../images/symbols/symbol-R.jpg";
+// import symbolRT from "../../../images/symbols/symbol-RT.jpg";
+// import symbolS from "../../../images/symbols/symbol-S.jpg";
+// import symbolST from "../../../images/symbols/symbol-ST.jpg";
+// import symbolT from "../../../images/symbols/symbol-T.jpg";
+// import symbolW from "../../../images/symbols/symbol-W.jpg";
+
 //akuma sprites can be refactored to its own spritesheet - same as mai
-import akuma0 from "../../../images/akuma/frame_0.png";
-import akuma1 from "../../../images/akuma/frame_1.png";
-import akuma2 from "../../../images/akuma/frame_2.png";
-import akuma3 from "../../../images/akuma/frame_3.png";
-import akuma4 from "../../../images/akuma/frame_4.png";
-import akuma5 from "../../../images/akuma/frame_5.png";
-import akuma6 from "../../../images/akuma/frame_6.png";
-import akuma7 from "../../../images/akuma/frame_7.png";
+// import akuma0 from "../../../images/akuma/frame_0.png";
+// import akuma1 from "../../../images/akuma/frame_1.png";
+// import akuma2 from "../../../images/akuma/frame_2.png";
+// import akuma3 from "../../../images/akuma/frame_3.png";
+// import akuma4 from "../../../images/akuma/frame_4.png";
+// import akuma5 from "../../../images/akuma/frame_5.png";
+// import akuma6 from "../../../images/akuma/frame_6.png";
+// import akuma7 from "../../../images/akuma/frame_7.png";
 
 import initializeApp from "../../../initializer";
 
@@ -140,27 +145,30 @@ export class LoadScreenStep extends Step {
         { name: "stage-1-background", url: stageOneBackground },
         { name: "maiSpritesheet", url: maiSpriteSheet },
         { name: "maiSpritesheet2", url: maiSpriteSheet2 },
+        { name: "ironmanStanceSpriteSheet", url: ironmanStanceSpriteSheet },
+        { name: "ironmanAttackSpriteSheet", url: ironmanAttackSpriteSheet },
         { name: "symbol-h", url: symbolH },
         { name: "symbol-j", url: symbolJ },
-        { name: "symbol-k", url: symbolK },
-        { name: "symbol-ke", url: symbolKE },
-        { name: "symbol-l", url: symbolL },
-        { name: "symbol-o", url: symbolO },
-        { name: "symbol-r", url: symbolR },
-        { name: "symbol-rt", url: symbolRT },
-        { name: "symbol-s", url: symbolS },
-        { name: "symbol-t", url: symbolT },
-        { name: "symbol-w", url: symbolW },
-        { name: "symbol-st", url: symbolST },
+
+        // { name: "symbol-k", url: symbolK },
+        // { name: "symbol-ke", url: symbolKE },
+        // { name: "symbol-l", url: symbolL },
+        // { name: "symbol-o", url: symbolO },
+        // { name: "symbol-r", url: symbolR },
+        // { name: "symbol-rt", url: symbolRT },
+        // { name: "symbol-s", url: symbolS },
+        // { name: "symbol-t", url: symbolT },
+        // { name: "symbol-w", url: symbolW },
+        // { name: "symbol-st", url: symbolST },
         //replace akuma individuals here too
-        { name: "akuma-0", url: akuma0 },
-        { name: "akuma-1", url: akuma1 },
-        { name: "akuma-2", url: akuma2 },
-        { name: "akuma-3", url: akuma3 },
-        { name: "akuma-4", url: akuma4 },
-        { name: "akuma-5", url: akuma5 },
-        { name: "akuma-6", url: akuma6 },
-        { name: "akuma-7", url: akuma7 },
+        // { name: "akuma-0", url: akuma0 },
+        // { name: "akuma-1", url: akuma1 },
+        // { name: "akuma-2", url: akuma2 },
+        // { name: "akuma-3", url: akuma3 },
+        // { name: "akuma-4", url: akuma4 },
+        // { name: "akuma-5", url: akuma5 },
+        // { name: "akuma-6", url: akuma6 },
+        // { name: "akuma-7", url: akuma7 },
       ]);
 
       assetLoader.onProgress.add(() => {
@@ -178,36 +186,40 @@ export class LoadScreenStep extends Step {
         const symbolTextures = [
           Texture.from("symbol-h"),
           Texture.from("symbol-j"),
-          Texture.from("symbol-k"),
-          Texture.from("symbol-ke"),
-          Texture.from("symbol-l"),
-          Texture.from("symbol-o"),
-          Texture.from("symbol-r"),
-          Texture.from("symbol-rt"),
-          Texture.from("symbol-s"),
-          Texture.from("symbol-st"),
-          Texture.from("symbol-t"),
-          Texture.from("symbol-w"),
+          // Texture.from("symbol-k"),
+          // Texture.from("symbol-ke"),
+          // Texture.from("symbol-l"),
+          // Texture.from("symbol-o"),
+          // Texture.from("symbol-r"),
+          // Texture.from("symbol-rt"),
+          // Texture.from("symbol-s"),
+          // Texture.from("symbol-st"),
+          // Texture.from("symbol-t"),
+          // Texture.from("symbol-w"),
         ];
 
-        const akuma = [
-          Texture.from("akuma-0"),
-          Texture.from("akuma-1"),
-          Texture.from("akuma-2"),
-          Texture.from("akuma-3"),
-          Texture.from("akuma-4"),
-          Texture.from("akuma-5"),
-          Texture.from("akuma-6"),
-          Texture.from("akuma-7"),
-        ];
+        // const akuma = [
+        //   Texture.from("akuma-0"),
+        //   Texture.from("akuma-1"),
+        //   Texture.from("akuma-2"),
+        //   Texture.from("akuma-3"),
+        //   Texture.from("akuma-4"),
+        //   Texture.from("akuma-5"),
+        //   Texture.from("akuma-6"),
+        //   Texture.from("akuma-7"),
+        // ];
         assets.textures = gameTextures;
         assets.symbolTextures = symbolTextures;
         // assets.animation = resources;
-        assets.akumaSprites = akuma;
+        //assets.akumaSprites = akuma;
         assets.mai.spriteData = maiAnimationInfo;
         assets.mai2.spriteData = maiAnimationInfo2;
+        assets.ironmanStance.spriteData = ironmanStanceInfo;
+        assets.ironmanAttack.spriteData = ironmanAttackInfo;
         assets.mai.spriteSheet = Texture.from("maiSpritesheet");
         assets.mai2.spriteSheet = Texture.from("maiSpritesheet2");
+        assets.ironmanStance.spriteSheet = Texture.from("ironmanStanceSpriteSheet");
+        assets.ironmanAttack.spriteSheet = Texture.from("ironmanAttackSpriteSheet");
       });
       assetLoader.onComplete.add(() => {
         resolve(); //something here?
