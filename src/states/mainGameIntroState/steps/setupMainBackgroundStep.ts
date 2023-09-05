@@ -111,10 +111,48 @@ export class SetupBackgroundStep implements IStep {
         const IMWinfist2Textures = ironmanStanceFrames["win_fist_2"].map(
           (frameName: string | number) => ironmanStanceSheet.textures[frameName]
         );
+        
         liveComponents.ironmanReady = IMreadyTextures;
         liveComponents.ironmanDazed = IMdazedTextures;
         liveComponents.ironmanWinFist1 = IMWinfist1Textures;
         liveComponents.ironmanWinFist2 = IMWinfist2Textures;
+      });
+      
+      ironmanAttackSheet.parse(() => {
+        const IMBeamTextures = ironmanAttackFrames["beam"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        const IMBeamCannonTextures = ironmanAttackFrames["beam_cannon"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        const IMHoldOrbTextures = ironmanAttackFrames["hold_orb"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        const IMPlasmaSplashTextures = ironmanAttackFrames["plasma_splash"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        const IMSpikeBombTextures = ironmanAttackFrames["spike_bomb"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        const IMSuperKickTextures = ironmanAttackFrames["super_kick"].map(
+          (frameName: string | number) => ironmanAttackSheet.textures[frameName]
+        );
+        console.log(IMHoldOrbTextures);
+
+          liveComponents.ironmanBeam = IMBeamTextures;
+          liveComponents.ironmanBeamCannon = IMBeamCannonTextures;
+          liveComponents.ironmanHoldOrb = IMHoldOrbTextures;
+          liveComponents.ironmanPlasmaSplash = IMPlasmaSplashTextures;
+          liveComponents.ironmanSpikeBomb = IMSpikeBombTextures;
+          liveComponents.ironmanSuperKick = IMSuperKickTextures;
+          liveComponents.ironmanAttackAnimationCatalogue.push(
+            liveComponents.ironmanBeam,
+            liveComponents.ironmanBeamCannon,
+            liveComponents.ironmanHoldOrb,
+            liveComponents.ironmanPlasmaSplash,
+            liveComponents.ironmanSpikeBomb,
+            liveComponents.ironmanSuperKick
+          );
       });
 
       // Load the spritesheet and parse the frame data - parse all animations right here only
@@ -162,12 +200,15 @@ export class SetupBackgroundStep implements IStep {
         characterOne.scale.y *= 2.5;
         characterOne.scale.x *= -1;
         liveComponents.mai = characterOne;
-        const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist2);        
+       //const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist2);        
        //  const characterTwo = new AnimatedSprite(liveComponents.ironmanReady);
+         const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist1);
         characterTwo.height = 1;
         characterTwo.width = 300;
-        characterTwo.anchor.set(animationCalibration.IMWinFist2[0], animationCalibration.IMWinFist2[1]);
-
+        characterTwo.anchor.set(animationCalibration.IMWinFist1[0], animationCalibration.IMWinFist1[1]);
+       
+        liveComponents.ironman = characterTwo;
+        
         characterTwo.position.set(
           this.app.view.width - (characterTwo.width / 2),
           this.app.view.height - 250

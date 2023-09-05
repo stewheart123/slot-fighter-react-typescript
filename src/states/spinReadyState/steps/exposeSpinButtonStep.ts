@@ -7,6 +7,7 @@ import liveComponents from "../../../models/liveComponents";
 import turnModel from "../../../models/TurnModel";
 import animationPlayer from "../../../models/AnimationPlayer";
 import assets from "../../../models/Assets";
+import animationCalibration from "../../../models/AnimationCalibration";
 
 export class ExposeSpinButtonStep implements IStep {
   public isComplete = false;
@@ -29,6 +30,11 @@ export class ExposeSpinButtonStep implements IStep {
     liveComponents.mai.textures = liveComponents.maiReady;
     liveComponents.mai.loop = true;
     liveComponents.mai.play();
+
+    liveComponents.ironman.textures = liveComponents.ironmanReady;
+    liveComponents.ironman.loop = true;
+    liveComponents.ironman.play();
+    liveComponents.ironman.anchor.set(animationCalibration.IMReady[0], animationCalibration.IMReady[1]);
 
     updateControls(true);
 

@@ -30,10 +30,23 @@ const liveComponents: {
   mai2Throw: undefined | any;
   mai2Ready: undefined | any;
   maiAttackAnimationCatalogue: any[];
+  ironman: undefined | any;
   ironmanReady: undefined | any;
   ironmanDazed: undefined | any;
   ironmanWinFist1: undefined | any;
   ironmanWinFist2: undefined | any;
+  ironmanBeam: undefined | any;
+  ironmanBeamCannon: undefined | any;
+  ironmanHoldOrb: undefined | any;
+  ironmanPlasmaSplash: undefined | any;
+  ironmanSpikeBomb: undefined | any;
+  ironmanSuperKick: undefined | any;
+  ironmanAttackAnimationCatalogue: any[];
+            //"beam_cannon"
+          //hold_orb
+          //"plasma_splash"
+          //"spike_bomb"
+          //"super_kick"
 
 } = {
   loadScreen: undefined,
@@ -58,11 +71,19 @@ const liveComponents: {
   mai2LieDown: undefined,
   mai2FanReady: undefined,
   mai2Throw: undefined,
+  ironman: undefined,
   ironmanReady: undefined,
   ironmanDazed: undefined,
   ironmanWinFist1: undefined,
   ironmanWinFist2: undefined,
-  mai2Ready: undefined
+  mai2Ready: undefined,
+  ironmanBeam: undefined,
+  ironmanBeamCannon: undefined,
+  ironmanHoldOrb: undefined,
+  ironmanPlasmaSplash: undefined,
+  ironmanSpikeBomb: undefined,
+  ironmanSuperKick: undefined,
+  ironmanAttackAnimationCatalogue: []
 };
 
 export default liveComponents;
