@@ -17,6 +17,7 @@ import playerHealth from "../../../models/PlayerHealth";
 import liveComponents from "../../../models/liveComponents";
 import { ValueSprite } from "../../../models/ValueSprite";
 import animationCalibration from "../../../models/AnimationCalibration";
+import maiAttackAnchors from "../../../models/MaiAttackAnchors";
 
 export class SetupBackgroundStep implements IStep {
   public isComplete = false;
@@ -28,27 +29,19 @@ export class SetupBackgroundStep implements IStep {
   };
 
   public start(signal: Signal): void {
+  
     assets.levelSoundtrack?.play();
     // Load the tile animation frames
-    //cant use the assets version of a json file.... ever!
-    const tileFrames = assets.mai.spriteData.animations;
-
-    const tileFrames2 = assets.mai2.spriteData.animations;
-
+    const maiFrames2 = assets.mai2.spriteData.animations;
     const ironmanStanceFrames = assets.ironmanStance.spriteData.animations;
     const ironmanAttackFrames = assets.ironmanAttack.spriteData.animations;
 
     // Create a spritesheet from the frame names
     if (
-      assets.mai.spriteSheet &&
       assets.mai2.spriteSheet &&
       assets.ironmanAttack.spriteSheet &&
       assets.ironmanStance.spriteSheet
     ) {
-      const spritesheet = new Spritesheet(
-        assets.mai.spriteSheet.baseTexture,
-        assets.mai.spriteData
-      ); // Replace with your spritesheet image path
 
       const spriteSheet2 = new Spritesheet(
         assets.mai2.spriteSheet.baseTexture,
@@ -64,39 +57,6 @@ export class SetupBackgroundStep implements IStep {
         assets.ironmanStance.spriteSheet?.baseTexture,
         assets.ironmanStance.spriteData
       );
-
-      spriteSheet2.parse(() => {
-        const cryTextures = tileFrames2["cry"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiFanGreet = tileFrames2["fan_greet"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiFanThrow = tileFrames2["fan_throw"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiFlyKick = tileFrames2["fly_kick"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiLieDown = tileFrames2["lie_down"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiReady = tileFrames2["ready"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        const maiThrow = tileFrames2["throw"].map(
-          (frameName: string | number) => spriteSheet2.textures[frameName]
-        );
-        //
-        liveComponents.maiReady = maiReady;
-        liveComponents.mai2Cry = cryTextures;
-        liveComponents.mai2FanGreet = maiFanGreet;
-        liveComponents.mai2FanThrow = maiFanThrow;
-        liveComponents.mai2FlyKick = maiFlyKick;
-        liveComponents.mai2LieDown = maiLieDown;
-        liveComponents.mai2FanReady = maiReady;
-        liveComponents.mai2Throw = maiThrow;
-      });
 
       ironmanStanceSheet.parse(() => {
         const IMreadyTextures = ironmanStanceFrames["ready"].map(
@@ -116,6 +76,12 @@ export class SetupBackgroundStep implements IStep {
         liveComponents.ironmanDazed = IMdazedTextures;
         liveComponents.ironmanWinFist1 = IMWinfist1Textures;
         liveComponents.ironmanWinFist2 = IMWinfist2Textures;
+        liveComponents.ironmanStanceAnimationCatalogue.push(
+          liveComponents.ironmanReady,
+          liveComponents.ironmanDazed,
+          liveComponents.ironmanWinFist1,
+          liveComponents.ironmanWinFist2
+        );
       });
       
       ironmanAttackSheet.parse(() => {
@@ -137,7 +103,7 @@ export class SetupBackgroundStep implements IStep {
         const IMSuperKickTextures = ironmanAttackFrames["super_kick"].map(
           (frameName: string | number) => ironmanAttackSheet.textures[frameName]
         );
-        console.log(IMHoldOrbTextures);
+       
 
           liveComponents.ironmanBeam = IMBeamTextures;
           liveComponents.ironmanBeamCannon = IMBeamCannonTextures;
@@ -153,56 +119,70 @@ export class SetupBackgroundStep implements IStep {
             liveComponents.ironmanSpikeBomb,
             liveComponents.ironmanSuperKick
           );
+       
       });
 
       // Load the spritesheet and parse the frame data - parse all animations right here only
-      spritesheet.parse(() => {
-        // Create an array of textures for the animation frames
-        const greetTextures = tileFrames["greet"].map(
-          (frameName: string | number) => spritesheet.textures[frameName]
+      spriteSheet2.parse(() => {
+        const cryTextures = maiFrames2["cry"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
         );
-        const maiReadyTextures = tileFrames["ready"].map(
-          (frameName: string | number) => spritesheet.textures[frameName]
+        const maiFanGreet = maiFrames2["fan_greet"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
         );
-        const maiForceTextures = tileFrames["force"].map(
-          (frameName: string | number) => spritesheet.textures[frameName]
+        const maiFanThrow = maiFrames2["fan_throw"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
         );
-        const maiBreezeTextures = tileFrames["breeze"].map(
-          (frameName: string | number) => spritesheet.textures[frameName]
+        const maiFlyKick = maiFrames2["fly_kick"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
         );
-        const maiLieDownTextures = tileFrames["lie-down"].map(
-          (frameName: string | number) => spritesheet.textures[frameName]
+        const maiLieDown = maiFrames2["lie_down"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
         );
-
-        liveComponents.maiGreet = greetTextures;
-        liveComponents.maiReady = maiReadyTextures;
-        liveComponents.maiForce = maiForceTextures;
-        liveComponents.maiBreeze = maiBreezeTextures;
-        liveComponents.maiLieDown = maiLieDownTextures;
+        const maiReady = maiFrames2["ready"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        const maiThrow = maiFrames2["throw"].map(
+          (frameName: string | number) => spriteSheet2.textures[frameName]
+        );
+        //
+        liveComponents.mai2Ready = maiReady;
+        liveComponents.mai2Cry = cryTextures;
+        liveComponents.mai2FanGreet = maiFanGreet;
+        liveComponents.mai2FanThrow = maiFanThrow;
+        liveComponents.mai2FlyKick = maiFlyKick;
+        liveComponents.mai2LieDown = maiLieDown;
+        liveComponents.mai2Throw = maiThrow;
 
         liveComponents.maiAttackAnimationCatalogue.push(
-          liveComponents.maiForce,
-          liveComponents.maiBreeze,
-          liveComponents.maiLieDown
+          liveComponents.mai2FanThrow,
+          liveComponents.mai2FlyKick,
+          liveComponents.mai2LieDown,
+          liveComponents.mai2Throw
         );
-
+        liveComponents.maiStanceAnimationCatalogue.push(
+          liveComponents.mai2Ready,
+          liveComponents.mai2Cry,
+          liveComponents.mai2FanGreet
+        );
+       
         // Create an AnimatedSprite using the textures
-        const characterOne = new AnimatedSprite(liveComponents.maiGreet);
+        const characterOne = new AnimatedSprite(liveComponents.mai2FanGreet);
 
         const characterTicker = new Ticker();
 
         // const characterOne = new AnimatedSprite(texturesArray);
         characterOne.position.set(350, this.app.view.height - 400);
-        characterOne.animationSpeed = 0.1; // Adjust the speed as needed
-        // console.log(characterOne);
+        characterOne.animationSpeed = 0.15; // Adjust the speed as needed
         characterOne.play(); // Start the animation
         characterOne.scale.x *= 2.5;
         characterOne.scale.y *= 2.5;
-        characterOne.scale.x *= -1;
+       //characterOne.anchor.set(0.4,0.25);
+        
         liveComponents.mai = characterOne;
-       //const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist2);        
-       //  const characterTwo = new AnimatedSprite(liveComponents.ironmanReady);
-         const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist1);
+        liveComponents.mai.anchor.set(animationCalibration.maiGreet[0], animationCalibration.maiGreet[1]);
+      
+        const characterTwo = new AnimatedSprite(liveComponents.ironmanWinFist1);
         characterTwo.height = 1;
         characterTwo.width = 300;
         characterTwo.anchor.set(animationCalibration.IMWinFist1[0], animationCalibration.IMWinFist1[1]);

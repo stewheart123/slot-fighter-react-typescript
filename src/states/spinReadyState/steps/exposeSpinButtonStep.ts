@@ -27,7 +27,8 @@ export class ExposeSpinButtonStep implements IStep {
   
     this.isComplete = false;
 
-    liveComponents.mai.textures = liveComponents.maiReady;
+    liveComponents.mai.textures = liveComponents.mai2Ready;
+    liveComponents.mai.anchor.set(animationCalibration.maiReady[0], animationCalibration.maiReady[1]);
     liveComponents.mai.loop = true;
     liveComponents.mai.play();
 

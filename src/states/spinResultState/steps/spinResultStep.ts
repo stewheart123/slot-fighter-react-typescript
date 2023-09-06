@@ -9,6 +9,7 @@ import { updateHealthBar } from "../../../";
 import animationPlayer from "../../../models/AnimationPlayer";
 import { Ticker, filters } from "pixi.js";
 import assets from "../../../models/Assets";
+import maiAttackAnchors from "../../../models/MaiAttackAnchors";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
@@ -271,12 +272,14 @@ export class SpinResultStep implements IStep {
     for (var i = 0; i < animationIDArray.length; i++) {
       let animationToPlay: any;
       if (
-        animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length
+        animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length && animationIDArray[i] < maiAttackAnchors.length
       ) {
         animationToPlay =
           liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]];
+          liveComponents.mai.anchor.set(maiAttackAnchors[animationIDArray[i]][0],maiAttackAnchors[animationIDArray[i]][1]);
       } else {
         animationToPlay = liveComponents.maiAttackAnimationCatalogue[0];
+        liveComponents.mai.anchor.set(maiAttackAnchors[0][0],maiAttackAnchors[0][1]);
       }
       this.SetWinlineRed(animationPlayer.reelPlots[i]);
       //WORKS WITH MAI AND WITH PLAYERONE --- WHY???

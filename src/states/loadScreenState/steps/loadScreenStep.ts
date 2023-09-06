@@ -8,8 +8,8 @@ import introScreenBackground from "../../../images/scene/into-screen-background.
 import slotFighterBackgroundDynamic from "../../../images/scene/slot-fighter-background-dynamic.jpg";
 import slotFighterForegroundDynamic from "../../../images/scene/slot-fighter-foreground-dynamic.png";
 import stageOneBackground from "../../../images/scene/stage-1-background.jpg";
-import maiSpriteSheet from "../../../images/character/mai-sprites.png";
-import maiAnimationInfo from "../../../images/character/mai-sprites.json";
+//import maiSpriteSheet from "../../../images/character/mai-sprites.png";
+//import maiAnimationInfo from "../../../images/character/mai-sprites.json";
 import maiSpriteSheet2 from "../../../images/character/mai_complete_range.png";
 import maiAnimationInfo2 from "../../../images/character/mai_complete_range.json";
 import ironmanStanceSpriteSheet from "../../../images/character/iron_man_stance_range.png";
@@ -122,7 +122,7 @@ export class LoadScreenStep extends Step {
         { name: "sf-background-dynamic", url: slotFighterBackgroundDynamic },
         { name: "sf-foreground-dynamic", url: slotFighterForegroundDynamic },
         { name: "stage-1-background", url: stageOneBackground },
-        { name: "maiSpritesheet", url: maiSpriteSheet },
+      //  { name: "maiSpritesheet", url: maiSpriteSheet },
         { name: "maiSpritesheet2", url: maiSpriteSheet2 },
         { name: "ironmanStanceSpriteSheet", url: ironmanStanceSpriteSheet },
         { name: "ironmanAttackSpriteSheet", url: ironmanAttackSpriteSheet },
@@ -149,11 +149,11 @@ export class LoadScreenStep extends Step {
 
         assets.textures = gameTextures;
         assets.symbolTextures = symbolTextures;
-        assets.mai.spriteData = maiAnimationInfo;
+       // assets.mai.spriteData = maiAnimationInfo;
         assets.mai2.spriteData = maiAnimationInfo2;
         assets.ironmanStance.spriteData = ironmanStanceInfo;
         assets.ironmanAttack.spriteData = ironmanAttackInfo;
-        assets.mai.spriteSheet = Texture.from("maiSpritesheet");
+       // assets.mai.spriteSheet = Texture.from("maiSpritesheet");
         assets.mai2.spriteSheet = Texture.from("maiSpritesheet2");
         assets.ironmanStance.spriteSheet = Texture.from("ironmanStanceSpriteSheet");
         assets.ironmanAttack.spriteSheet = Texture.from("ironmanAttackSpriteSheet");

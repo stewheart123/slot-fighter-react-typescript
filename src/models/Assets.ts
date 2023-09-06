@@ -5,10 +5,10 @@ let assets = {
   symbolTextures: [] as Texture[],
   animation: undefined as any | undefined,
   akumaSprites: [] as Texture[],
-  mai: {
-    spriteSheet: undefined as Texture | undefined,
-    spriteData: undefined as any | undefined,
-  },
+  // mai: {
+  //   spriteSheet: undefined as Texture | undefined,
+  //   spriteData: undefined as any | undefined,
+  // },
   akuma: {
     spriteSheet: undefined as Texture | undefined,
     spriteData: undefined as any | undefined,
