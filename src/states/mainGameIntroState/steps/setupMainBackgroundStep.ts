@@ -164,7 +164,8 @@ export class SetupBackgroundStep implements IStep {
           liveComponents.mai2Ready,
           liveComponents.mai2Cry,
           liveComponents.mai2FanGreet
-        );
+        ); 
+      });
        
         // Create an AnimatedSprite using the textures
         const characterOne = new AnimatedSprite(liveComponents.mai2FanGreet);
@@ -314,7 +315,7 @@ export class SetupBackgroundStep implements IStep {
 
         ticker.add(reelContainerIntroAnimation);
         ticker.start();
-      });
+     
     }
   }
 }
