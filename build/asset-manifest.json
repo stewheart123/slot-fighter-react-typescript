@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7c46c4a7.css",
+    "main.js": "/static/js/main.51b95ff2.js",
+    "static/media/into-screen-background.jpg": "/static/media/into-screen-background.394a7cba3d8d8ab90446.jpg",
+    "static/media/slot-fighter-foreground-dynamic.png": "/static/media/slot-fighter-foreground-dynamic.1d37100131c16299f695.png",
+    "static/media/iron_man_attack_range.png": "/static/media/iron_man_attack_range.806bc4499f5f9807d64f.png",
+    "static/media/stage-1-background.jpg": "/static/media/stage-1-background.8e08e96e6be485ccefce.jpg",
+    "static/media/iron_man_stance_range.png": "/static/media/iron_man_stance_range.d380f3d14de7f8308dc7.png",
+    "static/media/mai_complete_range.png": "/static/media/mai_complete_range.161817877f05acf48efe.png",
+    "static/media/slot-fighter-background-dynamic.jpg": "/static/media/slot-fighter-background-dynamic.b68b1649a15f8ede755a.jpg",
+    "static/media/symbol-H.jpg": "/static/media/symbol-H.347409f5030589bde269.jpg",
+    "static/media/symbol-J.jpg": "/static/media/symbol-J.1e4da2065681e20d7871.jpg",
+    "index.html": "/index.html",
+    "main.7c46c4a7.css.map": "/static/css/main.7c46c4a7.css.map",
+    "main.51b95ff2.js.map": "/static/js/main.51b95ff2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7c46c4a7.css",
+    "static/js/main.51b95ff2.js"
+  ]
+}
