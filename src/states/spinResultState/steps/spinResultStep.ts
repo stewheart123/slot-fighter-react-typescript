@@ -10,6 +10,8 @@ import animationPlayer from "../../../models/AnimationPlayer";
 import { Ticker, filters } from "pixi.js";
 import assets from "../../../models/Assets";
 import maiAttackAnchors from "../../../models/MaiAttackAnchors";
+import animationCalibration from "../../../models/AnimationCalibration";
+import ironmanAttackAnchors from "../../../models/IronmanAttackAnchors";
 
 export class SpinResultStep implements IStep {
   public isComplete = false;
@@ -239,6 +241,20 @@ export class SpinResultStep implements IStep {
     let time = 0;
     let count = 0;
     let alphaFilter = new filters.AlphaFilter(0.6);
+    if(turnModel.playerTurn === "playerOne") {
+      liveComponents.ironman.textures = liveComponents.ironmanDazed;
+        time = 0;
+      liveComponents.ironman.anchor.set(animationCalibration.IMReady[0], animationCalibration.IMReady[1] );
+      liveComponents.ironman.loop = true;
+      liveComponents.ironman.play();
+    }
+    else {
+      liveComponents.mai.textures = liveComponents.mai2Cry;
+      time = 0;
+    liveComponents.mai.anchor.set(animationCalibration.maiCry[0], animationCalibration.maiCry[1] );
+    liveComponents.mai.loop = true;
+    liveComponents.mai.play();
+    }
     flashTicker.add(() => {
       time++;
       if (time > 4) {
@@ -271,20 +287,34 @@ export class SpinResultStep implements IStep {
 
     for (var i = 0; i < animationIDArray.length; i++) {
       let animationToPlay: any;
-      if (
-        animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length && animationIDArray[i] < maiAttackAnchors.length
-      ) {
-        animationToPlay =
-          liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]];
-          liveComponents.mai.anchor.set(maiAttackAnchors[animationIDArray[i]][0],maiAttackAnchors[animationIDArray[i]][1]);
+      if(turnModel.playerTurn === "playerOne") {
+        if (
+          animationIDArray[i] < liveComponents.maiAttackAnimationCatalogue.length && animationIDArray[i] < maiAttackAnchors.length
+        ) {
+          animationToPlay =
+            liveComponents.maiAttackAnimationCatalogue[animationIDArray[i]];
+            liveComponents.mai.anchor.set(maiAttackAnchors[animationIDArray[i]][0],maiAttackAnchors[animationIDArray[i]][1]);
+        } else {
+          animationToPlay = liveComponents.maiAttackAnimationCatalogue[0];
+          liveComponents.mai.anchor.set(maiAttackAnchors[0][0],maiAttackAnchors[0][1]);
+        }
       } else {
-        animationToPlay = liveComponents.maiAttackAnimationCatalogue[0];
-        liveComponents.mai.anchor.set(maiAttackAnchors[0][0],maiAttackAnchors[0][1]);
+        if (
+          animationIDArray[i] < liveComponents.ironmanAttackAnimationCatalogue.length && animationIDArray[i] < ironmanAttackAnchors.length
+        ) {
+          animationToPlay =
+            liveComponents.ironmanAttackAnimationCatalogue[animationIDArray[i]];
+            liveComponents.ironman.anchor.set(ironmanAttackAnchors[animationIDArray[i]][0],ironmanAttackAnchors[animationIDArray[i]][1]);
+        } else {
+          animationToPlay = liveComponents.ironmanAttackAnimationCatalogue[0];
+          liveComponents.ironman.anchor.set(ironmanAttackAnchors[0][0],ironmanAttackAnchors[0][1]);
+        }
       }
+
       this.SetWinlineRed(animationPlayer.reelPlots[i]);
       //WORKS WITH MAI AND WITH PLAYERONE --- WHY???
 
-      if (turnModel.playerTurn === "playerOne") {
+     // if (turnModel.playerTurn === "playerOne") {
         //temp fix for no akuma animations - remove the conditionals
         const animationPromise = new Promise((resolve: any) => {
           attackPlayer.textures = animationToPlay;
@@ -298,7 +328,7 @@ export class SpinResultStep implements IStep {
         });
 
         await animationPromise; // Wait for the animation to complete before moving on
-      } /// remove this conditional
+    // } /// remove this conditional
     }
     this.ToggleAllGrey(true);
 
@@ -308,13 +338,23 @@ export class SpinResultStep implements IStep {
       stateChanger.stateChange("gameOverState");
       assets.levelSoundtrack?.stop();
       if(playerHealth.playerOneHealth != undefined) {
+       
         if(playerHealth.playerOneHealth < 463 ) {
+          liveComponents.mai.textures = liveComponents.mai2LieDown;
+          liveComponents.mai.anchor.set(animationCalibration.maiLieDown[0], animationCalibration.maiLieDown[1]);
+          liveComponents.mai.loop = false;
+          liveComponents.mai.play();
           assets.voiceYou?.on('end', () => {
+  
             assets.voiceWin?.play();
           }); 
           assets.voiceYou?.play();
         }
         else {
+          liveComponents.ironman.textures = liveComponents.ironmanWinFist2;
+          liveComponents.ironman.anchor.set(animationCalibration.IMWinFist2[0], animationCalibration.IMWinFist2[1]);
+          liveComponents.ironman.loop = true;
+          liveComponents.ironman.play();
           assets.voiceYou?.on('end', () => {
             assets.voiceLose?.play();
           }); 
